@@ -2,7 +2,7 @@
 <extension>
 	<name>PLUGIN_SUGARCUBE</name>
 	<module>Plugins::SugarCube::Plugin</module>
-	<version>7.0.0</version>
+	<version>7.0.1</version>
 	<description>PLUGIN_SUGARCUBE_DESCINSTALL</description>
 	<creator>Charles Parker</creator>
 	<icon>plugins/SugarCube/HTML/images/sugarcube.png</icon>
