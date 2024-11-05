@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<extension>
+	<name>PLUGIN_SUGARCUBE</name>
+	<module>Plugins::SugarCube::Plugin</module>
+	<version>7.0.0</version>
+	<description>PLUGIN_SUGARCUBE_DESCINSTALL</description>
+	<creator>Charles Parker</creator>
+	<icon>plugins/SugarCube/HTML/images/sugarcube.png</icon>
+	<homepageURL>https://www.spicefly.com/</homepageURL>
+	<optionsURL>plugins/SugarCube/settings/settings.html</optionsURL>
+	<defaultState>enabled</defaultState>
+	<targetApplication>
+		<id>Lyrion Music Server</id>
+		<maxVersion>*</maxVersion>
+		<minVersion>7.9</minVersion>
+	</targetApplication>
+</extension>

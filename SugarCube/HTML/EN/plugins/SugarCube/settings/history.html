@@ -1,0 +1,52 @@
+[%- IF !ajaxUpdate %]
+[% pagetitle = 'PLUGIN_SUGARCUBEHIS' | string; pageicon = 'PLUGIN_SUGARCUBEHIS' %]
+[%- pwd_list = BLOCK -%]/
+	<a href="[% webroot %][% path %]?player=[% player | uri %][% statisticparameters %]">
+		[% "PLUGIN_SUGARCUBEHIS" | string %]
+	</a>
+[% END -%]
+[%- pageHeaderInfo = BLOCK %]
+
+[% END -%]
+[% PROCESS pageheader.html %]
+[% PROCESS plugins/SugarCube/HTML/css/sugarcube.css %]
+
+[% END %]		
+[% IF refresh > 0 %] 
+	<SCRIPT>
+	<!--
+	setTimeout("myReload()", [% refresh %] * [% refreshRate %]);
+
+	function myReload() {
+	  location.replace("[% webroot %][% path %]?player=[% player | uri %][% statisticparameters %]");
+	}
+	-->
+	</SCRIPT>
+[% END %]
+		<script type="text/javascript">
+			for (var i=0; i < parent.frames.length; i++) {
+				if (parent.frames[i].name == "status") {
+					parent.frames[i].location.replace(parent.frames[i].location.pathname + "?player=[% player | uri %]&amp;refresh=1");
+				}
+			}
+		</script>	
+	<table class='topside'>
+	<thead>
+	<tr><Th><strong>Spicefly SugarCube Statistics</strong></Th></tr>
+	</thead>
+	<tbody>
+	<tr><td>Queued [% sugarcube_trackcount %] tracks, including [% sugarcube_randomcount %] random tracks.  [% sugarcube_randomcountpercentage %] of the total.</td></tr>
+	<tr><td>Random Track Last Chosen; [% sugarcube_randomtrack %] - [% sugarcube_stats_random_time %]</td></tr>
+	<tr><td>[% master %]</td></tr>
+	<tr><td>[% mixstatus %]</td></tr>
+	</tbody>
+	</table>
+	<HR>
+	[% WRAPPER settingGroup title="PLUGIN_SC_WEB_HISTORY_TEXT" %][% END %]
+	<table class='bottomside'>
+		[% filters %]
+	</table>	
+	
+[%- IF !ajaxUpdate %]
+[% PROCESS pagefooter.html %]
+[% END %]

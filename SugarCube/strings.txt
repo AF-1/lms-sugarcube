@@ -1,0 +1,560 @@
+PLUGIN_SUGARCUBE
+	EN	Spicefly SugarCube
+PLUGIN_SUGARCUBE_DESC
+	EN	Spicefly SugarCube Travel through your music Library using MusicIP
+PLUGIN_SUGARCUBE_DESCINSTALL
+	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS or TrackStat, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.  See <a href="https://www.spicefly.com/?from=lms" target="_blank">www.spicefly.com</a> for Change Log
+PLUGIN_SUGARCUBE_MENU
+	EN	SugarCube Status
+PLUGIN_SUGARCUBE_REDIRECT
+	EN	All other settings are now per player see Player Tab to configure them
+PLUGIN_SC_WEB_MAIN_HOST
+	EN	MusicIP Host Location
+PLUGIN_SC_WEB_MAIN_HOSTDESC
+	EN	Typically localhost and no need to change this setting
+PLUGIN_SUGARCUBE_PLAYER
+	EN	Per Player Settings
+PLUGIN_SUGARCUBE_PLAYERDESC
+	EN	See SB3 Extras Menu or Duet Settings Menu
+PLUGIN_SUGARCUBE_NAME
+	EN	SugarCube Settings
+PLUGIN_SUGARCUBE_WEIGHTING
+	EN	Track Duplication Weighting
+PLUGIN_SUGARCUBE_WEIGHTINGTXT
+	EN	Duplication Weighting Track Title
+PLUGIN_SUGARCUBE_WEIGHTINGTXTDESC
+	EN	User specified duplication words for Track Title, not case-sensitive, seperate by : e.g. Mix:Remix:Best of
+PLUGIN_SUGARCUBE_WEIGHTINGDESC
+	EN	Mix+5, Various Artists+5, Each Duplicate Word in Playing Track and New Track+5
+PLUGIN_SUGARCUBE_ON
+	EN	Enabled Play ONE Track Only to Begin
+PLUGIN_SUGARCUBE_OFF
+	EN	SugarCube Disabled
+PLUGIN_SUGARCUBE_TOGGLE
+	EN	Toggle Spicefly SugarCube
+PLUGIN_SUGARCUBE_ENABLE
+	EN	Enable Spicefly SugarCube
+PLUGIN_SUGARCUBE_MIX_SONG_ALBUM
+	EN	Mix by Song or Album
+PLUGIN_SUGARCUBE_SEEDDESC
+	EN	Use the Album as the Seed instead of the Song
+PLUGIN_SUGARCUBE_SEEDMENU
+	EN	Mix by Album
+PLUGIN_SUGARCUBE_DEBUG
+	EN	Show Debug Info
+PLUGIN_SUGARCUBE_DEBUGDESC
+	EN	Disabled Dev Use Only
+PLUGIN_SC_MENU_MIXTYPE
+	EN	Mix Type
+PLUGIN_SUGARCUBE_UPNEXT
+	EN	Coming Up Next
+PLUGIN_SUGARCUBE_UPNEXT_ON
+	EN	Enable Coming Up Next
+PLUGIN_SUGARCUBE_UPNEXT_OFF
+	EN	Disable Coming Up Next
+PLUGIN_SUGARCUBE_UPNEXTDESC
+	EN	Show briefly the next Track, Album and Artist details in the active playlist
+PLUGIN_SUGARCUBE_SHUFFLEMENU
+	EN	Override Shuffle
+PLUGIN_SUGARCUBE_SHUFFLEON
+	EN	Override Shuffle
+PLUGIN_SUGARCUBE_SHUFFLEENABLE
+	EN	Shuffle Overuled
+PLUGIN_SUGARCUBE_SHUFFLEDISABLE
+	EN	Shuffle Ignored
+PLUGIN_SUGARCUBE_SHUFFLEOFF
+	EN	Ignore Shuffle
+PLUGIN_UPNEXT_MENU_ENABLE
+	EN	UpNext Enabled
+PLUGIN_UPNEXT_MENU_DISABLED
+	EN	UpNext Disabled
+PLUGIN_SUGARCUBE_PICKORDER
+	EN	Result Selection Criteria
+PLUGIN_SUGARCUBE_ENABLEMIP
+	EN	Prefer Track Return Order
+PLUGIN_SUGARCUBE_PICKORDERDESC
+	EN	Pick track from top of MIP results list, rather than randomly selected.  May produce better mixes depending on your settings
+PLUGIN_SC_MAIN_PORT
+	EN	MusicIP Port
+PLUGIN_SC_MAIN_PORTDESC
+	EN	MusicIP Port (Default 10002)
+PLUGIN_SUGARCUBE_STYLE
+	EN	How much Mix Style
+PLUGIN_SUGARCUBE_STYLEDESC
+	EN	How much like the artist style ( 0 = Ignore (20 = default), 200 = Strict )
+PLUGIN_SUGARCUBE_VARIETY
+	EN	How much Mix Variety
+PLUGIN_SUGARCUBE_VARIETYDESC
+	EN	How much variety in the mix ( 0 = Less (default), 9 = More )
+PLUGIN_SUGARCUBE_RECIPE
+	EN	Add MusicIP Recipe Mixing
+PLUGIN_SUGARCUBE_RECIPE1
+	EN	Recipe Mixing
+PLUGIN_SUGARCUBE_RECIPEDESC
+	EN	Add the indicated recipe when making the mix
+PLUGIN_FILTER_OVERRIDE
+	EN	Switch Filter
+PLUGIN_SUGARCUBE_FILTER
+	EN	Use MusicIP Filter Mixing
+PLUGIN_SUGARCUBE_MASTERFILTER
+	EN	Set All Filters To This Filter
+PLUGIN_SUGARCUBE_SLEEP_ON
+	EN	Enable Player Sleep
+PLUGIN_SUGARCUBE_SLEEP_OFF
+	EN	Disable Player Sleep
+PLUGIN_SUGARCUBE_INJECT
+	EN	SugarCube Status
+PLUGIN_SUGARCUBE_GENREMENU
+	EN	Genre Mix NOT Filter
+PLUGIN_GENRE_MENU_ENABLE
+	EN	Mix by Genre Enabled
+PLUGIN_GENRE_MENU_DISABLED
+	EN	Mix by Genre Disabled
+PLUGIN_SUGARCUBE_GENRE_ON
+	EN	Enable Mix by Genre
+PLUGIN_SUGARCUBE_GENRE_OFF
+	EN	Disable Mix by Genre
+PLUGIN_SUGARCUBE_GENRE
+	EN	Restrict Mixing to Genre of Seed Track
+PLUGIN_SUGARCUBE_GENREDESC
+	EN	Will request same Genre as seed track, depending on your library may impair mixing
+PLUGIN_SUGARCUBE_VOLUME_FADE_ON
+	EN	Enable Volume Fade
+PLUGIN_SUGARCUBE_VOLUME_FADE_OFF
+	EN	Disable Volume Fade
+PLUGIN_SUGARCUBE_INJECTOR_ON
+	EN	Enable SugarCube
+PLUGIN_SUGARCUBE_INJECTOR_OFF
+	EN	Disable SugarCube
+PLUGIN_INJECTORON_MENU_ENABLE
+	EN	SugarCube Enabled
+PLUGIN_INJECTOROFF_MENU_DISABLED
+	EN	SugarCube Disabled
+PLUGIN_SUGARCUBE_SEEDALBUM_ON
+	EN	Enable Seed by Album
+PLUGIN_SUGARCUBE_SEEDALBUM_OFF
+	EN	Disable Seed by Album
+PLUGIN_SEEDON_MENU_ENABLE
+	EN	Seed by Album Enabled
+PLUGIN_SEEDOFF_MENU_DISABLED
+	EN	Seed by Album Disabled
+PLUGIN_SUGARCUBE_MENU_SLEEP_DISABLED
+	EN	Disabled Sleep
+PLUGIN_SUGARCUBE_MENU_SLEEP_ENABLE
+	EN	Enabled Sleep
+PLUGIN_SUGARCUBE_MENU_VOL_DISABLED
+	EN	Disabled Volume Fade
+PLUGIN_SUGARCUBE_MENU_VOL_ENABLE
+	EN	Enabled Volume Fade
+PLUGIN_SUGARCUBEON_MENU_ENABLE
+	EN	SugarCube Enabled
+PLUGIN_SUGARCUBEMAIN
+	EN	Genre Mixing
+PLUGIN_SUGARCUBEFILTERMAIN
+	EN	Filter Mixing
+PLUGIN_SUGARCUBE_FILTER_ACTIVE
+	EN	Filter Mixing
+PLUGIN_SUGARCUBEFILTERARTIST
+	EN	Artist Mixing
+PLUGIN_SUGARGENRE
+	EN	Available MIP Genres
+PLUGIN_SUGARARTISTS
+	EN	Available MIP Artists
+PLUGIN_SUGARARTISTSDESC
+	EN	Available MIP Artists, logic is, tracks in the style of the artist
+PLUGIN_SUGARGENREDESC
+	EN	Genres are taken from MusicIP
+PLUGIN_SUGARCUBE_FILTER_SELECT
+	EN	Select Filters
+PLUGIN_SUGARCUBE_FILTER_EVENING
+	EN	From 18:00 until 04:59
+PLUGIN_SUGARCUBE_FILTER_MORNING
+	EN	From 05:00 until 10:59
+PLUGIN_SUGARCUBE_FILTER_DAY
+	EN	From 11:00 until 17:59	
+PLUGIN_SUGARCUBE_JIVE_STATUS
+	EN	SugarCube Status
+PLUGIN_SUGARCUBE_JIVE_VOLUME_FADE
+	EN	Volume Fade
+PLUGIN_SUGARCUBE_JIVE_SLEEP
+	EN	Player Sleep
+PLUGIN_SUGARCUBE_JIVE_UPNEXT
+	EN	Coming Up Next
+PLUGIN_SUGARCUBE_JIVE_SHUFFLE
+	EN	Override Shuffle
+PLUGIN_SUGARCUBE_JIVE_MIXTYPE
+	EN	Mix Type
+PLUGIN_SUGARCUBE_JIVE_SONG_ALBUM
+	EN	Mix by Song or Album
+PLUGIN_SUGARCUBE_JIVE_WEIGHTING
+	EN	Duplicator Weighting
+PLUGIN_SUGARCUBE_JIVE_MIXSTYLE
+	EN	Mix Style - 0=Ignore 200=Strict
+PLUGIN_SUGARCUBE_JIVE_VARIETY
+	EN	Mix Variety - 0=Less 9=More
+PLUGIN_PLAYERS
+	EN	Enabled Players
+PLUGIN_GENREMIX
+	EN	Mix by Genre
+PLUGIN_GENREMIXDESC
+	EN	If selected overrides Filter Mixing and uses MIP Genres
+PLUGIN_JIVE_NEXT
+	EN	Replace Next Track
+PLUGIN_SUGARCUBE_TRACK
+	EN	Use SugarCube
+PLUGIN_SUGARCUBE_STATS
+	EN	Spicefly SugarCube Statistics
+PLUGIN_SUGARCUBE_LIVEVIEW
+	EN	Spicefly SugarCube Live View
+PLUGIN_FILTERS
+	EN	Select MusicIP Filter
+PLUGIN_GENRES
+	EN	Select MusicIP Genres
+PLUGIN_ARTISTS
+	EN	Select MusicIP Artists
+PLUGIN_SUGARCUBE_KICKOFF
+	EN	Start Auto Mix
+PLUGIN_SUGARCUBE_START
+	EN	Starting Auto Mix
+PLUGIN_SG_MIXFROMHERE
+	EN	SugarCube Auto Mix
+PLUGIN_SG_PLAYALBUM
+	EN	Play this Album
+PLUGIN_SG_MODE
+	EN	Change Mix Mode
+PLUGIN_SG_SENDTOPLAYER
+	EN	Send this Track
+PLUGIN_SG_STATS
+	EN	SugarCube Stats
+PLUGIN_SC_WEB_MAIN_DELAY
+	EN	Enable Delay Mode
+PLUGIN_SC_WEB_MAIN_DELAYDESC
+	EN	Wait x seconds before SugarCube initiates selecting the next track may improve performance on certain systems
+PLUGIN_SC_WEB_FILTER
+	EN	Available MIP Filters
+PLUGIN_SC_WEB_FILTERDESC
+	EN	Create filters in MusicIP and then select to apply that filter.  None means mix without any restrictions
+PLUGIN_SC_WEB_RECIPE
+	EN	Optionally Add a MusicIP Recipe
+PLUGIN_SC_WEB_RECIPEDESC
+	EN	Add the indicated recipe when making the mix
+PLUGIN_SC_WEB_GENRE
+	EN	Available MIP Genres
+PLUGIN_SC_WEB_GENREDESC
+	EN	Genres are taken from MusicIP
+PLUGIN_SC_WEB_ARTISTS
+	EN	Available MIP Artists
+PLUGIN_SC_WEB_ARTISTSDESC
+	EN	Available MIP Artists, logic is, tracks in the style of the artist
+PLUGIN_SC_WEB_DYNAMIC
+	EN	Dynamic Queuing
+PLUGIN_SC_WEB_DYNAMICTEXT
+	EN	Only Queue a New Track if Playing the last Track on the Playlist
+PLUGIN_SC_WEB_DYNAMICDESC
+	EN	Only Queue a New Track if Playing the last Track on the Playlist.  SugarCube will remain quiet when playing an album or a playlist
+PLUGIN_SC_WEB_PLAYTRACKALBUM
+	EN	Auto Set "Play Other Songs In Album"
+PLUGIN_SC_WEB_PLAYTRACKALBUMTEXT
+	EN	Set Squeezebox "Play Other Songs in Album" Client Setting when SugarCube is Enabled or Disabled
+PLUGIN_SC_WEB_ALARM_TYPE
+	EN	Auto Mix and Alarm Clock Settings
+PLUGIN_SC_WEB_ALARM_TYPEDESC
+	EN	Use MusicIP Filter or Genre for Alarm Clock Playlist and the Auto Start Mix	setting
+PLUGIN_SC_WEB_ALARMFILTER
+	EN	Use MIP Filter
+PLUGIN_SC_WEB_ALARMGENRE
+	EN	Use MIP Genre
+PLUGIN_SC_WEB_ALARMGENREDESC
+	EN	Use MusicIP Genre for the Alarm Clock Playlist and the Auto Start Mix setting
+PLUGIN_SC_WEB_ALARMFILTERDESC
+	EN	Use MusicIP Filter for the Alarm Clock Playlist and the Auto Start Mix setting
+PLUGIN_SC_WEB_TRACKWEIGHT
+	EN	SugarCube Enhancements
+PLUGIN_SC_WEB_BLOCKARTIST
+	EN	Block Artist Repeating for x Tracks
+PLUGIN_SC_WEB_BLOCKARTISTDESC
+	EN	Block the track if we have played the Artist within the specified number of Tracks
+PLUGIN_SC_WEB_VARTIST
+	EN	Do not Block "Various Artists"
+PLUGIN_SC_WEB_VARTISTDESC
+	EN	Allow Artist "Various Artists" to be queued.  Otherwise "Various Artists" will be blocked as per the Block Artist Repeating function
+PLUGIN_SC_WEB_BLOCKARTIST_ALWAYS
+	EN	Always Block Selected Artist
+PLUGIN_SC_WEB_BLOCKARTIST_ALWAYSDESC
+	EN	Always Block the Selected Artist so that it does not play.  This may be ignored when selecting a random track
+PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS
+	EN	Always Block this Genre
+PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC
+	EN	Genre will always be blocked.  Consider using MusicIP Filters to block more Genres
+PLUGIN_SC_WEB_BLOCKALBUM
+	EN	Block Album Repeating for x Tracks	
+PLUGIN_SC_WEB_BLOCKALBUMDESC
+	EN	Block the track if we have played its Album within the specified number of Tracks
+PLUGIN_SC_WEB_REMEMBERTRACKS
+	EN	Remember This Many Played Tracks 
+PLUGIN_SC_WEB_REMEMBERTRACKSDESC
+	EN	Block the track is we have played it within the specified number of Tracks
+PLUGIN_SC_WEB_SHUFFLEMENU
+	EN	Override Shuffle
+PLUGIN_SC_WEB_SHUFFLEMENUDESC
+	EN	When enabled turns off shuffle modes when queuing up tracks to ensure integrity of the mix is maintained
+PLUGIN_SC_WEB_CLEARTRACKS
+	EN	Forget when Playlist Cleared 
+PLUGIN_SC_WEB_CLEARTRACKSDESC
+	EN	Clear "Remember This Many Played Tracks" and SugarCube History when playlist is cleared
+PLUGIN_SC_WEB_CLUTTER
+	EN	Tracks to keep in Playlist View
+PLUGIN_SC_WEB_CLUTTERDESC
+	EN	The minimum number of tracks to keep in the playlist view before we start removing the old tracks from the playlist
+PLUGIN_SC_WEB_STATS
+	EN	Use Statistics
+PLUGIN_SC_WEB_TSDESC
+	EN	(Enable statistics and select the source (LMS or TrackStat) on the Plugins/Settings/Advanced/Spicefly SugarCube Page)
+PLUGIN_SC_WEB_TS_RECENTLYPLAYED
+	EN	Track Played Setting
+PLUGIN_SC_WEB_TS_PLAYCOUNT
+	EN	Track Playcount Setting
+PLUGIN_SC_WEB_TS_RATING
+	EN	Track Rating Setting
+PLUGIN_SC_WEB_TS_IGNORE
+	EN	Use TrackStat Block Settings below
+PLUGIN_SC_WEB_TS_IGNOREDESC
+	EN	Use TrackStat Block Settings to tweak track selection
+PLUGIN_SC_WEB_TSBLOCKPLAYCOUNT
+	EN	Block Tracks with Played Count Equal and Above
+PLUGIN_SC_WEB_TSBLOCKPLAYCOUNTDESC
+	EN	Use to stop tracks being chosen time and time again
+PLUGIN_SC_WEB_TSREMOVERATING
+	EN	Block Tracks Rated x and Below
+PLUGIN_SC_WEB_TSREMOVERATINGDESC
+	EN	0 is Disabled, Use to stop tracks with a low rating from being queued up
+PLUGIN_SC_WEB_TSBLOCKDAYS
+	EN	Block Tracks Played in last x days
+PLUGIN_SC_WEB_TSBLOCKDAYSDESC
+	EN	0 is Disabled, Use to stop tracks being chosen that have been played within the last x number of days
+PLUGIN_SC_WEB_VOLUMESLIDE
+	EN	Enabled Volume Reduction
+PLUGIN_SC_WEB_VOLUME_SELECT
+	EN	Reduce Volume on each track change
+PLUGIN_SC_WEB_VOLUME_TIMEFROM
+	EN	Reduce Volume Between From (Hours)
+PLUGIN_SC_WEB_VOLUME_TIMETO
+	EN	Reduce Volume Between To (Hours)
+PLUGIN_SC_WEB_VOLUME_SELECTDESC
+	EN	Gradually Reduce Volume on each track change for a restful nights sleep.  Use with "Enabled Player Sleep" to turn off the Player
+PLUGIN_SC_WEB_VOLUMEAMOUNT
+	EN	Reduce Volume this amount
+PLUGIN_SC_WEB_VOLUMEAMOUNTDESC
+	EN	Gradually Reduce Volume this amount on each track change
+PLUGIN_SC_SLEEP_TIMEFROM
+	EN	Sleep Time Between From (Hours)
+PLUGIN_SC_SLEEP_TIMETO
+	EN	Sleep Time Between To (Hours)
+PLUGIN_SC_WEB_SLEEPDURATION
+	EN	Duration in minutes before sleeping
+PLUGIN_SC_WEB_SLEEPDURATIONDESC
+	EN	How long to play in minutes before sleeping and turning off the player
+PLUGIN_SC_WEB_SLEEP
+	EN	Enable Player Sleep
+PLUGIN_SC_WEB_SLEEPENABLE
+	EN	Automatically activate Sleep Mode
+PLUGIN_SC_WEB_SLEEPDESC
+	EN	Automatically go into Sleep Mode if Playing between these hours
+PLUGIN_SC_WEB_TECHNICAL
+	EN	Show Technical Track Info
+PLUGIN_SC_WEB_TECHNICALDESC
+	EN	Replace "Coming Up Next" information with Cover Art and ReplayGain Details of the track.  "Coming Up Next" should be enabled
+PLUGIN_SC_WEB_NOISE
+	EN	Spicefly Noise
+PLUGIN_SC_WEB_SN_LINK
+	EN	Link to Spicefly website
+PLUGIN_SC_WEB_NOISEMODE
+	EN	Enable Spicefly Noise Mode
+PLUGIN_SC_WEB_NOISEMODEDESC
+	EN	Automatically turn on repeat, turnoff crossfade and dont queue a track up when track name contains Spicefly
+PLUGIN_SC_WEB_NOISEFADE
+	EN	Crossfade
+PLUGIN_SC_WEB_NOISEFADEDESC
+	EN	Return Crossfade to this setting when exiting Spicefly Noise Mode
+PLUGIN_SC_WEB_SUGARCUBESTATUS
+	EN	SugarCube Status
+PLUGIN_SC_WEB_SUGARCUBESTATUSDESC
+	EN	Whether SugarCube is Enabled or Disabled for this player
+PLUGIN_SC_WEB_STYLE
+	EN	How much Mix Style
+PLUGIN_SC_WEB_STYLEDESC
+	EN	How much like the artist style ( 0 = Ignore (default), 200 = Strict )
+PLUGIN_SC_WEB_VARIETY
+	EN	How much Mix Variety
+PLUGIN_SC_WEB_VARIETYDESC
+	EN	How much variety in the mix ( 0 = Less (default), 9 = More )
+PLUGIN_SC_WEB_MIX_SONG_ALBUM
+	EN	Mix by Song or Album
+PLUGIN_SC_WEB_MIX_SONG_ALBUMDESC
+	EN	Use the Album as the Seed instead of the Song (Track)
+PLUGIN_SC_WEB_RESTRICTMIXING
+	EN	Restrict Mixing to Genre of Seed Track
+PLUGIN_SC_WEB_RESTRICTMIXINGDESC
+	EN	Will request tracks of the same Genre as the seed track, depending on the number of tracks of that Genre it may produce poor results
+PLUGIN_SC_WEB_CLEARSTATSDESC
+	EN	Reset SugarCube Statistics on Live View Page (Number of Tracks Queued and Random Count)
+PLUGIN_SC_WEB_CLEARSTATS
+	EN	Reset SugarCube Live View Stats
+PLUGIN_SC_WEB_MIXTYPE
+	EN	Select Mix Type
+PLUGIN_SC_WEB_MIXTYPEDESC
+	EN	Specify whether to mix using a Filter, Artist or Genre.  Additionally add a Recipe as well.  None means mix without any restrictions
+PLUGIN_SC_WEB_SUGARCUBE
+	EN	Spicefly SugarCube
+PLUGIN_SC_WEB_SUGARCUBETEXT
+	EN	Spicefly SugarCube making MusicIP and Squeezebox work Sweeter
+PLUGIN_SC_WEB_LIVEVIEW_WIDTH
+	EN	Spicefly SugarCube Live View Width
+PLUGIN_SC_WEB_LIVEVIEW_WIDTHDESC
+	EN	Live View data table width as a percentage of the screen.  For large screens 90% works well reducing space on the edges, for smaller screens set to 100%
+PLUGIN_SC_WEB_WOBBLE
+	EN	SugarCube Wobble
+PLUGIN_SC_WEB_WOBBLETEXT
+	EN	Shake out a Track from the remaining Tracks with status OK
+PLUGIN_SC_WEB_WOBBLEDESC
+	EN	This adds a subtle tweak to the track selection process and stops a general circular track selection
+PLUGIN_SC_WEB_LIVEVIEW_ICONSIZE
+	EN	Album Art Size in SugarCube LiveView
+PLUGIN_SC_WEB_SHOW_STATS
+	EN	Use statistics
+PLUGIN_SC_WEB_SHOW_STATS_DESC
+	EN	Show statistics in the SugarCube LiveView - from the LMS database or from TrackStat
+PLUGIN_SC_WEB_ALARM_TIME
+	EN	 Alarm Time
+PLUGIN_SUGARCUBELV
+	EN	SugarCube Live View
+PLUGIN_SUGARCUBEHIS
+	EN	SugarCube History
+PLUGIN_SUGARCUBEQP
+	EN	SugarCube Auto Mix	
+PLUGIN_SUGARCUBE_PLAYING
+	EN	Currently Playing
+PLUGIN_SC_WEB_SETSAVE
+	EN	Sync Settings Across ALL Players
+PLUGIN_SC_WEB_SETSAVEDESC
+	EN	On Apply overwrite SugarCube settings across all current known Players
+PLUGIN_SC_WEB_VINTAGE
+	EN	MusicIP Vintage Mode
+PLUGIN_SC_WEB_VINTAGEDESC
+	EN	Queue Up All Tracks like the original MusicIP Mix Plugin
+PLUGIN_SC_WEB_HISTORY_TEXT
+	EN	Spicefly SugarCube Queued Tracks
+PLUGIN_SC_WEB_MIPSIZE
+	EN	MusicIP Request No. of Tracks
+PLUGIN_SC_WEB_MIPSIZEDESC
+	EN	Number of Tracks to Request from MusicIP
+PLUGIN_SC_LV_WEIGHT
+	EN	SugarCube Live View Icon Position
+PLUGIN_SC_LV_WEIGHTDESC
+	EN	Position/Weighting of the Icon within the LMS GUI=>My Music (1=Top 100=Bottom) *LMS Restart is Required*
+PLUGIN_SC_HIS_WEIGHT
+	EN	SugarCube History Icon Position
+PLUGIN_SC_WEB_XMAS
+	EN	Enable Christmas Genre Block
+PLUGIN_SC_WEB_XMASDESC
+	EN	Only allow Tracks with Genre Christmas or XMas in December
+PLUGIN_SC_WEB_TIMEOUT
+	EN	SQLite Timeout in Seconds
+PLUGIN_SC_WEB_TIMEOUTDESC
+	EN	If SugarCube is installed on a NAS or low powered device it may be CPU constrained, changing the SQLite Busy Timeout will force SugarCube to wait longer for a response.  (LMS restart required to take affect)
+PLUGIN_SC_WEB_NASCONVERTPATH
+	EN	DPC (MusicIP) - Set #1 Source
+PLUGIN_SC_WEB_NASCONVERTPATHDESC
+	EN	Dynamically Convert the File Path between MusicIP and LMS
+PLUGIN_SC_WEB_LOCALMEDIAPATH
+	EN	DPC (LMS) - Set #1 Destination
+PLUGIN_SC_WEB_LOCALMEDIAPATHDESC
+	EN	If LMS is installed on a different system than MusicIP, the LMS path to the music library is different to MusicIP's path to the music library. DPC enables the music paths to be different for LMS and MusicIP, dynamically converting the music path while communicating between MusicIP and Logitech Media Server.
+PLUGIN_SC_WEB_NASCONVERTPATH_2
+	EN	DPC (MusicIP) - Set #2
+PLUGIN_SC_WEB_LOCALMEDIAPATH_2
+	EN	DPC (LMS) - Set #2
+PLUGIN_SC_WEB_LOCALMEDIAPATHDESCTWO
+	EN	Typical Install do not require a second Set.  Use Set #1 Only.
+PLUGIN_SC_WEB_DYNAMICCONVERSION
+	EN	Enable Dynamic Path Conversion
+PLUGIN_SC_WEB_DISPLAYOPTIONS
+	EN	Player Display Options
+PLUGIN_SC_WEB_DISPLAYOPTIONSDESC
+	EN	Display Notifications on the Player
+PLUGIN_SC_WEB_SUGARCUBE_MODE
+	EN	SugarCube Mix Mode
+PLUGIN_SC_WEB_SUGARCUBE_MODEDESC
+	EN	Switch between the normal mixing MusicIP mode or Random FreeStyle Track Selection Mode
+PLUGIN_SC_WEB_SUGARCUBE_STARTYEAR
+	EN	Random Mixing Start Year
+PLUGIN_SC_WEB_SUGARCUBE_ENDYEAR
+	EN	Random Mixing End Year
+PLUGIN_SC_WEB_SUGARCUBE_YEARDESC
+	EN	When Random track selecting in FreeStyle Mode, try and take a track between these Years
+PLUGIN_SC_WEB_SUGARCUBE_YEARON_OFF
+	EN	FreeStyle Random Track Selection Range
+PLUGIN_SC_WEB_SUGARCUBE_YEARON_OFFDESC
+	EN	When Random track selecting in FreeStyle Mode, try and take a track between these Years.  Allow empty years when a Year is not specified in the music Year tag
+PLUGIN_SC_WEB_SUGARCUBE_CONTENT_TYPE
+	EN	FreeStyle Track Selection Type
+PLUGIN_SC_WEB_SUGARCUBE_CONTENT_TYPEDESC
+	EN	Limit FreeStyle Track Selection to MP3 or FLAC
+PLUGIN_SC_WEB_SUGARCUBE_LENGTH_FILTER
+	EN	FreeStyle Track Length Preference
+PLUGIN_SC_WEB_SUGARCUBE_LENGTH_FILTERDESC
+	EN	Limit FreeStyle Selection for Track Length
+PLUGIN_SC_WEB_FADE_ON_OFF
+	EN	Fade Volume on Track Transition
+PLUGIN_SC_WEB_FADE_TIME
+	EN	Number of Seconds to Fade
+PLUGIN_SC_SNAME
+	EN	mysqueezebox.com EMail Address
+PLUGIN_SC_SNAMEDESC
+	EN	EMail Address used when Plugin Licensing, License Manager and SugarCube Licensing
+PLUGIN_SC_WEB_FREE_STYLE
+	EN	SugarCube Mix Mode : FreeStyle Mode
+PLUGIN_SC_WEB_MIP_SETTINGS
+	EN	SugarCube Mix Mode : Standard MusicIP
+PLUGIN_SC_WEB_MISC
+	EN	Miscellaneous Settings
+PLUGIN_SC_WEB_DUPPER
+	EN	Duplication Tweak
+PLUGIN_SC_WEB_DUPPER_DESC
+	EN	Detect Duplicate Track (Not Implemented Yet)
+PLUGIN_TRAF_JOURNEY
+	EN	Journey Name
+PLUGIN_TRAF_ORIGIN
+	EN	Origin Address #1
+PLUGIN_TRAF_DESTINATION
+	EN	Destination Address #1
+PLUGIN_TRAF_ORIGIN_TWO
+	EN	Origin Address #2
+PLUGIN_TRAF_DESTINATION_TWO
+	EN	Destination Address #2
+PLUGIN_TRAF_APIKEY
+	EN	Google Traffic API Key
+PLUGIN_TRAF_FROM
+	EN	From Time (Hour)
+PLUGIN_TRAF_TO
+	EN	To Time	(Hour)
+PLUGIN_TRAF_ENABLE
+	EN	Enable Google Traffic
+PLUGIN_TRAF_ENABLE_TWO
+	EN	Enable Second Address 
+PLUGIN_TRAF_DAYS
+	EN	Active Days
+PLUGIN_TRAF_MON
+	EN	Monday
+PLUGIN_TRAF_TUE
+	EN	Tuesday
+PLUGIN_TRAF_WED
+	EN	Wednesday
+PLUGIN_TRAF_THU
+	EN	Thursday
+PLUGIN_TRAF_FRI
+	EN	Friday
+PLUGIN_TRAF_SAT
+	EN	Saturday
+PLUGIN_TRAF_SUN
+	EN	Sunday

@@ -1,0 +1,108 @@
+<style>
+
+/* SugarCube Stats */
+table.topside {
+  width: 100%;
+  text-align: center;
+}
+table.topside td, table.topside th {
+  padding: 3px 3px;
+}
+table.topside thead {
+  background: #A8A8A8;
+  border-bottom: 2px solid #444444;
+}
+table.topside thead th {
+  background-color:#888888;
+  font-size:14px;
+  font-weight: normal;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius:10px 10px 10px 10px;
+}
+
+/* Currently Playing and Coming Up Next */
+table.midside {
+  width: 100%;
+  text-align: left;
+}
+table.midside td, table.midside th {
+  padding: 3px 3px;
+}
+table.midside thead {
+  background: #A8A8A8;
+  border-bottom: 2px solid #444444;
+}
+table.midside thead th {
+ font-size:14px;
+ font-weight: normal;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+/* Used for MusicIP Recommendations */
+table.bottomside {
+  width: auto;
+  text-align: left;
+}
+table.bottomside td.end{
+  border-bottom: 2px solid #444444;
+  padding-bottom: 0px;
+}
+table.bottomside td.txt{
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+table.bottomside td.pic{
+  padding-top: 0px;
+  padding-right: 20px;
+  padding-bottom: 0px;
+  padding-left: 5px;
+  
+}
+table.bottomside thead {
+  background: #A8A8A8;
+  border-bottom: 2px solid #444444;
+}
+table.bottomside thead th {
+ font-size:14px;
+ font-weight: normal;
+  color: #FFFFFF;
+  text-align: left;
+}
+
+/* Used for Bold Text */
+div.heads{
+  font-weight: bold;	
+}
+
+/* Play Album Button */
+.myButton {
+	background:linear-gradient(to bottom, #888888 5%, #a8a8a8 100%);
+	background-color:#888888;
+	border-radius:5px;
+	border:1px solid #000000;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:4px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #a8a8a8 5%, #888888 100%);
+	background-color:#a8a8a8;
+	text-decoration:none;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+	text-decoration:none;
+}
+
+        
+</style>

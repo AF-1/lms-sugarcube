@@ -1,0 +1,15 @@
+<extensions>
+	<details>
+		<title lang="EN">SugarCube GitHub Repo (AF1)</title>
+	</details>
+	<plugins>
+		<plugin name="SugarCube" category="playlists" version="7.0.0" minTarget="7.9" maxTarget="*">
+			<title lang="EN">SugarCube</title>
+			<desc lang="EN">A modified version of the SugarCube plugin.</desc>
+			<url>https://github.com/AF-1/lms-sugarcube/releases/download/7.0.0/lms-sugarcube-7.0.0.zip</url>
+			<creator>AF</creator>
+			<link>https://github.com/AF-1/lms-sugarcube</link>
+			<sha>86b740290ba4a6e48167c188c3ac4afc516376d7</sha>
+		</plugin>
+	</plugins>
+</extensions>

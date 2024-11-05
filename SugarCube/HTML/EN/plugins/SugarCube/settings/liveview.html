@@ -1,0 +1,82 @@
+[%- IF !ajaxUpdate %]
+[% pagetitle = 'PLUGIN_SUGARCUBELV' | string; pageicon = 'PLUGIN_SUGARCUBELV' %]
+[%- pwd_list = BLOCK -%]/
+	<a href="[% webroot %][% path %]?player=[% player | uri %][% statisticparameters %]">
+		[% "PLUGIN_SUGARCUBELV" | string %]
+	</a>
+[% END -%]
+[%- pageHeaderInfo = BLOCK %]
+[% END -%]
+[% PROCESS pageheader.html %]
+[% PROCESS plugins/SugarCube/HTML/css/sugarcube.css %]
+[% END %]		
+[% IF refresh > 0 %] 
+	<SCRIPT>
+	<!--
+	setTimeout("myReload()", [% refresh %] * [% refreshRate %]);
+
+	function myReload() {
+	  location.replace("[% webroot %][% path %]?player=[% player | uri %][% statisticparameters %]");
+	}
+	-->
+	</SCRIPT>
+[% END %]
+		<script type="text/javascript">
+			for (var i=0; i < parent.frames.length; i++) {
+				if (parent.frames[i].name == "status") {
+					parent.frames[i].location.replace(parent.frames[i].location.pathname + "?player=[% player | uri %]&amp;refresh=1");
+				}
+			}
+		</script>	
+	<table class='topside'>
+	<thead>
+	<tr><th><strong>Spicefly SugarCube Statistics</strong></th></tr>
+	</thead>
+	<tbody>
+	<tr><td>Queued [% sugarcube_trackcount %] tracks, including [% sugarcube_randomcount %] random tracks.  [% sugarcube_randomcountpercentage %] of the total.</td></tr>
+	<tr><td>Random Track Last Chosen; [% sugarcube_randomtrack %] - [% sugarcube_stats_random_time %]</td></tr>
+	<tr><td>[% master %]</td></tr>
+	<tr><td>[% mixstatus %]</td></tr>
+	</tbody>
+	</table>
+	[% IF track != '' %]
+	<hr>
+	<table class='midside'>
+	<tr>
+	[% IF showstats == 'ON' %]
+	<td rowspan=8><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% currentalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
+	[% ELSE %]	
+	<td rowspan=5><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% currentalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
+	[% END %]	
+
+	<td><div class='heads'>Currently Playing</div></td>
+	[% IF showstats == 'ON' %]
+	<td rowspan=8><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% comingupnextalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
+	[% ELSE %]	
+	<td rowspan=5><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% comingupnextalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
+	[% END %]	
+	<td><div class='heads'>Coming Up Next</div></td>
+	</tr>
+	<tr><td>[% currenttrack %]</td><td>[% comingupnexttrack %]</td></tr>	
+	<tr><td>[% currentalbum %]</td><td>[% comingupnextalbum %]</td></tr>
+	<tr><td>[% currentartist %]</td><td>[% comingupnextartist %]</td></tr>
+	<tr><td>[% currentgenre %]</td><td>[% comingupnextgenre %]</td></tr>
+	[% IF showstats == 'ON' %]
+	<tr><td>Playcount: [% currentpc %]</td><td>Playcount: [% comingupnextpc %]</td></tr>
+	<tr><td>Rating: [% currentrat %]</td><td>Rating: [% comingupnextrat %]</td></tr>
+	<tr><td title="Last Played">[% currentlp %]</td><td title="Last Played">[% comingupnextlp %]</td></tr>
+	[% END %]	
+	</table>
+	<hr>
+	
+	[% IF mixstatus == '' %]
+	[% WRAPPER settingGroup title= mode %][% END %]
+	<table class='bottomside'>
+		[% filters %]
+	</table>	
+		[% END %]	
+	[% END %]	
+	
+[%- IF !ajaxUpdate %]
+[% PROCESS pagefooter.html %]
+[% END %]

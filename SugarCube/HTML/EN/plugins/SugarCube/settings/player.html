@@ -1,0 +1,336 @@
+[% PROCESS settings/header.html %]
+[% WRAPPER setting title="PLUGIN_SC_WEB_SUGARCUBE" desc="" %]	<div class="prefDesc">[% "PLUGIN_SC_WEB_SUGARCUBETEXT" | string %][% END %]
+	[% WRAPPER settingSection %]
+	[% WRAPPER settingGroup %]
+			<label class="stdlabel">[% prefs.master %]</label>
+	[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBESTATUS" desc="PLUGIN_SC_WEB_SUGARCUBESTATUSDESC" %]
+			<select class="stdedit" name="sugarcube_status" id="sugarcube_status">
+				<option [% IF NOT prefs.sugarcube_status %]selected [% END %]value="0">[% 'Disabled' | getstring %]</option>
+				<option [% IF prefs.sugarcube_status %]selected [% END %]value="1">[% 'Enabled' | getstring %]</option>					
+			</select>
+		[% END %]		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_MODE" desc="PLUGIN_SC_WEB_SUGARCUBE_MODEDESC" %]
+			<select class="stdedit" name="sugarcube_mode" id="sugarcube_mode">
+				<option [% IF NOT prefs.sugarcube_mode %]selected [% END %]value="0">[% 'Standard MusicIP' | getstring %]</option>
+				<option [% IF prefs.sugarcube_mode %]selected [% END %]value="1">[% 'FreeStyle Mode' | getstring %]</option>			
+			</select>
+		[% END %]
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_FREE_STYLE" desc="" %]		[% END %]		
+		<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_YEARON_OFF" desc="PLUGIN_SC_WEB_SUGARCUBE_YEARON_OFFDESC" %]
+			<select class="stdedit" name="sugarcube_year_on_off" id="sugarcube_year_on_off">
+				<option [% IF prefs.sugarcube_year_on_off == 0 %]selected [% END %]value="0">[% 'Any Year (Disabled)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_year_on_off == 1 %]selected [% END %]value="1">[% 'Specific Year Range (Strict)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_year_on_off == 2 %]selected [% END %]value="2">[% 'Specific Year Range (Allow Empty Years)' | getstring %]</option>
+			</select>
+		[% END %]		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_STARTYEAR" desc="PLUGIN_SC_WEB_SUGARCUBE_YEARDESC" %]
+			<input type="text" class="stdedit sliderInput_1800_2020_1" name="sugarcube_startyear" id="sugarcube_startyear" value="[% prefs.sugarcube_startyear %]" size="3">
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_ENDYEAR" desc="PLUGIN_SC_WEB_SUGARCUBE_YEARDESC" %]
+			<input type="text" class="stdedit sliderInput_1800_2020_1" name="sugarcube_endyear" id="sugarcube_endyear" value="[% prefs.sugarcube_endyear %]" size="3">	
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_CONTENT_TYPE" desc="PLUGIN_SC_WEB_SUGARCUBE_CONTENT_TYPEDESC" %]
+			<select class="stdedit" name="sugarcube_filetype" id="sugarcube_filetype">
+				<option [% IF prefs.sugarcube_filetype == 0 %]selected [% END %]value="0">[% 'Any Track Type (Default)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_filetype == 1 %]selected [% END %]value="1">[% 'Specific Track Type (MP3)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_filetype == 2 %]selected [% END %]value="2">[% 'Specific Track Type (FLAC)' | getstring %]</option>
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SUGARCUBE_LENGTH_FILTER" desc="PLUGIN_SC_WEB_SUGARCUBE_LENGTH_FILTERDESC" %]
+			<select class="stdedit" name="sugarcube_fs_length" id="sugarcube_fs_length">
+				<option [% IF prefs.sugarcube_fs_length == 0 %]selected [% END %]value="0">[% 'Any Length (Disabled)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_fs_length == 1 %]selected [% END %]value="1">[% 'No Intro Tracks ( > 1 min)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_fs_length == 2 %]selected [% END %]value="2">[% 'Prefer Short Tracks ( < 5 min)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_fs_length == 3 %]selected [% END %]value="3">[% 'Prefer Long Tracks ( > 5 min)' | getstring %]</option>
+			</select>
+		[% END %]
+	[% WRAPPER settingGroup %]
+		<label class="stdlabel">FreeStyle will respect SugarCube Enhancements</label>
+		<br><br><label class="stdlabel">Always Block this Genre, Blocked Artists, Christmas Genre Block, TrackStat and Previously Played Tracks</label>		
+
+	[% END %]		
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MIP_SETTINGS" desc="" %]		[% END %]		
+		<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_STYLE" desc="PLUGIN_SC_WEB_STYLEDESC" %]
+			<input type="text" class="stdedit sliderInput_0_200_1" name="sugarcube_style" id="sugarcube_style" value="[% prefs.sugarcube_style %]" size="2">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VARIETY" desc="PLUGIN_SC_WEB_VARIETYDESC" %]
+			<input type="text" class="stdedit sliderInput_0_9_1" name="sugarcube_variety" id="sugarcube_variety" value="[% prefs.sugarcube_variety %]" size="1">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MIX_SONG_ALBUM" desc="PLUGIN_SC_WEB_MIX_SONG_ALBUMDESC" %]
+			<select class="stdedit" name="sugarcube_album_song" id="sugarcube_album_song">
+				<option [% IF prefs.sugarcube_album_song == 0 %]selected [% END %]value="0">[% 'Album' | getstring %]</option>
+				<option [% IF prefs.sugarcube_album_song == 1 %]selected [% END %]value="1">[% 'Song' | getstring %]</option>					
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_RESTRICTMIXING" desc="PLUGIN_SC_WEB_RESTRICTMIXINGDESC" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_restrict_genre %]checked [% END %] class="stdedit" name="sugarcube_restrict_genre" id="sugarcube_restrict_genre" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_RESTRICTMIXING" | string %]</label>
+		[% END %]	
+		<BR><BR>	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MIXTYPE" desc="PLUGIN_SC_WEB_MIXTYPEDESC" %]
+			<select class="stdedit" name="sugarcube_mix_type" id="sugarcube_mix_type">
+				<option [% IF prefs.sugarcube_mix_type == 0 %]selected [% END %]value="0">[% '(None)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_mix_type == 1 %]selected [% END %]value="1">[% 'Filter Mixing' | getstring %]</option>
+				<option [% IF prefs.sugarcube_mix_type == 2 %]selected [% END %]value="2">[% 'Genre Mixing' | getstring %]</option>
+				<option [% IF prefs.sugarcube_mix_type == 3 %]selected [% END %]value="3">[% 'Artist Mixing' | getstring %]</option>
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_FILTER" desc="PLUGIN_SC_WEB_FILTERDESC" %]
+			<select class="stdedit" name="sugarcube_filteractive" id="sugarcube_filteractive">
+			[% FOREACH option IN filters.keys.sort %]
+				<option [% IF prefs.sugarcube_filteractive == option %]selected [% END %]value="[% option %]">[% filters.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_GENRE" desc="PLUGIN_SC_WEB_GENREDESC" %]
+			<select class="stdedit" name="sugarcube_genre" id="sugarcube_genre">
+			[% FOREACH option IN genres.keys.sort %]
+				<option [% IF prefs.sugarcube_genre == option %]selected [% END %]value="[% option %]">[% genres.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_ARTISTS" desc="PLUGIN_SC_WEB_ARTISTSDESC" %]
+			<select class="stdedit" name="sugarcube_artist" id="sugarcube_artist">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.sugarcube_artist == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_RECIPE" desc="PLUGIN_SC_WEB_RECIPEDESC" %]
+			<select class="stdedit" name="sugarcube_receipes" id="sugarcube_receipes">
+			[% FOREACH option IN receipes.keys.sort %]
+				<option [% IF prefs.sugarcube_receipes == option %]selected [% END %]value="[% option %]">[% receipes.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]		
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TRACKWEIGHT" desc="" %]		[% END %]		
+		<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_DYNAMIC" desc="PLUGIN_SC_WEB_DYNAMICDESC" %]
+			<input type="checkbox" [% IF prefs.sugarcube_dynamicq %]checked [% END %] class="stdedit" name="sugarcube_dynamicq" id="sugarcube_dynamicq" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_DYNAMICTEXT" | string %]</label>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_WOBBLE" desc="PLUGIN_SC_WEB_WOBBLEDESC" %]
+			<select class="stdedit" name="sugarcube_wobble" id="sugarcube_wobble">
+				<option [% IF prefs.sugarcube_wobble == 0 %]selected [% END %]value="0">[% '(Disabled)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_wobble == 1 %]selected [% END %]value="1">[% 'Tight Wobble (First 3)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_wobble == 2 %]selected [% END %]value="2">[% 'Medium Wobble (First 5)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_wobble == 3 %]selected [% END %]value="3">[% 'Loose Wobble (Any)'| getstring %]</option>
+			</select>
+		[% END %]	
+		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKARTIST" desc="PLUGIN_SC_WEB_BLOCKARTISTDESC" %]
+			<input type="text" class="stdedit sliderInput_0_100_1" name="sugarcube_blockartist" id="sugarcube_blockartist" value="[% prefs.sugarcube_blockartist %]" size="2">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VARTIST" desc="PLUGIN_SC_WEB_VARTISTDESC" %]
+			<input type="checkbox" [% IF prefs.sugarcube_vartist %]checked [% END %] class="stdedit" name="sugarcube_vartist" id="sugarcube_vartist" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_VARTIST" | string %]</label>				
+		[% END %]			
+
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_DUPPER" desc="PLUGIN_SC_WEB_DUPPER_DESC" %]
+			<input type="checkbox" [% IF prefs.sugarcube_dupper %]checked [% END %] class="stdedit" name="sugarcube_dupper" id="sugarcube_dupper" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_DUPPER" | string %]</label>				
+		[% END %]
+
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockartist_always" id="scblockartist_always">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scblockartist_always == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockartist_alwaystwo" id="scblockartist_alwaystwo">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scblockartist_alwaystwo == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKARTIST_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockartist_alwaysthree" id="scblockartist_alwaysthree">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scblockartist_alwaysthree == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockgenre_always" id="scblockgenre_always">
+			[% FOREACH option IN genres.keys.sort %]
+				<option [% IF prefs.scblockgenre_always == option %]selected [% END %]value="[% option %]">[% genres.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockgenre_alwaystwo" id="scblockgenre_alwaystwo">
+			[% FOREACH option IN genres.keys.sort %]
+				<option [% IF prefs.scblockgenre_alwaystwo == option %]selected [% END %]value="[% option %]">[% genres.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC" %]
+			<select class="stdedit" name="scblockgenre_alwaysthree" id="scblockgenre_alwaysthree">
+			[% FOREACH option IN genres.keys.sort %]
+				<option [% IF prefs.scblockgenre_alwaysthree == option %]selected [% END %]value="[% option %]">[% genres.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKALBUM" desc="PLUGIN_SC_WEB_BLOCKALBUMDESC" %]
+			<input type="text" class="stdedit sliderInput_1_100_1" name="sugarcube_blockalbum" id="sugarcube_blockalbum" value="[% prefs.sugarcube_blockalbum %]" size="2">
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_REMEMBERTRACKS" desc="PLUGIN_SC_WEB_REMEMBERTRACKSDESC" %]
+			<input type="text" class="stdedit sliderInput_2_100_1" name="sugarcube_remembertracks" id="sugarcube_remembertracks" value="[% prefs.sugarcube_remembertracks %]" size="2">
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_CLEARTRACKS" desc="PLUGIN_SC_WEB_CLEARTRACKSDESC" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_clear %]checked [% END %] class="stdedit" name="sugarcube_clear" id="sugarcube_clear" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_CLEARTRACKS" | string %]</label>
+		[% END %]
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_STATS" desc="" %][% "PLUGIN_SC_WEB_TSDESC" | string %][% END %]
+		<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TS_RECENTLYPLAYED" desc="" %]
+				<select class="stdedit" name="sugarcube_ts_recentplayed" id="sugarcube_ts_recentplayed">
+				<option [% IF prefs.sugarcube_ts_recentplayed == 0 %]selected [% END %]value="0">[% 'Disabled' | getstring %]</option>
+				<option [% IF prefs.sugarcube_ts_recentplayed == 1 %]selected [% END %]value="1">[% 'Tracks Recently Played' | getstring %]</option>
+				<option [% IF prefs.sugarcube_ts_recentplayed == 2 %]selected [% END %]value="2">[% 'Tracks Not Recently Played' | getstring %]</option>				
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TS_PLAYCOUNT" desc="" %]
+				<select class="stdedit" name="sugarcube_ts_playcount" id="sugarcube_ts_playcount">
+				<option [% IF prefs.sugarcube_ts_playcount == 0 %]selected [% END %]value="0">[% 'Disabled' | getstring %]</option>
+				<option [% IF prefs.sugarcube_ts_playcount == 1 %]selected [% END %]value="1">[% 'Tracks with Lowest Playcount' | getstring %]</option>
+				<option [% IF prefs.sugarcube_ts_playcount == 2 %]selected [% END %]value="2">[% 'Tracks with Highest Playcount' | getstring %]</option>				
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TS_RATING" desc="" %]
+				<select class="stdedit" name="sugarcube_ts_rating" id="sugarcube_ts_rating">
+				<option [% IF prefs.sugarcube_ts_rating == 0 %]selected [% END %]value="0">[% 'Disabled' | getstring %]</option>		
+				<option [% IF prefs.sugarcube_ts_rating == 1 %]selected [% END %]value="1">[% 'Tracks with Lowest Rating' | getstring %]</option>
+				<option [% IF prefs.sugarcube_ts_rating == 2 %]selected [% END %]value="2">[% 'Tracks with Highest Rating' | getstring %]</option>				
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TSBLOCKPLAYCOUNT" desc="PLUGIN_SC_WEB_TSBLOCKPLAYCOUNTDESC" %]
+			<input type="text" class="stdedit sliderInput_0_30_1" name="sugarcube_ts_pc_higher" id="sugarcube_ts_pc_higher" value="[% prefs.sugarcube_ts_pc_higher %]" size="1">
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TSREMOVERATING" desc="PLUGIN_SC_WEB_TSREMOVERATINGDESC" %]
+			<input type="text" class="stdedit sliderInput_0_9_1" name="sugarcube_ts_trackrated" id="sugarcube_ts_trackrated" value="[% prefs.sugarcube_ts_trackrated %]" size="1">
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TSBLOCKDAYS" desc="PLUGIN_SC_WEB_TSBLOCKDAYSDESC" %]
+			<input type="text" class="stdedit sliderInput_0_60_1" name="sugarcube_ts_lastplayed" id="sugarcube_ts_lastplayed" value="[% prefs.sugarcube_ts_lastplayed %]" size="1">
+		[% END %]		
+		<HR><BR>	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_ALARM_TYPE" desc="PLUGIN_SC_WEB_ALARM_TYPEDESC" %]
+			<select class="stdedit" name="sugarcube_alarm_type" id="sugarcube_alarm_type">
+				<option [% IF prefs.sugarcube_alarm_type == 0 %]selected [% END %]value="0">[% 'Filter' | getstring %]</option>
+				<option [% IF prefs.sugarcube_alarm_type == 1 %]selected [% END %]value="1">[% 'Genre' | getstring %]</option>					
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_ALARMFILTER" desc="PLUGIN_SC_WEB_ALARMFILTERDESC" %]
+			<select class="stdedit" name="scalarm_filter" id="scalarm_filter">
+			[% FOREACH option IN filters.keys.sort %]
+				<option [% IF prefs.scalarm_filter == option %]selected [% END %]value="[% option %]">[% filters.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_ALARMGENRE" desc="PLUGIN_SC_WEB_ALARMGENREDESC" %]
+			<select class="stdedit" name="scalarm_genre" id="scalarm_genre">
+			[% FOREACH option IN genres.keys.sort %]
+				<option [% IF prefs.scalarm_genre == option %]selected [% END %]value="[% option %]">[% genres.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]		
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VOLUMESLIDE" desc="PLUGIN_SC_WEB_VOLUME_SELECTDESC" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_volume_flag %]checked [% END %] class="stdedit" name="sugarcube_volume_flag" id="sugarcube_volume_flag" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_VOLUME_SELECT" | string %]</label>
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VOLUME_TIMEFROM" desc="" %]
+			<input type="text" class="stdedit sliderInput_12_23_1" name="sugarcube_volumetimefrom" id="sugarcube_volumetimefrom" value="[% prefs.sugarcube_volumetimefrom %]" size="1">
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VOLUME_TIMETO" desc="" %]
+			<input type="text" class="stdedit sliderInput_0_11_1" name="sugarcube_volumetimeto" id="sugarcube_volumetimeto" value="[% prefs.sugarcube_volumetimeto %]" size="1">
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VOLUMEAMOUNT" desc="PLUGIN_SC_WEB_VOLUMEAMOUNTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_10_1" name="sugarcube_reducevolume" id="sugarcube_reducevolume" value="[% prefs.sugarcube_reducevolume %]" size="1">
+		[% END %]	
+		<HR><BR>		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SLEEP" desc="PLUGIN_SC_WEB_SLEEPDESC" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_sleep %]checked [% END %] class="stdedit" name="sugarcube_sleep" id="sugarcube_sleep" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_SLEEPENABLE" | string %]</label>
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_SLEEP_TIMEFROM" desc="" %]
+			<input type="text" class="stdedit sliderInput_12_23_1" name="sugarcube_sleepfrom" id="sugarcube_sleepfrom" value="[% prefs.sugarcube_sleepfrom %]" size="1">
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_SLEEP_TIMETO" desc="" %]
+			<input type="text" class="stdedit sliderInput_0_11_1" name="sugarcube_sleepto" id="sugarcube_sleepto" value="[% prefs.sugarcube_sleepto %]" size="1">
+		[% END %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SLEEPDURATION" desc="PLUGIN_SC_WEB_SLEEPDURATIONDESC" %]
+			<input type="text" class="stdedit sliderInput_1_240_1" name="sugarcube_sleepduration" id="sugarcube_sleepduration" value="[% prefs.sugarcube_sleepduration %]" size="2">
+		[% END %]
+	<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_VINTAGE" desc="PLUGIN_SC_WEB_VINTAGEDESC" %]
+			<input type="checkbox" [% IF prefs.sugarcube_vintage %]checked [% END %] class="stdedit" name="sugarcube_vintage" id="sugarcube_vintage" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_VINTAGEDESC" | string %]</label>
+		[% END %]
+	[% WRAPPER settingGroup %]
+			<label class="stdlabel">Mirrors the original MusicIP Mixer Plugin and will disable SugarCube Enhancements</label>
+			<br><br><label class="stdlabel">Tracks within the Queue stack may repeat from the same Album and Artist</label>		
+	[% END %]
+
+		<HR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MISC" desc="" %]		[% END %]		
+		<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_DISPLAYOPTIONS" desc="PLUGIN_SC_WEB_DISPLAYOPTIONSDESC" %]
+			<select class="stdedit" name="sugarcube_display" id="sugarcube_display">
+				<option [% IF prefs.sugarcube_display == 0 %]selected [% END %]value="0">[% '(None)' | getstring %]</option>
+				<option [% IF prefs.sugarcube_display == 1 %]selected [% END %]value="1">[% 'Show Coming Up Next' | getstring %]</option>
+				<option [% IF prefs.sugarcube_display == 2 %]selected [% END %]value="2">[% 'Show Technical Information' | getstring %]</option>
+				<option [% IF prefs.sugarcube_display == 3 %]selected [% END %]value="3">[% 'When Random Track Selected' | getstring %]</option>
+			</select>
+		[% END %]	
+<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_FADE_ON_OFF" desc="PLUGIN_SC_WEB_FADE_ON_OFF" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_fade_on_off %]checked [% END %] class="stdedit" name="sugarcube_fade_on_off" id="sugarcube_fade_on_off" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_FADE_ON_OFF" | string %]</label>
+		[% END %]			
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_FADE_TIME" desc="PLUGIN_SC_WEB_FADE_TIME" %]
+			<input type="text" class="stdedit sliderInput_5_20_1" name="sugarcube_fade_time" id="sugarcube_fade_time" value="[% prefs.sugarcube_fade_time %]" size="1">
+		[% END %]
+<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PLAYTRACKALBUM" desc="" %]
+			<input type="checkbox" [% IF prefs.sugarcube_albumoveride %]checked [% END %] class="stdedit" name="sugarcube_albumoveride" id="sugarcube_albumoveride" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_PLAYTRACKALBUMTEXT" | string %]</label>
+		[% END %]		
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SHUFFLEMENU" desc="PLUGIN_SC_WEB_SHUFFLEMENUDESC" %]
+			<select class="stdedit" name="sugarcube_shuffle" id="sugarcube_shuffle">
+				<option [% IF NOT prefs.sugarcube_shuffle %]selected [% END %]value="0">[% 'Disabled' | getstring %]</option>
+				<option [% IF prefs.sugarcube_shuffle %]selected [% END %]value="1">[% 'Enabled' | getstring %]</option>
+			</select>
+		[% END %]			
+<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_CLEARSTATS" desc="" %]
+			<input type="checkbox" [% IF prefs.sugarcube_clearstats %]checked [% END %] class="stdedit" name="sugarcube_clearstats" id="sugarcube_clearstats" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_CLEARSTATSDESC" | string %]</label>
+		[% END %]
+<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_CLUTTER" desc="PLUGIN_SC_WEB_CLUTTERDESC" %]	
+			<input type="text" class="stdedit sliderInput_5_300_1" name="sugarcube_clutter" id="sugarcube_clutter" value="[% prefs.sugarcube_clutter %]" size="2">
+		[% END %]
+<BR><BR>
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_SETSAVE" desc="PLUGIN_SC_WEB_SETSAVEDESC" %]	
+			<input type="checkbox" [% IF prefs.sugarcube_megasaver %]checked [% END %] class="stdedit" name="sugarcube_megasaver" id="sugarcube_megasaver" value="1"/>
+			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_SETSAVEDESC" | string %]</label>
+		[% END %]	
+<BR><BR>		
+
+		
+	[% END %]			
+
+	<BR><A HREF="http://www.spicefly.com/?from=plugin">Spicefly.com</A>- This plugin is for your own personal, non-commercial use.</BR>	
+		<br><br>
+	
+[% PROCESS settings/footer.html %]

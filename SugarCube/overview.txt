@@ -1,0 +1,60 @@
+SugarCube Overview
+
+This is kinda random stuff lol
+
+Starting Off
++==========+
+sub kickoff			# Fire on track change and timer expires
+
+$track = Slim::Utils::Misc::pathFromFileURL($song);
+my $untouchedtrack = $track;
+
+$track = Plugins::SugarCube::Plugin::dirtyencoder($track);		// encode track
+Plugins::SugarCube::Breakout::TrackTracker( $client, $track );	// save track
+
+Check if Dynamic Queuing enabled
+If we dont need a track exit (return)
+Set sugarcube_working to 1
+Set sugarcube_stats_mip_size to "A"
+
+Check SugarCube Mode (sugarcube_mode)
+If Standard MusicIP Mode (default failback if no prefs set)
+BuildMIPReq( $client, $untouchedtrack );
+SendtoMIPAsync( $client, $mypageurl );
+} else {
+FreeStyle( $client ); 		# FreeStyle Mode
+}
+
+Standard MusicIP Mode
++===================+
+Build URL
+Dynamic Path Conversion if required to
+Otherwise just encode
+Determine whether filter/genre/artist etc
+Return the URL
+
+SendtoMIPAsync 					# SendtoMIPAsync
+If not response go to
+gotErrorViaHTTP
+else go to
+gotMIP
+
+
+gotMIP 					# gotMIP
+Dynamic Path Conversion if required back
+CHECK WHETHER ASYNC WAS FROM ALARM or AUTOMIX - IF SO THEN DONT SAVE CURRENT TRACK
+See if TrackStat is installed/enabled
+Get the playing file
+Encode and then save the Current Playing Track details into the database (Save current Album, Save current Artist)
+Pull details from db - if Trackstat pull extra fields
+tracks.url, tracks.title, albums.title, genres.name, contributors.name, track_statistics.playCount, track_statistics.rating, track_statistics.lastPlayed, tracks.coverid, tracks.album, tracks.id
+
+Save details into database
+Drop following (DropEmPunk)
+XMas tracks
+# Block Artist we dont want
+# Block Genres we dont want
+Dropping as per TrackStat Block metrics
+
+
+Note; Dupper code (try and guess if the queuing track was the same as the playing track ie. greatest hits or same but different directory) was never tested strong enough to release
