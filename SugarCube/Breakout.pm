@@ -500,7 +500,7 @@ sub getTSSongDetails {
 sub getmyTSNextSong {
     no warnings 'numeric';
 
-    my $client = shift;
+    my ($client, $TSenabled, $sugarlvTS) = @_;
     my $song;
     my (
         $CurrentArtist, $CurrentTrack,    $CurrentAlbum,

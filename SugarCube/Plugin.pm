@@ -2916,7 +2916,7 @@ sub SugarPlayerCheck {
                 my $UPNPC,
                 my $UPNRAT,
                 my $UPNLP
-            ) = Plugins::SugarCube::Breakout::getmyTSNextSong($client);
+            ) = Plugins::SugarCube::Breakout::getmyTSNextSong($client, $TSenabled, $sugarlvTS);
             if ( length($UPNAlbumArt) == 0 ) { $UPNAlbumArt = "0"; }
             $upnartist{$client}    = $UPNArtist;
             $upntrack{$client}     = $UPNTrack;
