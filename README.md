@@ -16,7 +16,7 @@ A modified version of the SugarCube plugin by [Charles Parker](https://www.spice
 
 ## Changes
 
-- should work without the *TrackStat* plugin (ratings etc.)
+- should not require the *TrackStat* plugin for ratings etc. anymore because LMS already has a database table with these values
 
 <br><br>
 
