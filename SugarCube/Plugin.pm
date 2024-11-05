@@ -12,7 +12,7 @@
 #
 #In Short Summary
 #Complete source code must be made available that includes all changes
-#Copyright and license notices must be preserved. 
+#Copyright and license notices must be preserved.
 #Contributors provide an express grant of patent rights.
 
 
@@ -2045,8 +2045,6 @@ sub FreeStyle {
     Plugins::SugarCube::Breakout::DropEmPunk($client);
 
     # If TrackStat ENABLED
-    my $sugarlvTS = $prefs->get('sugarlvTS');
-
     if ($sugarlvTS) {
         $log->debug("Dropping as per TrackStat Block metrics\n");
         Plugins::SugarCube::Breakout::droptsmetrics($client);
@@ -2896,7 +2894,7 @@ sub SugarPlayerCheck {
                 my $PC,
                 my $Rat,
                 my $LP
-            ) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong);
+            ) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong, $TSenabled, $sugarlvTS);
             if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
             $cpartist{$client}    = $PlayArtist;
             $cptrack{$client}     = $PlayTrack;

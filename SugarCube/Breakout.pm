@@ -427,7 +427,7 @@ sub FSgetRealRandomSubset {
 
 #TrackStat
 sub getTSSongDetails {
-    my $song = shift;
+    my ($song, $TSenabled, $sugarlvTS) = @_;
     my (
         $CurrentArtist, $CurrentTrack,    $CurrentAlbum,
         $CurrentGenre,  $CurrentAlbumArt, $FullAlbum,
