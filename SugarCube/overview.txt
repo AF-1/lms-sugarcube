@@ -43,18 +43,18 @@ gotMIP
 gotMIP 					# gotMIP
 Dynamic Path Conversion if required back
 CHECK WHETHER ASYNC WAS FROM ALARM or AUTOMIX - IF SO THEN DONT SAVE CURRENT TRACK
-See if TrackStat is installed/enabled
+See if "show statistics" is enabled
 Get the playing file
 Encode and then save the Current Playing Track details into the database (Save current Album, Save current Artist)
-Pull details from db - if Trackstat pull extra fields
-tracks.url, tracks.title, albums.title, genres.name, contributors.name, track_statistics.playCount, track_statistics.rating, track_statistics.lastPlayed, tracks.coverid, tracks.album, tracks.id
+Pull details from db - if statistics pull extra fields
+tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed, tracks.coverid, tracks.album, tracks.id
 
 Save details into database
 Drop following (DropEmPunk)
 XMas tracks
 # Block Artist we dont want
 # Block Genres we dont want
-Dropping as per TrackStat Block metrics
+Dropping as per statistics Block metrics
 
 
 Note; Dupper code (try and guess if the queuing track was the same as the playing track ie. greatest hits or same but different directory) was never tested strong enough to release

@@ -40,6 +40,8 @@ sub handler {
         $prefs->set( 'sugarlviconsize', "$sugarlviconsize" );
         my $sugarlvTS = $params->{'sugarlvTS'};
         $prefs->set( 'sugarlvTS', "$sugarlvTS" );
+        my $rating_10scale = $params->{'rating_10scale'};
+        $prefs->set( 'rating_10scale', "$rating_10scale" );
         my $sugarmipsize = $params->{'sugarmipsize'};
         $prefs->set( 'sugarmipsize', "$sugarmipsize" );
         my $sugarhisweight = $params->{'sugarhisweight'};
@@ -109,6 +111,7 @@ sub handler {
     $params->{'prefs'}->{'sugarlvwidth'}     = $prefs->get('sugarlvwidth');
     $params->{'prefs'}->{'sugarlviconsize'}  = $prefs->get('sugarlviconsize');
     $params->{'prefs'}->{'sugarlvTS'}        = $prefs->get('sugarlvTS');
+    $params->{'prefs'}->{'rating_10scale'}   = $prefs->get('rating_10scale');
     $params->{'prefs'}->{'sugarmipsize'}     = $prefs->get('sugarmipsize');
     $params->{'prefs'}->{'sugarhisweight'}   = $prefs->get('sugarhisweight');
     $params->{'prefs'}->{'sugarlvweight'}    = $prefs->get('sugarlvweight');

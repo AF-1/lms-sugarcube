@@ -393,7 +393,7 @@ sub handler {
 
 	my $sugarcube_dupper = $prefs->client($client)->get('sugarcube_dupper');		
 	
-# TrackStat Settings default to 0 if not defined
+# statistics Settings default to 0 if not defined
 	if ( $sugarcube_ts_trackrated eq '' ) {
 			$log->debug("sugarcube_ts_trackrated; NOT defined\n");
 			$prefs->client($client)->set('sugarcube_ts_trackrated', 0);

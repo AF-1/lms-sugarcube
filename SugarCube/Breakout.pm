@@ -425,9 +425,9 @@ sub FSgetRealRandomSubset {
     return @myworkingset;
 }
 
-#TrackStat
+#Statistics
 sub getTSSongDetails {
-    my ($song, $TSenabled, $sugarlvTS) = @_;
+    my $song = shift;
     my (
         $CurrentArtist, $CurrentTrack,    $CurrentAlbum,
         $CurrentGenre,  $CurrentAlbumArt, $FullAlbum,
@@ -438,9 +438,8 @@ sub getTSSongDetails {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-	my $statsSource = (($sugarlvTS == 1) || !$TSenabled) ? "tracks_persistent" : "track_statistics"; # 1 = LMS, 2 = TS
     my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $statsSource.playCount, $statsSource.rating, $statsSource.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN $statsSource ON (tracks.urlmd5 = $statsSource.urlmd5) where tracks.url = ?'
+'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.url = ?'
     );
 
     $sth->execute($song);
@@ -500,7 +499,7 @@ sub getTSSongDetails {
 sub getmyTSNextSong {
     no warnings 'numeric';
 
-    my ($client, $TSenabled, $sugarlvTS) = @_;
+    my $client = shift;
     my $song;
     my (
         $CurrentArtist, $CurrentTrack,    $CurrentAlbum,
@@ -523,9 +522,8 @@ sub getmyTSNextSong {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-	my $statsSource = (($sugarlvTS == 1) || !$TSenabled) ? "tracks_persistent" : "track_statistics"; # 1 = LMS, 2 = TS
     my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $statsSource.playCount, $statsSource.rating, $statsSource.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN $statsSource ON (tracks.urlmd5 = $statsSource.urlmd5) where tracks.id = ?'
+'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.id = ?'
     );
 
     $sth->execute($trackid);
@@ -869,7 +867,7 @@ qq{INSERT INTO WorkingSet (client, trackingno, temptrack, SCtrack, SCalbum, SCge
         my $SCrating     = $miparray[ $i + 6 ];
         my $SClastplayed = $miparray[ $i + 7 ];
 
-        # If these are not set ie. trackstat not installed set to -1
+        # If these are not set ie. statistics not enabled set to -1
 
         $SCplaycount += 0;
         if ( $SCplaycount <= 0 ) {
@@ -1187,34 +1185,34 @@ sub tssorting {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-    $log->debug("TrackStat - Sorting Requested\n");
+    $log->debug("Statistics - Sorting Requested\n");
 
     if ( $sugarcube_ts_playcount == 1 ) {
 
-        #	$log->debug("TrackStat - Lowest Playcount\n");
+        #	$log->debug("Statistics - Lowest Playcount\n");
     }
     elsif ( $sugarcube_ts_playcount == 2 ) {
 
-        #	$log->debug("TrackStat - Highest Playcount\n");
+        #	$log->debug("Statistics - Highest Playcount\n");
     }
     if ( $sugarcube_ts_rating == 1 ) {
 
-        #	$log->debug("TrackStat - Lowest Rating\n");
+        #	$log->debug("Statistics - Lowest Rating\n");
     }
     elsif ( $sugarcube_ts_rating == 2 ) {
 
-        #	$log->debug("TrackStat - Highest Rating\n");
+        #	$log->debug("Statistics - Highest Rating\n");
     }
     if ( $sugarcube_ts_recentplayed == 1 ) {
 
-        #	$log->debug("TrackStat - Recently Played\n");
+        #	$log->debug("Statistics - Recently Played\n");
     }
     elsif ( $sugarcube_ts_recentplayed == 2 ) {
 
-        #	$log->debug("TrackStat - Not Recently Played\n");
+        #	$log->debug("Statistics - Not Recently Played\n");
     }
 
-#$log->debug("TrackStat WITH Sorting; PC;$sugarcube_ts_playcount, R;$sugarcube_ts_rating, RP;$sugarcube_ts_recentplayed\n");
+#$log->debug("Statistics WITH Sorting; PC;$sugarcube_ts_playcount, R;$sugarcube_ts_rating, RP;$sugarcube_ts_recentplayed\n");
 
 #Track Playcount Setting - sugarcube_ts_playcount 	0=Dis 1=Lowest Playcount 	2=Highest Playcount
 #Track Rating Setting - sugarcube_ts_rating 		0=Dis 1=Lowest Rating 		2=Highest Rating
@@ -1493,21 +1491,20 @@ sub droptsmetrics {
 #	$log->debug("Track Rating: $sugarcube_ts_trackrated PlayCount: $sugarcube_ts_pc_higher LastPlayed: $sugarcube_ts_lastplayed\n");
 
     if ( $sugarcube_ts_trackrated == 0 ) {
-        $log->debug("TrackStat - Use Track Rating - Disabled\n");
+        $log->debug("Statistics - Use Track Rating - Disabled\n");
     }
     else {
 
-        ## trackstat.plugin.pm line 1940
-        my $ts_prefs = preferences('plugin.TrackStat');
+
 
         #rating_10scale == 0 if 1to5
         #rating_10scale == 1 if 1to10
 
-        my $rating_scale = $ts_prefs->get('rating_10scale');
+        my $rating_scale = $prefs->get('rating_10scale');
 
         if ( $rating_scale == 1 ) {    # TS scale is 1 to 10
 
-            #	$log->debug("TrackStat - Is using Rating Scale of 1 to 10\n");
+            #	$log->debug("Statistics - Is using Rating Scale of 1 to 10\n");
             if ( $sugarcube_ts_trackrated == 1 ) {
                 $sugarcube_ts_trackrated = 14;
             }                          # TS1
@@ -1540,7 +1537,7 @@ sub droptsmetrics {
         }
         else {                         # TS rating 1 to 5
 
-            #	$log->debug("TrackStat - Is using Rating Scale of 1 to 5\n");
+            #	$log->debug("Statistics - Is using Rating Scale of 1 to 5\n");
             # TS0 is under 9
             if ( $sugarcube_ts_trackrated == 1 ) {
                 $sugarcube_ts_trackrated = 29;
@@ -1557,15 +1554,15 @@ sub droptsmetrics {
             else {
                 $sugarcube_ts_trackrated = 0;
                 $log->debug(
-"***ERROR*** you set block higher than TrackStat Rating Scale.. (Change to Block 0 to 4) Ignoring Setting and using 0\n"
+"***ERROR*** you set block higher than Statistics Rating Scale.. (Change to Block 0 to 4) Ignoring Setting and using 0\n"
                 );
             }
         }
 
-#		$sugarcube_ts_trackrated *= 10;	# Bump it same as Trackstat
-#		$sugarcube_ts_trackrated += 9;	# Trackstat tracks ratings of 1* or 2* may actually be 12 or 23 so we bump up to the 9 to catch these
+#		$sugarcube_ts_trackrated *= 10;	# Bump it same as LMS
+#		$sugarcube_ts_trackrated += 9;	# LMS tracks ratings of 1* or 2* may actually be 12 or 23 so we bump up to the 9 to catch these
 
-    #		$log->debug("TrackStat - Drop between 0 and $sugarcube_ts_trackrated\n");
+    #		$log->debug("Statistics - Drop between 0 and $sugarcube_ts_trackrated\n");
 
         my $sth = $dbh->prepare(
 "SELECT DISTINCT WorkingSet.id FROM WorkingSet WHERE (WorkingSet.SCrating BETWEEN 0 AND '$sugarcube_ts_trackrated') AND WorkingSet.client ='$clientid'"
@@ -1584,10 +1581,10 @@ sub droptsmetrics {
 
     if ( $sugarcube_ts_pc_higher == 0 ) {
 
-       #	$log->debug("TrackStat - Drop Tracks with Playcount N/A - DISABLED\n");
+       #	$log->debug("Statistics - Drop Tracks with Playcount N/A - DISABLED\n");
     }
     else {
-#		$log->debug("TrackStat - Drop Tracks with Playcount >= $sugarcube_ts_pc_higher\n");
+#		$log->debug("Statistics - Drop Tracks with Playcount >= $sugarcube_ts_pc_higher\n");
         my $sth = $dbh->prepare(
 "SELECT DISTINCT WorkingSet.id FROM WorkingSet WHERE (WorkingSet.SCplaycount >= '$sugarcube_ts_pc_higher') AND WorkingSet.client ='$clientid'"
         );
@@ -1605,7 +1602,7 @@ sub droptsmetrics {
     }
     if ( $sugarcube_ts_lastplayed == 0 ) {
 
-        #	$log->debug("TrackStat - Drop tracks Lastplayed N/A - DISABLED\n");
+        #	$log->debug("Statistics - Drop tracks Lastplayed N/A - DISABLED\n");
     }
     else {
 
@@ -1614,7 +1611,7 @@ sub droptsmetrics {
           ( ( $sugarcube_ts_lastplayed * 24 ) * 60 * 60 )
           ;    # subtract secs in day from current epoch time
 
- #		$log->debug("TrackStat - Drop BETWEEN $epochYestertime AND $currenttime\n");
+ #		$log->debug("Statistics - Drop BETWEEN $epochYestertime AND $currenttime\n");
 
         my $sth = $dbh->prepare(
 "SELECT DISTINCT WorkingSet.id FROM WorkingSet WHERE (WorkingSet.SClastplayed BETWEEN '$epochYestertime' AND '$currenttime') AND WorkingSet.client ='$clientid'"
@@ -1915,7 +1912,7 @@ sub StatsPuller {
               . $clientid
               . "', 1, SqueezeJS.string('Add Track'));\">";
 
-            # THIS IS TRACKSTAT BUILD UP
+            # THIS IS STATISTICS BUILD UP
             $line =
                 $line
               . '<tr><td rowspan=9 class=pic><img width='

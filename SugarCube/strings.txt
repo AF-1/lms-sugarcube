@@ -3,7 +3,7 @@ PLUGIN_SUGARCUBE
 PLUGIN_SUGARCUBE_DESC
 	EN	Spicefly SugarCube Travel through your music Library using MusicIP
 PLUGIN_SUGARCUBE_DESCINSTALL
-	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS or TrackStat, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.  See <a href="https://www.spicefly.com/?from=lms" target="_blank">www.spicefly.com</a> for Change Log
+	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.  See <a href="https://www.spicefly.com/?from=lms" target="_blank">www.spicefly.com</a> for Change Log
 PLUGIN_SUGARCUBE_MENU
 	EN	SugarCube Status
 PLUGIN_SUGARCUBE_REDIRECT
@@ -309,17 +309,21 @@ PLUGIN_SC_WEB_CLUTTERDESC
 PLUGIN_SC_WEB_STATS
 	EN	Use Statistics
 PLUGIN_SC_WEB_TSDESC
-	EN	(Enable statistics and select the source (LMS or TrackStat) on the Plugins/Settings/Advanced/Spicefly SugarCube Page)
+	EN	(Enable statistics on the Plugins/Settings/Advanced/Spicefly SugarCube Page)
 PLUGIN_SC_WEB_TS_RECENTLYPLAYED
 	EN	Track Played Setting
 PLUGIN_SC_WEB_TS_PLAYCOUNT
 	EN	Track Playcount Setting
 PLUGIN_SC_WEB_TS_RATING
 	EN	Track Rating Setting
+PLUGIN_SC_STATS_RATINGSCALE
+	EN	Rating Scale
+PLUGIN_SC_STATS_RATINGSCALE
+	EN	Select the displayed rating scale (does not affect the actual rating value)
 PLUGIN_SC_WEB_TS_IGNORE
-	EN	Use TrackStat Block Settings below
+	EN	Use Statistics Block Settings below
 PLUGIN_SC_WEB_TS_IGNOREDESC
-	EN	Use TrackStat Block Settings to tweak track selection
+	EN	Use Statistics Block Settings to tweak track selection
 PLUGIN_SC_WEB_TSBLOCKPLAYCOUNT
 	EN	Block Tracks with Played Count Equal and Above
 PLUGIN_SC_WEB_TSBLOCKPLAYCOUNTDESC
@@ -423,7 +427,7 @@ PLUGIN_SC_WEB_LIVEVIEW_ICONSIZE
 PLUGIN_SC_WEB_SHOW_STATS
 	EN	Use statistics
 PLUGIN_SC_WEB_SHOW_STATS_DESC
-	EN	Show statistics in the SugarCube LiveView - from the LMS database or from TrackStat
+	EN	Show statistics in the SugarCube LiveView from the LMS database
 PLUGIN_SC_WEB_ALARM_TIME
 	EN	 Alarm Time
 PLUGIN_SUGARCUBELV

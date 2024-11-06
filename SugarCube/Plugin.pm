@@ -76,7 +76,6 @@ my $global_quickmix    = 0;  # if quick fire mix from currently playing selected
 my %slide_start_volume = (); # Holds clients volume level before sliding
 my %global_slide_on    = (); # Holds clients status if volume sliding
 my $mixstatus          = ''; # Holds status of MusicIP service
-my $TSenabled;
 
 sub getIcon {
     return Plugins::SugarCube::Plugin->_pluginDataFor('icon');
@@ -198,6 +197,11 @@ sub initPlugin {
         $log->debug("sugarlvwidth set to 100\n");
     }
 
+	$prefs->init({
+		sugarlvTS => 1,
+		rating_10scale => 0,
+	});
+
     ####
     ####
     ####
@@ -317,7 +321,6 @@ sub postinitPlugin {
             }
         );
     }
-	$TSenabled = Slim::Utils::PluginManager->isEnabled('Plugins::TrackStat::Plugin');
 }
 
 sub SCInfoMenu {
@@ -1971,12 +1974,11 @@ sub FreeStyle {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-    ## When TrackStat is ENABLED
+    ## When "show statistics" is ENABLED
     my $sugarlvTS = $prefs->get('sugarlvTS');
     if ($sugarlvTS) {
-    	my $statsSource = (($sugarlvTS == 1) || !$TSenabled) ? "tracks_persistent" : "track_statistics"; # 1 = LMS, 2 = TS
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $statsSource.playCount, $statsSource.rating, $statsSource.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN $statsSource ON (tracks.urlmd5 = $statsSource.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {
@@ -2004,7 +2006,7 @@ sub FreeStyle {
     }
     else {
 ###
-        # NO TrackStat - When TrackStat is DISABLED - Normal Function
+        # NO statistics - When Statistics is DISABLED - Normal Function
 ###
         my $query =
 "SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
@@ -2044,9 +2046,10 @@ sub FreeStyle {
 
     Plugins::SugarCube::Breakout::DropEmPunk($client);
 
-    # If TrackStat ENABLED
+    # If "show statistics" ENABLED
+    my $sugarlvTS = $prefs->get('sugarlvTS');
     if ($sugarlvTS) {
-        $log->debug("Dropping as per TrackStat Block metrics\n");
+        $log->debug("Dropping as per Statistics Block metrics\n");
         Plugins::SugarCube::Breakout::droptsmetrics($client);
 
         my $sugarcube_ts_recentplayed =
@@ -2056,7 +2059,7 @@ sub FreeStyle {
         my $sugarcube_ts_rating =
           $prefs->client($client)->get('sugarcube_ts_rating');
 
-        # TrackStat Settings default to 0 if not defined
+        # Settings default to 0 if not defined
 
         if ( $sugarcube_ts_recentplayed eq '' ) {
 
@@ -2092,7 +2095,7 @@ sub FreeStyle {
         }
     }
     else {
-        #		$log->debug("No TrackStat Sorting Required Raw Pull\n");
+        #		$log->debug("No Sorting Required Raw Pull\n");
         @myworkingset = Plugins::SugarCube::Breakout::mystuff($client)
           ;    # Dont TS Sort just pull results
     }
@@ -2287,14 +2290,13 @@ sub gotMIP {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-    my $sugarlvTS = $prefs->get('sugarlvTS');    # Show TrackStat
+    my $sugarlvTS = $prefs->get('sugarlvTS');    # Show statisticas
 ##
-## TRACKSTAT ENABLED
+##  If "show statistics" is ENABLED
 ##
     if ($sugarlvTS) {
-    	my $statsSource = (($sugarlvTS == 1) || !$TSenabled) ? "tracks_persistent" : "track_statistics"; # 1 = LMS, 2 = TS
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $statsSource.playCount, $statsSource.rating, $statsSource.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN $statsSource ON (tracks.urlmd5 = $statsSource.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {
@@ -2337,7 +2339,7 @@ sub gotMIP {
 #		if ($duplicate == 1) {
 #			dupper($client);
 #		}
-#		$log->debug("Dropping as per TrackStat Block metrics\n");
+#		$log->debug("Dropping as per statistics Block metrics\n");
             Plugins::SugarCube::Breakout::droptsmetrics($client);
 
             my $sugarcube_ts_recentplayed =
@@ -2347,7 +2349,7 @@ sub gotMIP {
             my $sugarcube_ts_rating =
               $prefs->client($client)->get('sugarcube_ts_rating');
 
-            # TrackStat Settings default to 0 if not defined
+            # statistics Settings default to 0 if not defined
 
             if ( $sugarcube_ts_recentplayed eq '' ) {
                 $log->debug("sugarcube_ts_recentplayed; NOT defined\n");
@@ -2387,7 +2389,7 @@ sub gotMIP {
     }
     else {
 ###
-        # NO TrackStat - When TrackStat is DISABLED - Normal Function
+        # NO statistics - When "show statistics" is DISABLED - Normal Function
 ###
         #						0		1	2		3		4		8		9		10
         my $query =
@@ -2437,7 +2439,7 @@ sub gotMIP {
 #		}
 
         }
-        $log->debug("No TrackStat Sorting Required (TS Disabled)\n");
+        $log->debug("No statistics Sorting Required ('show statistics' Disabled)\n");
         @myworkingset = Plugins::SugarCube::Breakout::mystuff($client)
           ;    # Dont TS Sort just pull results
 
@@ -2880,8 +2882,8 @@ sub SugarPlayerCheck {
         $currentsong = Slim::Utils::Misc::pathFromFileURL($currentsong);
         $currentsong = dirtyencoder($currentsong);
 
-        #  If using TrackStat pull stats for liveview
-        my $sugarlvTS = $prefs->get('sugarlvTS');       # Show TrackStat
+        #  If using statistics pull stats for liveview
+        my $sugarlvTS = $prefs->get('sugarlvTS');       # Show statistics
         if ($sugarlvTS) {
             ## Current Playing Track Details
             (
@@ -2894,7 +2896,7 @@ sub SugarPlayerCheck {
                 my $PC,
                 my $Rat,
                 my $LP
-            ) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong, $TSenabled, $sugarlvTS);
+            ) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong);
             if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
             $cpartist{$client}    = $PlayArtist;
             $cptrack{$client}     = $PlayTrack;
@@ -2916,7 +2918,7 @@ sub SugarPlayerCheck {
                 my $UPNPC,
                 my $UPNRAT,
                 my $UPNLP
-            ) = Plugins::SugarCube::Breakout::getmyTSNextSong($client, $TSenabled, $sugarlvTS);
+            ) = Plugins::SugarCube::Breakout::getmyTSNextSong($client);
             if ( length($UPNAlbumArt) == 0 ) { $UPNAlbumArt = "0"; }
             $upnartist{$client}    = $UPNArtist;
             $upntrack{$client}     = $UPNTrack;
