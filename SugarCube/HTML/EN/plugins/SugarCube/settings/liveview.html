@@ -9,8 +9,8 @@
 [% END -%]
 [% PROCESS pageheader.html %]
 [% PROCESS plugins/SugarCube/HTML/css/sugarcube.css %]
-[% END %]		
-[% IF refresh > 0 %] 
+[% END %]
+[% IF refresh > 0 %]
 	<SCRIPT>
 	<!--
 	setTimeout("myReload()", [% refresh %] * [% refreshRate %]);
@@ -27,7 +27,7 @@
 					parent.frames[i].location.replace(parent.frames[i].location.pathname + "?player=[% player | uri %]&amp;refresh=1");
 				}
 			}
-		</script>	
+		</script>
 	<table class='topside'>
 	<thead>
 	<tr><th><strong>Spicefly SugarCube Statistics</strong></th></tr>
@@ -45,19 +45,19 @@
 	<tr>
 	[% IF showstats == 'ON' %]
 	<td rowspan=8><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% currentalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
-	[% ELSE %]	
+	[% ELSE %]
 	<td rowspan=5><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% currentalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
-	[% END %]	
+	[% END %]
 
 	<td><div class='heads'>Currently Playing</div></td>
 	[% IF showstats == 'ON' %]
 	<td rowspan=8><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% comingupnextalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
-	[% ELSE %]	
+	[% ELSE %]
 	<td rowspan=5><img width="[% size %]" height="[% size %]" src="[% webroot %]music/[% comingupnextalbumart %]/cover_[% size %]x[% size %]_o.jpg"></td>
-	[% END %]	
+	[% END %]
 	<td><div class='heads'>Coming Up Next</div></td>
 	</tr>
-	<tr><td>[% currenttrack %]</td><td>[% comingupnexttrack %]</td></tr>	
+	<tr><td>[% currenttrack %]</td><td>[% comingupnexttrack %]</td></tr>
 	<tr><td>[% currentalbum %]</td><td>[% comingupnextalbum %]</td></tr>
 	<tr><td>[% currentartist %]</td><td>[% comingupnextartist %]</td></tr>
 	<tr><td>[% currentgenre %]</td><td>[% comingupnextgenre %]</td></tr>
@@ -65,18 +65,20 @@
 	<tr><td>Playcount: [% currentpc %]</td><td>Playcount: [% comingupnextpc %]</td></tr>
 	<tr><td>Rating: [% currentrat %]</td><td>Rating: [% comingupnextrat %]</td></tr>
 	<tr><td title="Last Played">[% currentlp %]</td><td title="Last Played">[% comingupnextlp %]</td></tr>
-	[% END %]	
+	[% END %]
 	</table>
 	<hr>
-	
+
 	[% IF mixstatus == '' %]
+	<div class="filler1"></div>
 	[% WRAPPER settingGroup title= mode %][% END %]
+	<div class="filler2"></div>
 	<table class='bottomside'>
 		[% filters %]
-	</table>	
-		[% END %]	
-	[% END %]	
-	
+	</table>
+		[% END %]
+	[% END %]
+
 [%- IF !ajaxUpdate %]
 [% PROCESS pagefooter.html %]
 [% END %]
