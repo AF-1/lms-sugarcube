@@ -16,7 +16,7 @@ A modified version of the SugarCube plugin by [Charles Parker](https://www.spice
 
 ## Changes
 
-- remove code for *TrackStat* plugin, use LMS data
+- Statistics (rating, play count…) now pulled directly from LMS database (table). Installing **TrackStat** for statistics no longer required. Removed *TrackStat* code from plugin.
 
 <br><br>
 
