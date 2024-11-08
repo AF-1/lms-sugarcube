@@ -1,7 +1,7 @@
 PLUGIN_SUGARCUBE
-	EN	Spicefly SugarCube
+	EN	SugarCube
 PLUGIN_SUGARCUBE_DESC
-	EN	Spicefly SugarCube Travel through your music Library using MusicIP
+	EN	SugarCube Travel through your music Library using MusicIP
 PLUGIN_SUGARCUBE_DESCINSTALL
 	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.  See <a href="https://www.spicefly.com/?from=lms" target="_blank">www.spicefly.com</a> for Change Log
 PLUGIN_SUGARCUBE_MENU
@@ -171,7 +171,7 @@ PLUGIN_SUGARCUBE_FILTER_EVENING
 PLUGIN_SUGARCUBE_FILTER_MORNING
 	EN	From 05:00 until 10:59
 PLUGIN_SUGARCUBE_FILTER_DAY
-	EN	From 11:00 until 17:59	
+	EN	From 11:00 until 17:59
 PLUGIN_SUGARCUBE_JIVE_STATUS
 	EN	SugarCube Status
 PLUGIN_SUGARCUBE_JIVE_VOLUME_FADE
@@ -203,9 +203,9 @@ PLUGIN_JIVE_NEXT
 PLUGIN_SUGARCUBE_TRACK
 	EN	Use SugarCube
 PLUGIN_SUGARCUBE_STATS
-	EN	Spicefly SugarCube Statistics
+	EN	SugarCube Statistics
 PLUGIN_SUGARCUBE_LIVEVIEW
-	EN	Spicefly SugarCube Live View
+	EN	SugarCube Live View
 PLUGIN_FILTERS
 	EN	Select MusicIP Filter
 PLUGIN_GENRES
@@ -287,11 +287,11 @@ PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS
 PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC
 	EN	Genre will always be blocked.  Consider using MusicIP Filters to block more Genres
 PLUGIN_SC_WEB_BLOCKALBUM
-	EN	Block Album Repeating for x Tracks	
+	EN	Block Album Repeating for x Tracks
 PLUGIN_SC_WEB_BLOCKALBUMDESC
 	EN	Block the track if we have played its Album within the specified number of Tracks
 PLUGIN_SC_WEB_REMEMBERTRACKS
-	EN	Remember This Many Played Tracks 
+	EN	Remember This Many Played Tracks
 PLUGIN_SC_WEB_REMEMBERTRACKSDESC
 	EN	Block the track is we have played it within the specified number of Tracks
 PLUGIN_SC_WEB_SHUFFLEMENU
@@ -299,7 +299,7 @@ PLUGIN_SC_WEB_SHUFFLEMENU
 PLUGIN_SC_WEB_SHUFFLEMENUDESC
 	EN	When enabled turns off shuffle modes when queuing up tracks to ensure integrity of the mix is maintained
 PLUGIN_SC_WEB_CLEARTRACKS
-	EN	Forget when Playlist Cleared 
+	EN	Forget when Playlist Cleared
 PLUGIN_SC_WEB_CLEARTRACKSDESC
 	EN	Clear "Remember This Many Played Tracks" and SugarCube History when playlist is cleared
 PLUGIN_SC_WEB_CLUTTER
@@ -309,7 +309,7 @@ PLUGIN_SC_WEB_CLUTTERDESC
 PLUGIN_SC_WEB_STATS
 	EN	Use Statistics
 PLUGIN_SC_WEB_TSDESC
-	EN	(Enable statistics on the Plugins/Settings/Advanced/Spicefly SugarCube Page)
+	EN	(Enable statistics on the Plugins/Settings/Advanced/SugarCube Page)
 PLUGIN_SC_WEB_TS_RECENTLYPLAYED
 	EN	Track Played Setting
 PLUGIN_SC_WEB_TS_PLAYCOUNT
@@ -318,7 +318,7 @@ PLUGIN_SC_WEB_TS_RATING
 	EN	Track Rating Setting
 PLUGIN_SC_STATS_RATINGSCALE
 	EN	Rating Scale
-PLUGIN_SC_STATS_RATINGSCALE
+PLUGIN_SC_STATS_RATINGSCALE_DESC
 	EN	Select the displayed rating scale (does not affect the actual rating value)
 PLUGIN_SC_WEB_TS_IGNORE
 	EN	Use Statistics Block Settings below
@@ -409,11 +409,11 @@ PLUGIN_SC_WEB_MIXTYPE
 PLUGIN_SC_WEB_MIXTYPEDESC
 	EN	Specify whether to mix using a Filter, Artist or Genre.  Additionally add a Recipe as well.  None means mix without any restrictions
 PLUGIN_SC_WEB_SUGARCUBE
-	EN	Spicefly SugarCube
+	EN	SugarCube
 PLUGIN_SC_WEB_SUGARCUBETEXT
-	EN	Spicefly SugarCube making MusicIP and Squeezebox work Sweeter
+	EN	SugarCube making MusicIP and Squeezebox work Sweeter
 PLUGIN_SC_WEB_LIVEVIEW_WIDTH
-	EN	Spicefly SugarCube Live View Width
+	EN	SugarCube Live View Width
 PLUGIN_SC_WEB_LIVEVIEW_WIDTHDESC
 	EN	Live View data table width as a percentage of the screen.  For large screens 90% works well reducing space on the edges, for smaller screens set to 100%
 PLUGIN_SC_WEB_WOBBLE
@@ -435,7 +435,7 @@ PLUGIN_SUGARCUBELV
 PLUGIN_SUGARCUBEHIS
 	EN	SugarCube History
 PLUGIN_SUGARCUBEQP
-	EN	SugarCube Auto Mix	
+	EN	SugarCube Auto Mix
 PLUGIN_SUGARCUBE_PLAYING
 	EN	Currently Playing
 PLUGIN_SC_WEB_SETSAVE
@@ -447,7 +447,7 @@ PLUGIN_SC_WEB_VINTAGE
 PLUGIN_SC_WEB_VINTAGEDESC
 	EN	Queue Up All Tracks like the original MusicIP Mix Plugin
 PLUGIN_SC_WEB_HISTORY_TEXT
-	EN	Spicefly SugarCube Queued Tracks
+	EN	SugarCube Queued Tracks
 PLUGIN_SC_WEB_MIPSIZE
 	EN	MusicIP Request No. of Tracks
 PLUGIN_SC_WEB_MIPSIZEDESC
@@ -545,7 +545,7 @@ PLUGIN_TRAF_TO
 PLUGIN_TRAF_ENABLE
 	EN	Enable Google Traffic
 PLUGIN_TRAF_ENABLE_TWO
-	EN	Enable Second Address 
+	EN	Enable Second Address
 PLUGIN_TRAF_DAYS
 	EN	Active Days
 PLUGIN_TRAF_MON
