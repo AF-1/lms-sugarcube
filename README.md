@@ -2,6 +2,7 @@ SugarCube
 ====
 
 A modified version of the SugarCube plugin by [Charles Parker](https://www.spicefly.com/).<br>
+Based on the [**6.01** open-source version](https://bitbucket.org/spicefly/sugarcube/src/master/), *not v5.25*.<br>
 **No guarantees that it will work or continue to do so**.<br>
 
 ⚠️ **I'm not maintaining this plugin. I don't provide support for it.**
