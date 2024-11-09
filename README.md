@@ -29,6 +29,9 @@ Based on the [**6.01** open-source version](https://bitbucket.org/spicefly/sugar
 [https://raw.githubusercontent.com/AF-1/lms-sugarcube/main/public.xml](https://raw.githubusercontent.com/AF-1/lms-sugarcube/main/public.xml)
 
 - Install the plugin from the added repository at the bottom of the page.
+
+- If you want to see statistics displayed, go to *LMS* > *Settings* > *Advanced* > *SugarCube* and enable *Show statistics*.
+
 <br>
 
 ### Manual Install
