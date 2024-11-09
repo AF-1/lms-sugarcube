@@ -17,7 +17,7 @@ Based on the [**6.01** open-source version](https://bitbucket.org/spicefly/sugar
 
 ## Changes
 
-- Statistics (rating, play count…) now pulled directly from LMS database (table). Installing **TrackStat** for statistics no longer required. Removed *TrackStat* code from plugin.
+- Statistics (rating, play count…) now pulled directly from LMS database (table). **TrackStat** for statistics no longer required/supported.
 
 <br><br>
 
