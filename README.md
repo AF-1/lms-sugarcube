@@ -30,7 +30,7 @@ Based on the [**6.01** open-source version](https://bitbucket.org/spicefly/sugar
 
 - Install the plugin from the added repository at the bottom of the page.
 
-- If you want to see statistics displayed, go to *LMS* > *Settings* > *Advanced* > *SugarCube* and enable *Show statistics*.
+- If you want to see stats (rating, play count…), go to *LMS* > *Settings* > *Advanced* > *SugarCube* and enable *Show statistics*.
 
 <br>
 
