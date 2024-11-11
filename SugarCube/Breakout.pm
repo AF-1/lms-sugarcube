@@ -440,9 +440,11 @@ sub getTSSongDetails {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-    my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.url = ?'
-    );
+	my $query = "SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5)";
+	$query .= " left join alternativeplaycount on tracks.urlmd5 = alternativeplaycount.urlmd5" if ($apc_enabled && $prefs->get('useapcvalues'));
+	$query .= " where tracks.url = ?";
+
+    my $sth = $dbh->prepare($query);
 
     $sth->execute($song);
     $sth->bind_col( 1, \$CurrentArtist );
@@ -525,9 +527,10 @@ sub getmyTSNextSong {
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
-    my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.id = ?'
-    );
+	my $query = "SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5)";
+	$query .= " left join alternativeplaycount on tracks.urlmd5 = alternativeplaycount.urlmd5" if ($apc_enabled && $prefs->get('useapcvalues'));
+	$query .= " where tracks.id = ?";
+    my $sth = $dbh->prepare($query);
 
     $sth->execute($trackid);
     $sth->bind_col( 1, \$CurrentArtist );

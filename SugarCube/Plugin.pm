@@ -1987,7 +1987,9 @@ sub FreeStyle {
     if ($sugarlvTS) {
 		my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5)";
+		$query .= " left join alternativeplaycount on tracks.urlmd5 = alternativeplaycount.urlmd5" if ($apc_enabled && $prefs->get('useapcvalues'));
+		$query .= " INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {
@@ -2306,7 +2308,9 @@ sub gotMIP {
     if ($sugarlvTS) {
 		my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5)";
+		$query .= " left join alternativeplaycount on tracks.urlmd5 = alternativeplaycount.urlmd5" if ($apc_enabled && $prefs->get('useapcvalues'));
+		$query .= " INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {
