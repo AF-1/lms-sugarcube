@@ -67,6 +67,16 @@
 				[%- END -%]
 			</select>
 		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_STATS_USEAPCVALUES" desc="PLUGIN_SC_STATS_USEAPCVALUES_DESC" %]
+			<select name="useapcvalues" id="useapcvalues">
+				[% FOREACH option = {
+					'0' => 'No',
+					'1' => 'Yes',
+				} %]
+					<option [% IF prefs.useapcvalues == option.key %]selected='selected' [% END %]value="[% option.key %]">[% option.value | html %]</option>
+				[%- END -%]
+			</select>
+		[% END %]	
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MIPSIZE" desc="PLUGIN_SC_WEB_MIPSIZEDESC" %]
 			<input type="text" class="stdedit sliderInput_10_100_1" name="sugarmipsize" id="sugarmipsize" value="[% prefs.sugarmipsize %]" size="2">
 		[% END %]

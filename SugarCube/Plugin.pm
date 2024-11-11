@@ -4,6 +4,10 @@
 #Donations are gratefully received to assist with the costs of maintaining spicefly.com and associated knowledge articles
 #https://paypal.me/spicefly
 #
+# v7 - Nov. 2024
+# - pull stats directly from LMS, not TrackStat
+# - removed TrackStat code & support
+# - option to pull play count & date last played from Alternative Play Count plugin
 #
 #v6.01 - December 2023
 #+===================+
@@ -76,6 +80,7 @@ my $global_quickmix    = 0;  # if quick fire mix from currently playing selected
 my %slide_start_volume = (); # Holds clients volume level before sliding
 my %global_slide_on    = (); # Holds clients status if volume sliding
 my $mixstatus          = ''; # Holds status of MusicIP service
+my $apc_enabled;
 
 sub getIcon {
     return Plugins::SugarCube::Plugin->_pluginDataFor('icon');
@@ -303,6 +308,9 @@ sub initPlugin {
 
 sub postinitPlugin {
     my $class = shift;
+
+	$apc_enabled = Slim::Utils::PluginManager->isEnabled('Plugins::AlternativePlayCount::Plugin');
+	main::DEBUGLOG && $log->is_debug && $log->debug('Plugin "Alternative Play Count" is enabled') if $apc_enabled;
 
     # if user has the Don't Stop The Music plugin enabled, register ourselves
     if (
@@ -1977,8 +1985,9 @@ sub FreeStyle {
     ## When "show statistics" is ENABLED
     my $sugarlvTS = $prefs->get('sugarlvTS');
     if ($sugarlvTS) {
+		my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {
@@ -2295,8 +2304,9 @@ sub gotMIP {
 ##  If "show statistics" is ENABLED
 ##
     if ($sugarlvTS) {
+		my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
         my $query =
-"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
+"SELECT tracks.url, tracks.title, albums.title, genres.name, contributors.name, $table.playCount, tracks_persistent.rating, $table.lastPlayed, tracks.coverid, tracks.album, tracks.id FROM contributors, tracks INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN albums ON (tracks.album = albums.id) INNER JOIN contributor_track ON tracks.id = contributor_track.track AND contributor_track.contributor = contributors.id AND contributor_track.role in (1,6) WHERE tracks.url = ";
 
         my $changeindex = 0;
         foreach (@unique) {

@@ -320,6 +320,10 @@ PLUGIN_SC_STATS_RATINGSCALE
 	EN	Rating Scale
 PLUGIN_SC_STATS_RATINGSCALE_DESC
 	EN	Select the displayed rating scale (does not affect the actual rating value)
+PLUGIN_SC_STATS_USEAPCVALUES
+	EN	Use APC values for play count<br>and date last played
+PLUGIN_SC_STATS_USEAPCVALUES_DESC
+	EN	If you have installed the <a href="https://github.com/AF-1/lms-alternativeplaycount" target="_blank" rel="noopener noreferrer"><i>Alternative Play Count</i></a> plugin, you can use APC values for play count and date last played.
 PLUGIN_SC_WEB_TS_IGNORE
 	EN	Use Statistics Block Settings below
 PLUGIN_SC_WEB_TS_IGNOREDESC

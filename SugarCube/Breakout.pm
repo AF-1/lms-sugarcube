@@ -29,6 +29,7 @@ my $log = Slim::Utils::Log->addLogCategory(
 
 sub getDisplayName { return 'PLUGIN_SUGARCUBE'; }
 my $prefs = preferences('plugin.SugarCube');
+my $apc_enabled;
 
 # Get a Random Track based on provided Genre
 sub getRandom {
@@ -434,12 +435,13 @@ sub getTSSongDetails {
         $PC,            $Rat,             $LP
     );
 
+	my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
     my $dbh           = Slim::Schema->storage->dbh();
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
     my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.url = ?'
+'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.url = ?'
     );
 
     $sth->execute($song);
@@ -518,12 +520,13 @@ sub getmyTSNextSong {
     );
     my $trackid = $track->id;
 
+	my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
     my $dbh           = Slim::Schema->storage->dbh();
     my $sqlitetimeout = $prefs->get('sqlitetimeout');
     $dbh->sqlite_busy_timeout( $sqlitetimeout * 1000 );
 
     my $sth = $dbh->prepare(
-'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, tracks_persistent.playCount, tracks_persistent.rating, tracks_persistent.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.id = ?'
+'SELECT contributors.name, tracks.title, albums.title, genres.name, tracks.coverid, tracks.album, $table.playCount, tracks_persistent.rating, $table.lastPlayed FROM albums INNER JOIN contributors ON (albums.contributor = contributors.id) INNER JOIN tracks ON (tracks.album = albums.id)  INNER JOIN genres ON (genre_track.genre = genres.id) INNER JOIN genre_track ON (genre_track.track = tracks.id) INNER JOIN tracks_persistent ON (tracks.urlmd5 = tracks_persistent.urlmd5) where tracks.id = ?'
     );
 
     $sth->execute($trackid);
@@ -835,6 +838,12 @@ sub init {
     $dbh->do("DROP TABLE IF EXISTS sugarcubeversion");
     $dbh->do("DROP TABLE IF EXISTS MIPReturned");
     $dbh->disconnect;
+}
+
+sub postinitPlugin {
+    my $class = shift;
+	$apc_enabled = Slim::Utils::PluginManager->isEnabled('Plugins::AlternativePlayCount::Plugin');
+	main::DEBUGLOG && $log->is_debug && $log->debug('Plugin "Alternative Play Count" is enabled') if $apc_enabled;
 }
 
 sub myworkingset {
