@@ -3,11 +3,11 @@
 	<id>af168d88-e109-469d-6c80-b65fd836896f</id>
 	<name>PLUGIN_SUGARCUBE</name>
 	<module>Plugins::SugarCube::Plugin</module>
-	<version>7.0.7</version>
+	<version>7.0.8</version>
 	<description>PLUGIN_SUGARCUBE_DESCINSTALL</description>
-	<creator>Charles Parker</creator>
+	<creator>Charles Parker, AF</creator>
 	<icon>plugins/SugarCube/HTML/images/sugarcube.png</icon>
-	<homepageURL>https://www.spicefly.com/</homepageURL>
+	<homepageURL>https://github.com/AF-1/lms-sugarcube</homepageURL>
 	<optionsURL>plugins/SugarCube/settings/settings.html</optionsURL>
 	<defaultState>enabled</defaultState>
 	<targetApplication>
