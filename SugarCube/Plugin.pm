@@ -43,7 +43,6 @@ use Slim::Utils::OSDetect;
 use Plugins::SugarCube::Settings;
 use Plugins::SugarCube::PlayerSettings;
 use Plugins::SugarCube::Breakout;
-use Plugins::SugarCube::Traffic;
 use Plugins::SugarCube::ProtocolHandler;
 use Scalar::Util qw(blessed);
 use Slim::Utils::Timers;
@@ -2822,18 +2821,13 @@ sub SugarDelay {
 
 sub SugarPlayerCheck {
     my $client = shift;
-    Slim::Utils::Timers::killTimers( $client, \&SugarPlayerCheck )
-      ;    #Paranoia check
+    Slim::Utils::Timers::killTimers($client, \&SugarPlayerCheck); #Paranoia check
 
-    my $timer =
-      Slim::Utils::Timers::setTimer( $client, Time::HiRes::time() + 20,
-        \&SugarPlayerCheck );
+    my $timer = Slim::Utils::Timers::setTimer($client, Time::HiRes::time() + 20, \&SugarPlayerCheck);
     my $quicksong = Slim::Player::Playlist::url($client);
 
     #  Blocking Streaming
-    if ( Slim::Music::Info::isRemoteURL($quicksong) == 1 ) {
-        return;
-    }
+    return if Slim::Music::Info::isRemoteURL($quicksong) == 1;
 
     if (   $quicksong =~ m/^napster:/i
         || $quicksong =~ m/.pls/i
@@ -2880,7 +2874,8 @@ sub SugarPlayerCheck {
 
         ## GOOGLE TRAFFIC START
         my $traf_enable = $prefs->get('traf_enable');    # If Traffic Enabled
-        if ( $traf_enable == 1 ) {
+        if ($traf_enable == 1) {
+			require Plugins::SugarCube::Traffic;
             Plugins::SugarCube::Traffic::start($client);
         }
         ## TRAFFIC END

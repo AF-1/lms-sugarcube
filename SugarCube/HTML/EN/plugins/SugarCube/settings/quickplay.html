@@ -9,7 +9,7 @@
 
 [% END -%]
 [% PROCESS pageheader.html %]
-[% END %]		
+[% END %]
 
 		<script type="text/javascript">
 			for (var i=0; i < parent.frames.length; i++) {
@@ -17,14 +17,11 @@
 					parent.frames[i].location.replace(parent.frames[i].location.pathname + "?player=[% player | uri %]&amp;refresh=1");
 				}
 			}
-		</script>	
+		</script>
 
 	[% WRAPPER settingGroup title="Spicefly SugarCube - Auto Mix" %][% END %]
-	<TABLE border=0 cellpadding=2 cellspacing=3>
-		<tr><td><a href="https://www.spicefly.com/?from=amix" target="_blank">Find more interesting MusicIP information at Spicefly.com</a></td></tr>
-		</TABLE>	
 	<P><BR>&nbsp;</BR></P>
-	
+
 [%- IF !ajaxUpdate %]
 [% PROCESS pagefooter.html %]
 [% END %]

@@ -3,7 +3,7 @@ PLUGIN_SUGARCUBE
 PLUGIN_SUGARCUBE_DESC
 	EN	SugarCube Travel through your music Library using MusicIP
 PLUGIN_SUGARCUBE_DESCINSTALL
-	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.  See <a href="https://www.spicefly.com/?from=lms" target="_blank">www.spicefly.com</a> for Change Log
+	EN	Travel through your music Library using MusicIPs recommendations or SugarCube FreeStyle Mode. Features Include Filter, Genre, Artist and Recipe Mixing, use statistics from LMS, Artist and Genre Blocking, Coming Up Next, Web Interface, Sleep Mode, Volume Fade, Google Traffic, DTSM Provider and lots more.
 PLUGIN_SUGARCUBE_MENU
 	EN	SugarCube Status
 PLUGIN_SUGARCUBE_REDIRECT

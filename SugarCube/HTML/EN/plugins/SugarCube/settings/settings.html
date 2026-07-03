@@ -1,8 +1,8 @@
 [% PROCESS settings/header.html %]
 [% WRAPPER setting title="PLUGIN_SC_WEB_SUGARCUBE" desc="" %]
-	<div class="prefDesc">[% "PLUGIN_SC_WEB_SUGARCUBETEXT" | string %]<br><br><b><a href="http://www.spicefly.com/" target="_blank">www.spicefly.com</a></b></div>
+	<div class="prefDesc">[% "PLUGIN_SC_WEB_SUGARCUBETEXT" | string %]</div>
 [% END %]
-	
+
 	[% WRAPPER settingSection %]
 		[% WRAPPER settingGroup title="PLUGIN_SC_MAIN_PORT" desc="PLUGIN_SC_MAIN_PORTDESC" %]
 		<input type="text" class="stdedit" name="sugarport" id="sugarport" value="[% prefs.sugarport %]" size="5" />
@@ -12,26 +12,26 @@
 		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_TIMEOUT" desc="PLUGIN_SC_WEB_TIMEOUTDESC" %]
 			<input type="text" class="stdedit sliderInput_30_120_5" name="sqlitetimeout" id="sqlitetimeout" value="[% prefs.sqlitetimeout %]" size="2">
-		[% END %]	
-		<HR><BR>		
+		[% END %]
+		<HR><BR>
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_DYNAMICCONVERSION" desc="PLUGIN_SC_WEB_DYNAMICCONVERSION" %]
 			<input type="checkbox" [% IF prefs.sugardpc %]checked [% END %] class="stdedit" name="sugardpc" id="sugardpc" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_DYNAMICCONVERSION" | string %]</label>
-		[% END %]			
-		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LOCALMEDIAPATH" desc="PLUGIN_SC_WEB_LOCALMEDIAPATHDESC" %]	
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LOCALMEDIAPATH" desc="PLUGIN_SC_WEB_LOCALMEDIAPATHDESC" %]
 			<input type="text" class="stdedit" name="localmediapath" id="localmediapath" value="[% prefs.localmediapath %]" size="30">
-		[% END %]		
-		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_NASCONVERTPATH" desc="PLUGIN_SC_WEB_NASCONVERTPATHDESC" %]	
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_NASCONVERTPATH" desc="PLUGIN_SC_WEB_NASCONVERTPATHDESC" %]
 			<input type="text" class="stdedit" name="nasconvertpath" id="nasconvertpath" value="[% prefs.nasconvertpath %]" size="30">
 		[% END %]
 		<HR><BR>
-		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LOCALMEDIAPATH_2" desc="PLUGIN_SC_WEB_LOCALMEDIAPATHDESCTWO" %]	
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LOCALMEDIAPATH_2" desc="PLUGIN_SC_WEB_LOCALMEDIAPATHDESCTWO" %]
 			<input type="text" class="stdedit" name="localmediapath_2" id="localmediapath_2" value="[% prefs.localmediapath_2 %]" size="30">
-		[% END %]		
-		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_NASCONVERTPATH_2" desc="PLUGIN_SC_WEB_NASCONVERTPATHDESC" %]	
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_NASCONVERTPATH_2" desc="PLUGIN_SC_WEB_NASCONVERTPATHDESC" %]
 			<input type="text" class="stdedit" name="nasconvertpath_2" id="nasconvertpath_2" value="[% prefs.nasconvertpath_2 %]" size="30">
 		[% END %]
-		<HR><BR>		
+		<HR><BR>
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MAIN_DELAY" desc="PLUGIN_SC_WEB_MAIN_DELAYDESC" %]
 		<input type="text" class="stdedit sliderInput_1_30_1" name="sugardelay" id="sugardelay" value="[% prefs.sugardelay %]" size="1">
 		[% END %]
@@ -56,7 +56,7 @@
 					<option [% IF prefs.sugarlvTS == option.key %]selected='selected' [% END %]value="[% option.key %]">[% option.value | html %]</option>
 				[%- END -%]
 			</select>
-		[% END %]	
+		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_SC_STATS_RATINGSCALE" desc="PLUGIN_SC_STATS_RATINGSCALE_DESC" %]
 			<select name="rating_10scale" id="rating_10scale">
 				[% FOREACH option = {
@@ -76,23 +76,24 @@
 					<option [% IF prefs.useapcvalues == option.key %]selected='selected' [% END %]value="[% option.key %]">[% option.value | html %]</option>
 				[%- END -%]
 			</select>
-		[% END %]	
+		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_MIPSIZE" desc="PLUGIN_SC_WEB_MIPSIZEDESC" %]
 			<input type="text" class="stdedit sliderInput_10_100_1" name="sugarmipsize" id="sugarmipsize" value="[% prefs.sugarmipsize %]" size="2">
 		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_XMAS" desc="PLUGIN_SC_WEB_XMASDESC" %]
 			<input type="checkbox" [% IF prefs.sugarxmas %]checked [% END %] class="stdedit" name="sugarxmas" id="sugarxmas" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_SC_WEB_XMAS" | string %]</label>
-		[% END %]	
+		[% END %]
 		<br><b>All other settings are Per Player see Player Tab to configure them</b>
-		<br>	
-	[% END %]	
-	<HR><BR>		
+		<br>
+	[% END %]
+	<HR><BR>
 	[% WRAPPER settingSection %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_ENABLE" desc="PLUGIN_TRAF_ENABLE" %]
 			<input type="checkbox" [% IF prefs.traf_enable %]checked [% END %] class="stdedit" name="traf_enable" id="traf_enable" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_ENABLE" | string %]</label>
-		[% END %]	
+		[% END %]
+		[% IF prefs.traf_enable %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_JOURNEY" desc="PLUGIN_TRAF_JOURNEY" %]
 		<input type="text" class="stdedit" name="traf_journey_one" id="traf_journey_one" value="[% prefs.traf_journey_one %]" size="70" />
 		[% END %]
@@ -105,7 +106,7 @@
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_ENABLE_TWO" desc="PLUGIN_TRAF_ENABLE_TWO" %]
 			<input type="checkbox" [% IF prefs.traf_enable_two %]checked [% END %] class="stdedit" name="traf_enable_two" id="traf_enable_two" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_ENABLE_TWO" | string %]</label>
-		[% END %]	
+		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_JOURNEY" desc="PLUGIN_TRAF_JOURNEY" %]
 		<input type="text" class="stdedit" name="traf_journey_two" id="traf_journey_two" value="[% prefs.traf_journey_two %]" size="70" />
 		[% END %]
@@ -120,10 +121,10 @@
 		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_FROM" desc="PLUGIN_TRAF_FROM" %]
 			<input type="text" class="stdedit sliderInput_1_23_1" name="traf_from" id="traf_from" value="[% prefs.traf_from %]" size="1">
-		[% END %]	
+		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_TO" desc="PLUGIN_TRAF_TO" %]
 			<input type="text" class="stdedit sliderInput_1_23_1" name="traf_to" id="traf_to" value="[% prefs.traf_to %]" size="1">
-		[% END %]	
+		[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_DAYS" desc="PLUGIN_TRAF_DAYS" %]
 			<input type="checkbox" [% IF prefs.traf_mon %]checked [% END %] class="stdedit" name="traf_mon" id="traf_mon" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_MON" | string %]</label>
@@ -139,10 +140,10 @@
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_SAT" | string %]</label>
 			<input type="checkbox" [% IF prefs.traf_sun %]checked [% END %] class="stdedit" name="traf_sun" id="traf_sun" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_SUN" | string %]</label>
-		[% END %]	
-
-	[% END %]	
-	<br><a href="http://www.spicefly.com/">Spicefly.com</a>- This plugin is for your own personal, non-commercial use.
+		[% END %]
+		[% END %]
+	[% END %]
+	<br>This plugin is for your own personal, non-commercial use.
 	<br>
 	<br>
 [% PROCESS settings/footer.html %]

@@ -1,3 +1,12 @@
+Spicefly - SugarCube
+
+Copyright 2008-2021 Charles Parker (https://www.spicefly.com/)
+
+Minor modifications by AF, (c) 2024
+
+---
+
+
 Spicefly - SugarCube - Copyright 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 - Charles Parker
 Developed by Charles Parker - https://www.spicefly.com/
 
@@ -12,7 +21,7 @@ Released as Open Source under the GNU General Public License v3.0
 
 In Short Summary
 Complete source code must be made available that includes all changes
-Copyright and license notices must be preserved. 
+Copyright and license notices must be preserved.
 Contributors provide an express grant of patent rights.
 
 

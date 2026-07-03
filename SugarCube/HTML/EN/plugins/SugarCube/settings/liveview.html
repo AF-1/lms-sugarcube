@@ -10,6 +10,7 @@
 [% PROCESS pageheader.html %]
 [% PROCESS plugins/SugarCube/HTML/css/sugarcube.css %]
 [% END %]
+[% refresh = refresh || 0 %]
 [% IF refresh > 0 %]
 	<SCRIPT>
 	<!--
