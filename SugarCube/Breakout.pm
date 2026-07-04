@@ -1,3 +1,9 @@
+# Spicefly - SugarCube
+# Developed by Charles Parker
+# Modifications by AF, (c) 2024
+# Licensed under the GPLv3 - see LICENSE file
+#
+
 # Breakout contain all the database calls
 #
 # In Summary
@@ -11,6 +17,7 @@
 package Plugins::SugarCube::Breakout;
 
 use strict;
+use warnings;
 use base qw(Slim::Web::Settings);
 use Plugins::SugarCube::Plugin;
 use Slim::Utils::Prefs;
@@ -172,7 +179,7 @@ sub FSgetRealRandomSubsetYearRangeStrict {
     my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype');
 
     if ( $sugarcube_filetype eq "" ) {
-        $sugarcube_filetype == 0;    # Default Anything
+        $sugarcube_filetype = 0;    # Default Anything
     }
 
     my $sugarcube_fs_length =
@@ -269,7 +276,7 @@ sub FSgetRealRandomSubsetYearRangeAny {
     my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype');
 
     if ( $sugarcube_filetype eq "" ) {
-        $sugarcube_filetype == 0;    # Default Anything
+        $sugarcube_filetype = 0;    # Default Anything
     }
 
     my $sugarcube_fs_length =
@@ -359,7 +366,7 @@ sub FSgetRealRandomSubset {
     my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype');
 
     if ( $sugarcube_filetype eq "" ) {
-        $sugarcube_filetype == 0;    # Default Anything
+        $sugarcube_filetype = 0;    # Default Anything
     }
 
     my $sugarcube_fs_length =
@@ -458,15 +465,14 @@ sub getTSSongDetails {
     $sth->bind_col( 9, \$LP );
 
     if ( $sth->fetch() ) {
-
-        if ( $PC eq '' ) {
+		if ( !defined($PC) || $PC eq '' ) {
             $PC = 'Never Played';
         }
-        if ( $Rat eq '' ) {
+        if ( !defined($Rat) || $Rat eq '' ) {
             $Rat = 'Not Rated';
         }
 
-        if ( $LP == -1 ) {
+        if ( !defined($LP) || $LP == -1 ) {
             $LP = 'Never Played';
         }
         else {
@@ -544,15 +550,14 @@ sub getmyTSNextSong {
     $sth->bind_col( 9, \$LP );
 
     if ( $sth->fetch() ) {
-
-        if ( $PC eq '' ) {
+		if ( !defined($PC) || $PC eq '' ) {
             $PC = 'Never Played';
         }
-        if ( $Rat eq '' ) {
+        if ( !defined($Rat) || $Rat eq '' ) {
             $Rat = 'Not Rated';
         }
 
-        if ( $LP == -1 ) {
+        if ( !defined($LP) || $LP == -1 ) {
             $LP = 'Never Played';
         }
         else {
@@ -828,9 +833,9 @@ sub init {
 "CREATE TABLE IF NOT EXISTS previoustrack (id INTEGER PRIMARY KEY, client, temptrack, SCtrack, SCalbum, SCgenres, SCartist, SCplaycount integer, SCrating integer, SClastplayed integer, cover)"
         );
     }
-    my $catalog_rowset =
+    $catalog_rowset =
       $dbh->selectall_arrayref("PRAGMA table_info(WorkingSet)");
-    my @col_names = map { $_->[1] } @{$catalog_rowset};
+    @col_names = map { $_->[1] } @{$catalog_rowset};
     if ( grep { $_ eq 'trackid' } @col_names ) {
         $log->debug("Database tables are ready\n");
     }
@@ -868,9 +873,9 @@ sub myworkingset {
       $dbh->prepare("DELETE FROM WorkingSet WHERE client = '$clientid' ");
     $sth->execute();
 
-    my $sql =
-qq{INSERT INTO WorkingSet (client, trackingno, temptrack, SCtrack, SCalbum, SCgenres, SCartist, SCplaycount, SCrating, SClastplayed, cover, album, trackid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)};
-    my $sth = $dbh->prepare($sql);
+	$sth = $dbh->prepare(
+"INSERT INTO WorkingSet (client, trackingno, temptrack, SCtrack, SCalbum, SCgenres, SCartist, SCplaycount, SCrating, SClastplayed, cover, album, trackid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    );
 
     my $arraysize = scalar(@miparray);
     my $i         = 0;
@@ -979,7 +984,7 @@ qq{INSERT OR REPLACE INTO AlbumTracker (client, SCalbum) VALUES (?,?)};
         $sth->execute;
         $sth->finish();
 
-        my $sth = $dbh->prepare(
+        $sth = $dbh->prepare(
             "SELECT COUNT(*) FROM AlbumTracker WHERE client ='$clientid'");
         eval {
             $sth->execute();
@@ -1027,7 +1032,7 @@ qq{INSERT OR REPLACE INTO AlbumTracker (client, SCalbum) VALUES (?,?)};
     $sth->execute;
     $sth->finish();
 
-    my $sth = $dbh->prepare(
+    $sth = $dbh->prepare(
         "SELECT COUNT(*) FROM ArtistTracker WHERE client ='$clientid'");
     eval {
         $sth->execute();
@@ -1090,7 +1095,7 @@ sub TrackTracker {
     $sth->execute;
     $sth->finish();
 
-    my $sth = $dbh->prepare(
+    $sth = $dbh->prepare(
         "SELECT COUNT(*) FROM TrackTracker WHERE client ='$clientid'");
     eval {
         $sth->execute();
@@ -1852,22 +1857,21 @@ sub StatsPuller {
 "SELECT trackingno, SCtrack, SCalbum, SCartist, SCgenres, SCplaycount, SCrating, SClastplayed, temptrack, cover, album, trackid FROM WorkingSet WHERE WorkingSet.client = '$clientid' ORDER BY WorkingSet.trackingno DESC"
     );
     $sth->execute();
-    $sth->bind_col( 1, \$col1 )
-      ;    # tracking status ie. played already, playcount etc
+    $sth->bind_col( 1,  \$col1 );     # tracking status ie. played already, playcount etc
     $sth->bind_col( 2,  \$col2 );     # track name
     $sth->bind_col( 3,  \$col3 );     # album name
     $sth->bind_col( 4,  \$col4 );     # artist name
     $sth->bind_col( 5,  \$col5 );     # genres
-    $sth->bind_col( 6,  \$col6 );     # TS playcount
-    $sth->bind_col( 7,  \$col7 );     # TS rating
-    $sth->bind_col( 8,  \$col8 );     # TS lastplayed
+    $sth->bind_col( 6,  \$col6 );     # playcount
+    $sth->bind_col( 7,  \$col7 );     # rating
+    $sth->bind_col( 8,  \$col8 );     # lastplayed
     $sth->bind_col( 9,  \$col9 );     # temptrack file url
     $sth->bind_col( 10, \$col10 );    # albumart cover number
     $sth->bind_col( 11, \$col11 );    # full album id
     $sth->bind_col( 12, \$col12 );    # track id
 
-    my $clientid = $client->id;
-    $clientid =~ s/:/%3A/g;           # URI player id
+    my $clientid_uri = $client->id;
+    $clientid_uri =~ s/:/%3A/g;           # URI player id
 
     if ($sugarlvTS) {
 
@@ -1903,25 +1907,25 @@ sub StatsPuller {
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Loading Album'));\">";
             my $build2 =
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=album_id:"
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Loading Album'));\">";
             my $build3 =
 "<a href=\"/clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;album_id="
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "'/index.html?index=0\" target=\"browser\"><img src=\"/html/images/b_mmmix.gif\"  alt=\"More\" title=\"More\"></a>";
             my $build4 =
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=track_id:"
               . $col12
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Add Track'));\">";
 
             # THIS IS STATISTICS BUILD UP
@@ -1987,25 +1991,25 @@ sub StatsPuller {
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Loading Album'));\">";
             my $build2 =
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=album_id:"
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Add Album'));\">";
             my $build4 =
 "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=track_id:"
               . $col12
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "', 1, SqueezeJS.string('Add Track'));\">";
             my $build3 =
 "<a href=\"/clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;album_id="
               . $col11
               . "&amp;player="
-              . $clientid
+              . $clientid_uri
               . "'/index.html?index=0\" target=\"browser\"><img src=\"/html/images/b_mmmix.gif\" alt=\"More\" title=\"More\"></a>";
 
             $line =
@@ -2065,23 +2069,23 @@ sub GrabHistory {
     $sth->execute();
 
     my $array_ref = $sth->fetchall_arrayref();
-    foreach my $row (@$array_ref) {
+	foreach my $row (@$array_ref) {
         push @myworkingset,
-          my ( $artist, $track, $album, $genre, $albumart, $fullalbum ) = @$row;
+          map { defined($_) ? $_ : '' } @$row;
     }
-
     $sth->finish();
     return @myworkingset;
 }
 
 sub SaveHistory {
-    my $client    = shift;
-    my $artist    = shift;
-    my $track     = shift;
-    my $album     = shift;
-    my $genre     = shift;
-    my $albumart  = shift;
-    my $fullalbum = shift;
+    my ($client, $artist, $track, $album, $genre, $albumart, $fullalbum) = @_;
+
+	$artist = '' unless defined($artist);
+	$track = '' unless defined($track);
+	$album = '' unless defined($album);
+	$genre = '' unless defined($genre);
+	$albumart = '' unless defined($albumart);
+	$fullalbum = '' unless defined($fullalbum);
 
     my $clientid = Slim::Player::Client::id($client);
 
@@ -2106,7 +2110,7 @@ qq{INSERT INTO History (client, artist, track, album, genre, albumart, fullalbum
 
     $sth->execute;
 
-    my $sth =
+    $sth =
       $dbh->prepare("SELECT COUNT(*) FROM History WHERE client ='$clientid'");
     eval {
         $sth->execute();
@@ -2152,4 +2156,3 @@ sub get_track_length {
 }
 
 1;
-__END__

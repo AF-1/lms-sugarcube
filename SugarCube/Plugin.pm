@@ -1,28 +1,14 @@
-#Spicefly - SugarCube - Copyright 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 - Charles Parker
-#Developed by Charles Parker - https://www.spicefly.com/
+# Spicefly - SugarCube
+# Developed by Charles Parker
+# Modifications by AF, (c) 2024
+# Licensed under the GPLv3 - see LICENSE file
 #
-#Donations are gratefully received to assist with the costs of maintaining spicefly.com and associated knowledge articles
-#https://paypal.me/spicefly
-#
-# v7 - Nov. 2024
-# - pull stats directly from LMS, not TrackStat
-# - removed TrackStat code & support
-# - option to pull play count & date last played from Alternative Play Count plugin
-#
-#v6.01 - December 2023
-#+===================+
-#Licencing Requirements Removed
-#Released as Open Source under the GNU General Public License v3.0
-#
-#In Short Summary
-#Complete source code must be made available that includes all changes
-#Copyright and license notices must be preserved.
-#Contributors provide an express grant of patent rights.
-
 
 package Plugins::SugarCube::Plugin;
-use base qw(Slim::Plugin::Base);
+
 use strict;
+use warnings;
+use base qw(Slim::Plugin::Base);
 use Slim::Utils::Misc;
 use Slim::Utils::Prefs;
 use Slim::Utils::Log;
@@ -1119,10 +1105,11 @@ sub playalbum {
     my $client   = shift;
     my $song     = Slim::Player::Playlist::url($client);
     my $SCQAlbum = Plugins::SugarCube::Breakout::getalbum( $client, $song );
-    my $request  = $client->execute( [ "playlist", 'clear' ] );
-    my $request =
-      $client->execute( [ "playlist", 'addtracks', "album.id=$SCQAlbum" ] );
-    my $request = $client->execute( ["play"] );
+
+    $client->execute( [ "playlist", 'clear' ] );
+    $client->execute( [ "playlist", 'addtracks', "album.id=$SCQAlbum" ] );
+    $client->execute( ["play"] );
+
     my $msg = ('Album Queued');
     $client->showBriefly(
         {
@@ -1394,15 +1381,15 @@ sub jiveSugarCubeSetting {
         AutoStartMix($client);
     }
 
-    if ( defined( $request->getParam('_sendplayer') ) ) {
-        my $newplayer = $request->getParam('_sendplayer');
-        my $player    = Slim::Player::Client::getClient($newplayer);
-        my $song      = Slim::Player::Playlist::url($client);
-        my $track     = Slim::Utils::Misc::pathFromFileURL($song);
-        my $request   = $player->execute( [ "playlist", 'clear' ] );
-        my $request   = $player->execute( [ "playlist", "add", $track ] );
-        my $request   = $player->execute( ["play"] );
-    }
+	if ( defined( $request->getParam('_sendplayer') ) ) {
+		my $newplayer = $request->getParam('_sendplayer');
+		my $player    = Slim::Player::Client::getClient($newplayer);
+		my $song      = Slim::Player::Playlist::url($client);
+		my $track     = Slim::Utils::Misc::pathFromFileURL($song);
+		$player->execute( [ "playlist", 'clear' ] );
+		$player->execute( [ "playlist", "add", $track ] );
+		$player->execute( ["play"] );
+	}
 
     if ( defined( $request->getParam('sugarcube_sleep') ) ) {
         $prefs->client($client)
@@ -1960,6 +1947,7 @@ sub FreeStyle {
         my $CurrentAlbumArt,
         my $FullAlbum
     ) = Plugins::SugarCube::Breakout::getSongDetails($song);
+    $CurrentAlbumArt = "0" if !$CurrentAlbumArt;
     if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
     $cpartist{$client}    = $PlayArtist;
     $cptrack{$client}     = $PlayTrack;
@@ -1992,7 +1980,7 @@ sub FreeStyle {
 
         my $changeindex = 0;
         foreach (@unique) {
-            my $addme = $dbh->quote( @unique[$changeindex] );
+			my $addme = $dbh->quote( $unique[$changeindex] );
             $query = ( $query . $addme . " OR tracks.url = " );
             $changeindex++;
         }
@@ -2023,7 +2011,7 @@ sub FreeStyle {
 
         my $changeindex = 0;
         foreach (@unique) {
-            my $addme = $dbh->quote( @unique[$changeindex] );
+            my $addme = $dbh->quote( $unique[$changeindex] );
             $query = ( $query . $addme . " OR tracks.url = " );
             $changeindex++;
         }
@@ -2057,7 +2045,7 @@ sub FreeStyle {
     Plugins::SugarCube::Breakout::DropEmPunk($client);
 
     # If "show statistics" ENABLED
-    my $sugarlvTS = $prefs->get('sugarlvTS');
+    $sugarlvTS = $prefs->get('sugarlvTS');
     if ($sugarlvTS) {
         $log->debug("Dropping as per Statistics Block metrics\n");
         Plugins::SugarCube::Breakout::droptsmetrics($client);
@@ -2198,14 +2186,14 @@ sub gotMIP {
         $global_quickmix = 0;
     }
 
-    my $changeindex = 0;
+    $changeindex = 0;
     my $sugardpc    = $prefs->get('sugardpc');    # Dynamic Path Conversion
 
     foreach (@miparray) {
-        my $enc =
-          Slim::Utils::Unicode::encodingFromString( @miparray[$changeindex] );
+		my $enc =
+          Slim::Utils::Unicode::encodingFromString( $miparray[$changeindex] );
         $element =
-          Slim::Utils::Unicode::utf8decode_guess( @miparray[$changeindex],
+          Slim::Utils::Unicode::utf8decode_guess( $miparray[$changeindex],
             $enc );
 
         if ( $sugardpc == 1 ) {                   # Dynamic Path Conversion
@@ -2245,9 +2233,7 @@ sub gotMIP {
         $changeindex++;
     }
 
-    my $x       = Slim::Player::Playlist::url($client);
-    my $creator = $params->{'caller'}
-      ; # CHECK WHETHER ASYNC WAS FROM ALARM or AUTOMIX - IF SO THEN DONT SAVE CURRENT TRACK
+    my $x = Slim::Player::Playlist::url($client);
 
     # START ALARM CHECK - IF NOT ALARM SITUATION - SAVE CURRENT PLAYING TRACK
     if (   $x ne 'sugarcube:track'
@@ -2273,6 +2259,7 @@ sub gotMIP {
             my $CurrentAlbumArt,
             my $FullAlbum
         ) = Plugins::SugarCube::Breakout::getSongDetails($song);
+        $CurrentAlbumArt = "0" if !$CurrentAlbumArt;
         if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
         $cpartist{$client}    = $PlayArtist;
         $cptrack{$client}     = $PlayTrack;
@@ -2313,7 +2300,7 @@ sub gotMIP {
 
         my $changeindex = 0;
         foreach (@unique) {
-            my $addme = $dbh->quote( @unique[$changeindex] );
+            my $addme = $dbh->quote( $unique[$changeindex] );
             $query = ( $query . $addme . " OR tracks.url = " );
             $changeindex++;
         }
@@ -2410,7 +2397,7 @@ sub gotMIP {
 
         my $changeindex = 0;
         foreach (@unique) {
-            my $addme = $dbh->quote( @unique[$changeindex] );
+            my $addme = $dbh->quote( $unique[$changeindex] );
             $query = ( $query . $addme . " OR tracks.url = " );
             $changeindex++;
         }
@@ -2669,14 +2656,14 @@ sub gotMIP {
     Plugins::SugarCube::Breakout::playlistcull($client);
     sleepplayer($client);
 
-    my $creator = $params->{'caller'};
+    $creator = $params->{'caller'};
 
     # ASYNC WAS FROM ALARM DO THE TIDY UP FUNCTIONS
     if ( $creator eq 'SpiceflyAlarm' ) {
 
         my $request = $client->execute( [ 'playlist', 'delete', 0 ] );
         $request->source('PLUGIN_SUGARCUBE');
-        my $request = $client->execute( ['play'] );
+        $request = $client->execute( ['play'] );
         $request->source('PLUGIN_SUGARCUBE');
         return 1;    # Need to return 1 to stop being attacked by alarm calls
     }
@@ -2710,14 +2697,14 @@ sub randompuller {
 
     my $song = Slim::Player::Playlist::url($client)
       ; # CHECK WHETHER ASYNC WAS FROM ALARM or AUTOMIX - IF SO THEN DONT SAVE CURRENT TRACK
-    $log->debug("\nLMS Reported Track Playing;\n$song\n");
 
-    if ( $song eq 'sugarcube:track' )
+    if ( !defined($song) || $song eq 'sugarcube:track' )
     { # Breakout if there is no currently playing track we can pull the genre from
         $song = "FAILED";
         $log->debug("\nNo Currently Playing Track to get Genre from\n");
         return $song;
     }
+    $log->debug("\nLMS Reported Track Playing;\n$song\n");
 
     ( my $NEWSCgenre ) =
       Plugins::SugarCube::Breakout::getGenre( $client, $song );
@@ -2733,7 +2720,7 @@ sub randompuller {
         my $RNDAlbumArt,
         my $RNDFullAlbum
     ) = Plugins::SugarCube::Breakout::getRandom( $client, $NEWSCgenre );
-
+	$RNDAlbumArt = "0" if !$RNDAlbumArt;
     if ( length($RNDAlbumArt) == 0 ) { $RNDAlbumArt = "0"; }
 
     my $sugarcube_mode = $prefs->client($client)->get('sugarcube_mode');
@@ -2788,21 +2775,6 @@ sub randompuller {
 
 sub SugarDelay {
     my $client = shift;
-
-    my $sugarcube_sn = $prefs->client($client)->get('sugarcube_sn');
-    if ( $sugarcube_sn == 1 ) {
-        my $sugarcube_sn_active =
-          $prefs->client($client)->get('sugarcube_ns_active');
-
-        if ( $sugarcube_sn_active == 1 ) {
-            my $sugarcube_fade = $prefs->client($client)->get('sugarcube_fade');
-            $prefs->client($client)->set( 'sugarcube_ns_active', 0 );
-            my $aprefs = preferences('server');
-            $aprefs->client($client)
-              ->set( 'transitionType', "$sugarcube_fade" );
-            $client->execute( [ "playlist", "repeat", 0 ] );
-        }
-    }
 
     my $shufflesetting = $prefs->client($client)->get('sugarcube_shuffle');
     if ( $shufflesetting == 1 ) {
@@ -2860,8 +2832,7 @@ sub SugarPlayerCheck {
         {
             my $request = $client->execute( [ 'playlist', 'delete', 0 ] );
             $request->source('PLUGIN_SUGARCUBE');
-
-            my $request = $client->execute( ['play'] );
+            $request = $client->execute( ['play'] );
             $request->source('PLUGIN_SUGARCUBE');
             return;
         }
@@ -2906,6 +2877,7 @@ sub SugarPlayerCheck {
                 my $Rat,
                 my $LP
             ) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong);
+            $CurrentAlbumArt = "0" if !$CurrentAlbumArt;
             if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
             $cpartist{$client}    = $PlayArtist;
             $cptrack{$client}     = $PlayTrack;
@@ -2928,6 +2900,7 @@ sub SugarPlayerCheck {
                 my $UPNRAT,
                 my $UPNLP
             ) = Plugins::SugarCube::Breakout::getmyTSNextSong($client);
+            $UPNAlbumArt = "0" if !$UPNAlbumArt;
             if ( length($UPNAlbumArt) == 0 ) { $UPNAlbumArt = "0"; }
             $upnartist{$client}    = $UPNArtist;
             $upntrack{$client}     = $UPNTrack;
@@ -2950,7 +2923,7 @@ sub SugarPlayerCheck {
                 my $CurrentAlbumArt,
                 my $FullAlbum
             ) = Plugins::SugarCube::Breakout::getSongDetails($currentsong);
-
+			$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
             if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
             $cpartist{$client}    = $PlayArtist;
             $cptrack{$client}     = $PlayTrack;
@@ -2966,6 +2939,7 @@ sub SugarPlayerCheck {
                 my $UPNAlbumArt,
                 my $UPNFULLAlbum
             ) = Plugins::SugarCube::Breakout::getmyNextSong($client);
+            $UPNAlbumArt = "0" if !$UPNAlbumArt;
             if ( length($UPNAlbumArt) == 0 ) { $UPNAlbumArt = "0"; }
             $upnartist{$client}    = $UPNArtist;
             $upntrack{$client}     = $UPNTrack;
@@ -3077,9 +3051,6 @@ sub buildMIPReq {
 
 #      $log->debug("No MIP Variety Setting - Set for this client, default set to 0.\n" );
     }
-    my $sugarcube_style   = '&style=' . $scube_style;
-    my $sugarcube_variety = '&variety=' . $scube_variety;
-
     my $mypageurl;
 
     my $sugardpc = $prefs->get('sugardpc');    # Dynamic Path Conversion
@@ -3301,7 +3272,7 @@ sub gotErrorContinue {
     $log->debug(
 "\nKeeping music playing requesting (from LMS db) a Random Track matching the Current Playing Tracks Genre\n"
     );
-    my $song = randompuller($client);
+    my $song = randompuller($client) // 'FAILED';
     if ( $song eq 'FAILED' ) {
         $log->debug(
             "\nFAILED, likely no playing track to use or track has no Genre\n");
@@ -3332,7 +3303,7 @@ sub gotErrorContinue {
     }
     else {                              # Random Track selected was ok
 
-        my $currentsong = Slim::Player::Playlist::url($client);
+        my $currentsong = Slim::Player::Playlist::url($client) // '';
         if ( length($currentsong) != 0 ) {
             $currentsong = Slim::Utils::Misc::pathFromFileURL($currentsong);
             $currentsong = dirtyencoder($currentsong);
@@ -3345,6 +3316,7 @@ sub gotErrorContinue {
                 my $CurrentAlbumArt,
                 my $FullAlbum
             ) = Plugins::SugarCube::Breakout::getSongDetails($currentsong);
+            $CurrentAlbumArt = "0" if !$CurrentAlbumArt;
             if ( length($CurrentAlbumArt) == 0 ) { $CurrentAlbumArt = "0"; }
             $cpartist{$client}    = $PlayArtist;
             $cptrack{$client}     = $PlayTrack;
@@ -3517,31 +3489,15 @@ sub commandCallback {
         else { return; }
     }
 
-    if (   $request->source && ( $request->source eq 'PLUGIN_SUGARCUBE' )
-        || ( $request->source eq 'ALARM' )
-        || ( $request->source eq 'SpiceflyONE' ) )
+	my $source = $request->source() || '';
+    if (   ( $source eq 'PLUGIN_SUGARCUBE' )
+        || ( $source eq 'ALARM' )
+        || ( $source eq 'SpiceflyONE' ) )
     {
         return 1;
     }
 
-    if ( $request->isCommand( [ ['play'] ] ) ) {
-        my $sugarcube_sn = $prefs->client($client)->get('sugarcube_sn');
-        if ( $sugarcube_sn == 1 ) {
-
-            my $sugarcube_sn_active =
-              $prefs->client($client)->get('sugarcube_ns_active');
-
-            if ( $sugarcube_sn_active == 1 ) {
-                my $sugarcube_fade =
-                  $prefs->client($client)->get('sugarcube_fade');
-                $prefs->client($client)->set( 'sugarcube_ns_active', 0 );
-                my $aprefs = preferences('server');
-                $aprefs->client($client)
-                  ->set( 'transitionType', "$sugarcube_fade" );
-                $client->execute( [ "playlist", "repeat", 0 ] );
-            }
-
-        }
+	if ( $request->isCommand( [ ['play'] ] ) ) {
         Slim::Utils::Timers::setTimer( $client, Time::HiRes::time() + 10,
             \&SugarPlayerCheck );
 
@@ -3552,9 +3508,7 @@ sub commandCallback {
             Slim::Utils::Timers::setTimer( $client, Time::HiRes::time() + 20,
                 \&CheckSong );
         }
-
         #		$log->debug("SugarCube Timer Set\n");
-
     }
 
     if ( $request->isCommand( [ ['playlist'], ['clear'] ] ) ) {
@@ -3567,8 +3521,7 @@ sub commandCallback {
     if ( $request->isCommand( [ ['playlist'], ['newsong'] ] ) ) {
         my $sugardelay = $prefs->get('sugardelay');
         if ( length($sugardelay) == 1 || length($sugardelay) == 2 ) {
-
-            #			$log->debug("SugarCube Delay OK\n");
+            # $log->debug("SugarCube Delay OK\n");
         }
         else { $sugardelay = 1; }
         Slim::Utils::Timers::killTimers( $client, \&SugarDelay );
@@ -4246,13 +4199,9 @@ sub handleWebListHistory {
     $params->{'size'} = $sugarlviconsize;
 
     if ($client) {
-
-        my $sugarcubeworking = $prefs->client($client)->get('sugarcube_working')
-          ;    # reset for the stats page
-        my $sugarcube_randomtrack =
-          $prefs->client($client)->get('sugarcube_randomtrack');
-        my $quicktrackcount =
-          $prefs->client($client)->get('sugarcube_trackcount');
+        my $sugarcubeworking = $prefs->client($client)->get('sugarcube_working') // 0; # reset for the stats page
+        my $sugarcube_randomtrack = $prefs->client($client)->get('sugarcube_randomtrack');
+        my $quicktrackcount = $prefs->client($client)->get('sugarcube_trackcount');
 
         if ( !defined $quicktrackcount ) {
             $params->{'sugarcube_trackcount'} = 0;
@@ -4305,7 +4254,7 @@ sub handleWebListHistory {
 
         }
         else {
-            my $url = Slim::Player::Playlist::song($client);
+            my $url = Slim::Player::Playlist::song($client) // '';
             if ( $url ne '' ) {
                 my $track =
                   Slim::Schema->rs('Track')->objectForUrl( { 'url' => $url, } );
@@ -4319,22 +4268,22 @@ sub handleWebListHistory {
           ;    # Get History from db
         my $historysize = @history;
 
-        my ( $line, $index, $x );
+        my ( $line, $index, $x ) = ( '', 0, 0 );
 
 #	                   artist, track, album, genre, albumart, fullalbum FROM History WHERE client ='$clientid'" );
 #0		1		2		3		4		5
 #	push @previousset, $PlayArtist, $PlayTrack, $PlayAlbum, $CurrentGenre, $CurrentAlbumArt, $FullAlbum;
 
-        for ( $index = 0 ; $index < @history ; ( $index = $index + 6 ) ) {
+for ( $index = 0 ; $index < @history ; ( $index = $index + 6 ) ) {
             $x = $x + 6;
 
             my $build =
 "<a class='myButton' title='Play Album' onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
-              . @history[ $x - 1 ]
+              . $history[ $x - 1 ]
               . "&amp;player="
               . $client
               . "', 1, SqueezeJS.string('Loading Album'));\">Play Album</a>";
-            my $icon = @history[ $x - 2 ];
+            my $icon = $history[ $x - 2 ];
             if ( length($icon) == 0 ) {
                 $line =
                     $line
@@ -4345,13 +4294,13 @@ sub handleWebListHistory {
                   . ' src=/music/0/cover.jpg></td><td>'
                   . $build
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 5 ]
+                  . $history[ $x - 5 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 4 ]
+                  . $history[ $x - 4 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 6 ]
+                  . $history[ $x - 6 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 3 ]
+                  . $history[ $x - 3 ]
                   . '</td></tr><tr><td colspan=2 class=end>&nbsp;</td></tr><tr><td colspan=2>&nbsp;</td></tr>';
             }
             else {
@@ -4362,20 +4311,20 @@ sub handleWebListHistory {
                   . ' height='
                   . $sugarlviconsize
                   . " src=/music/"
-                  . @history[ $x - 2 ]
+                  . $history[ $x - 2 ]
                   . "/cover_"
                   . $sugarlviconsize . 'x'
                   . $sugarlviconsize
                   . '_o.jpg></td><td>'
                   . $build
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 5 ]
+                  . $history[ $x - 5 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 4 ]
+                  . $history[ $x - 4 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 6 ]
+                  . $history[ $x - 6 ]
                   . '</td></tr><tr><td>'
-                  . @history[ $x - 3 ]
+                  . $history[ $x - 3 ]
                   . '</td></tr><tr><td colspan=2 class=end>&nbsp;</td></tr><tr><td colspan=2>&nbsp;</td></tr>';
             }
         }
@@ -4429,10 +4378,8 @@ sub handleWebList {
         }
         else { $params->{'master'} = ''; }
 
-        my $sugarcubeworking = $prefs->client($client)->get('sugarcube_working')
-          ;    # reset for the stats page
-        my $sugarcube_randomtrack =
-          $prefs->client($client)->get('sugarcube_randomtrack');
+        my $sugarcubeworking = $prefs->client($client)->get('sugarcube_working') // 0; # reset for the stats page
+        my $sugarcube_randomtrack = $prefs->client($client)->get('sugarcube_randomtrack');
 
         # IF DISABLED
         my $checklive = $prefs->client($client)->get('sugarcube_status');
@@ -4576,7 +4523,7 @@ sub handleWebList {
 "CONFIGURATION ERROR: Select Mix Type by Filter: No Filter is specified";
                 }
             }
-            elsif ( $sugarcube_mix_type == 3 ) {    # Artist Mixing
+            elsif ( $sugarcube_mix_type == 3 ) { # Artist Mixing
                 my $sugarcube_artist =
                   $prefs->client($client)->get('sugarcube_artist');
                 if ( $sugarcube_artist eq '0' ) {
@@ -4587,10 +4534,9 @@ sub handleWebList {
 
             # Get Currently Playing Metric - Rest are held in previousset array
 
-            my $url = Slim::Player::Playlist::song($client);
+            my $url = Slim::Player::Playlist::song($client) // '';
             if ( $url ne '' ) {
-                my $track =
-                  Slim::Schema->rs('Track')->objectForUrl( { 'url' => $url, } );
+                my $track = Slim::Schema->rs('Track')->objectForUrl( { 'url' => $url, } );
                 $params->{'track'} = $track->title;
                 $params->{refresh} = 1;
             }
@@ -4598,8 +4544,8 @@ sub handleWebList {
               Plugins::SugarCube::Breakout::StatsPuller($client);
 
         }
-        if ( $upnartist{$client} ne '' ) {
-            my $sugarlvTS = $prefs->get('sugarlvTS');    # use stats
+        if ( ( $upnartist{$client} // '' ) ne '' ) {
+            my $sugarlvTS = $prefs->get('sugarlvTS'); # use stats
             if ($sugarlvTS) {
                 $params->{'showstats'}       = "ON";
                 $params->{'currentpc'}       = $cppc{$client};

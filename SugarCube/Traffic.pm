@@ -1,9 +1,16 @@
+# Spicefly - SugarCube
+# Developed by Charles Parker
+# Modifications by AF, (c) 2024
+# Licensed under the GPLv3 - see LICENSE file
+#
+
 # Google Traffic
 # Various API/JSON calls
 
 package Plugins::SugarCube::Traffic;
 
 use strict;
+use warnings;
 use base qw(Slim::Web::Settings);
 use Plugins::SugarCube::Plugin;
 use Slim::Utils::Prefs;

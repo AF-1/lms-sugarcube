@@ -1,17 +1,22 @@
 Spicefly - SugarCube
 
-Copyright 2008-2021 Charles Parker (https://www.spicefly.com/)
+Copyright 2008-2021 Charles Parker
 
-Minor modifications by AF, (c) 2024
+Modifications by AF, (c) 2024
 
 ---
 
-
 Spicefly - SugarCube - Copyright 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 - Charles Parker
-Developed by Charles Parker - https://www.spicefly.com/
+Developed by Charles Parker
 
 Donations are gratefully received to assist with the costs of maintaining spicefly.com and associated knowledge articles
 https://paypal.me/spicefly
+
+v7 AF-version / starting Nov. 2024
+ - pull stats directly from LMS, not TrackStat
+ - removed TrackStat code & support
+ - option to pull play count & date last played from Alternative Play Count plugin
+ - misc. bug fixes
 
 
 v6.01 - December 2023

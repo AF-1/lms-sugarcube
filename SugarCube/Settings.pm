@@ -1,6 +1,13 @@
+# Spicefly - SugarCube
+# Developed by Charles Parker
+# Modifications by AF, (c) 2024
+# Licensed under the GPLv3 - see LICENSE file
+#
+
 package Plugins::SugarCube::Settings;
 
 use strict;
+use warnings;
 use base qw(Slim::Web::Settings);
 use Slim::Utils::Prefs;
 
@@ -50,7 +57,7 @@ sub handler {
         $prefs->set( 'sugarhisweight', "$sugarhisweight" );
         my $sugarlvweight = $params->{'sugarlvweight'};
         $prefs->set( 'sugarlvweight', "$sugarlvweight" );
-        my $sugarxmas = $params->{'sugarxmas'};
+        my $sugarxmas = $params->{'sugarxmas'} ? 1 : 0;
         $prefs->set( 'sugarxmas', "$sugarxmas" );
         my $sqlitetimeout = $params->{'sqlitetimeout'};
         $prefs->set( 'sqlitetimeout', "$sqlitetimeout" );
@@ -62,17 +69,17 @@ sub handler {
         $prefs->set( 'nasconvertpath_2', "$nasconvertpath_2" );
         my $localmediapath_2 = $params->{'localmediapath_2'};
         $prefs->set( 'localmediapath_2', "$localmediapath_2" );
-        my $sugardpc = $params->{'sugardpc'};
+        my $sugardpc = $params->{'sugardpc'} ? 1 : 0;
         $prefs->set( 'sugardpc', "$sugardpc" );
 
-        my $traf_enable = $params->{'traf_enable'};
+        my $traf_enable = $params->{'traf_enable'} ? 1 : 0;
         $prefs->set( 'traf_enable', "$traf_enable" );
         my $traf_origin = $params->{'traf_origin'};
         $prefs->set( 'traf_origin', "$traf_origin" );
         my $traf_destination = $params->{'traf_destination'};
         $prefs->set( 'traf_destination', "$traf_destination" );
 
-        my $traf_enable_two = $params->{'traf_enable_two'};
+        my $traf_enable_two = $params->{'traf_enable_two'} ? 1 : 0;
         $prefs->set( 'traf_enable_two', "$traf_enable_two" );
         my $traf_origin_two = $params->{'traf_origin_two'};
         $prefs->set( 'traf_origin_two', "$traf_origin_two" );
@@ -91,19 +98,19 @@ sub handler {
         my $traf_to = $params->{'traf_to'};
         $prefs->set( 'traf_to', "$traf_to" );
 
-        my $traf_mon = $params->{'traf_mon'};
+        my $traf_mon = $params->{'traf_mon'} ? 1 : 0;
         $prefs->set( 'traf_mon', "$traf_mon" );
-        my $traf_tue = $params->{'traf_tue'};
+        my $traf_tue = $params->{'traf_tue'} ? 1 : 0;
         $prefs->set( 'traf_tue', "$traf_tue" );
-        my $traf_wed = $params->{'traf_wed'};
+        my $traf_wed = $params->{'traf_wed'} ? 1 : 0;
         $prefs->set( 'traf_wed', "$traf_wed" );
-        my $traf_thu = $params->{'traf_thu'};
+        my $traf_thu = $params->{'traf_thu'} ? 1 : 0;
         $prefs->set( 'traf_thu', "$traf_thu" );
-        my $traf_fri = $params->{'traf_fri'};
+        my $traf_fri = $params->{'traf_fri'} ? 1 : 0;
         $prefs->set( 'traf_fri', "$traf_fri" );
-        my $traf_sat = $params->{'traf_sat'};
+        my $traf_sat = $params->{'traf_sat'} ? 1 : 0;
         $prefs->set( 'traf_sat', "$traf_sat" );
-        my $traf_sun = $params->{'traf_sun'};
+        my $traf_sun = $params->{'traf_sun'} ? 1 : 0;
         $prefs->set( 'traf_sun', "$traf_sun" );
 
     }    # LOAD
@@ -132,8 +139,7 @@ sub handler {
     $params->{'prefs'}->{'traf_destination'} = $prefs->get('traf_destination');
     $params->{'prefs'}->{'traf_enable_two'}  = $prefs->get('traf_enable_two');
     $params->{'prefs'}->{'traf_origin_two'}  = $prefs->get('traf_origin_two');
-    $params->{'prefs'}->{'traf_destination_two'} =
-      $prefs->get('traf_destination_two');
+    $params->{'prefs'}->{'traf_destination_two'} = $prefs->get('traf_destination_two');
 
     $params->{'prefs'}->{'traf_journey_one'} = $prefs->get('traf_journey_one');
     $params->{'prefs'}->{'traf_journey_two'} = $prefs->get('traf_journey_two');

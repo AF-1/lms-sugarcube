@@ -93,7 +93,7 @@
 			<input type="checkbox" [% IF prefs.traf_enable %]checked [% END %] class="stdedit" name="traf_enable" id="traf_enable" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_ENABLE" | string %]</label>
 		[% END %]
-		[% IF prefs.traf_enable %]
+		[% IF !prefs.traf_enable %]<div style="display:none">[% END %]
 		[% WRAPPER settingGroup title="PLUGIN_TRAF_JOURNEY" desc="PLUGIN_TRAF_JOURNEY" %]
 		<input type="text" class="stdedit" name="traf_journey_one" id="traf_journey_one" value="[% prefs.traf_journey_one %]" size="70" />
 		[% END %]
@@ -141,7 +141,7 @@
 			<input type="checkbox" [% IF prefs.traf_sun %]checked [% END %] class="stdedit" name="traf_sun" id="traf_sun" value="1"/>
 			<label for="enabled" class="stdlabel">[% "PLUGIN_TRAF_SUN" | string %]</label>
 		[% END %]
-		[% END %]
+		[% IF !prefs.traf_enable %]</div>[% END %]
 	[% END %]
 	<br>This plugin is for your own personal, non-commercial use.
 	<br>

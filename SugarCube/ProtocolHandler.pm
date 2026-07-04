@@ -1,18 +1,13 @@
+# Spicefly - SugarCube
+# Developed by Charles Parker
+# Modifications by AF, (c) 2024
+# Licensed under the GPLv3 - see LICENSE file
+#
+
 package Plugins::SugarCube::ProtocolHandler;
 
-# $Id
-
-# Squeezebox Server Copyright 2001-2009 Logitech.
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License,
-# version 2.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-
 use strict;
+use warnings;
 use Plugins::SugarCube::Plugin;
 use Slim::Utils::Log;
 my $log = Slim::Utils::Log->addLogCategory({
