@@ -16,20 +16,14 @@ use Slim::Utils::DateTime;
 use LWP::UserAgent;
 
 my $prefs = preferences('plugin.SugarCube');
+my $log = logger('plugin.sugarcube');
+
 my %filterHash = ();
 my %GenresHash = ();
 my %ReceipesHash = ();
 my %ArtistsHash = ();
 my $timeoutvalue = 4;
 
-my $log = Slim::Utils::Log->addLogCategory({
-	'category'     => 'plugin.sugarcube',
-	'defaultLevel' => 'WARN',
-	'description'  => getDisplayName(),
-});
-sub getDisplayName {
-	return 'PLUGIN_SUGARCUBE';
-}
 sub needsClient {
 	return 1;
 }
@@ -49,20 +43,19 @@ sub prefs {
 
 sub handler {
 	my ($class, $client, $params, $callback, @args) = @_;
-	if ($params->{'saveSettings'})
-	{			# Save routine.. pull out the form and save them to disk
-
+	# Save routine.. pull out the form and save them to disk
+	if ($params->{'saveSettings'}) {
 		my $sugarcube_dupper = $params->{'sugarcube_dupper'} ? 1 : 0;
 		$prefs->client($client)->set('sugarcube_dupper', "$sugarcube_dupper");
 
 		my $sugarcube_fade_time = $params->{'sugarcube_fade_time'};
-		$prefs->client($client)->set('sugarcube_fade_time', "$sugarcube_fade_time");		# Fade timeline
+		$prefs->client($client)->set('sugarcube_fade_time', "$sugarcube_fade_time"); # Fade timeline
 
 		my $sugarcube_fade_on_off = $params->{'sugarcube_fade_on_off'} ? 1 : 0;
-		$prefs->client($client)->set('sugarcube_fade_on_off', "$sugarcube_fade_on_off");		# Fade or not fade
+		$prefs->client($client)->set('sugarcube_fade_on_off', "$sugarcube_fade_on_off"); # Fade or not fade
 
 		my $sugarcube_mode = $params->{'sugarcube_mode'};
-		$prefs->client($client)->set('sugarcube_mode', "$sugarcube_mode");		# Standard MusicIP or Freestyle mode
+		$prefs->client($client)->set('sugarcube_mode', "$sugarcube_mode"); # Standard MusicIP or Freestyle mode
 
 		my $sugarcube_vintage = $params->{'sugarcube_vintage'} ? 1 : 0;
 		$prefs->client($client)->set('sugarcube_vintage', "$sugarcube_vintage");
@@ -184,20 +177,20 @@ sub handler {
 		my $scblockartist_alwaysthree = $params->{'scblockartist_alwaysthree'};
 		$prefs->client($client)->set('scblockartist_alwaysthree', "$scblockartist_alwaysthree");
 
-		my $sugarcube_filetype = $params->{'sugarcube_filetype'};				# Flac or MP3 used in FreeStyle Mode
+		my $sugarcube_filetype = $params->{'sugarcube_filetype'}; # Flac or MP3 used in FreeStyle Mode
 		$prefs->client($client)->set('sugarcube_filetype',"$sugarcube_filetype");
 
 		my $sugarcube_year_on_off = $params->{'sugarcube_year_on_off'};
-		$prefs->client($client)->set('sugarcube_year_on_off',"$sugarcube_year_on_off");	# 0=any 1=strict 2=allow empty
+		$prefs->client($client)->set('sugarcube_year_on_off',"$sugarcube_year_on_off"); # 0=any 1=strict 2=allow empty
 
 		my $sugarcube_startyear = $params->{'sugarcube_startyear'};
-		$prefs->client($client)->set('sugarcube_startyear',"$sugarcube_startyear");	# FS Start Year
+		$prefs->client($client)->set('sugarcube_startyear',"$sugarcube_startyear"); # FS Start Year
 
 		my $sugarcube_endyear = $params->{'sugarcube_endyear'};
-		$prefs->client($client)->set('sugarcube_endyear',"$sugarcube_endyear");		# FS End Year
+		$prefs->client($client)->set('sugarcube_endyear',"$sugarcube_endyear"); # FS End Year
 
 		my $sugarcube_fs_length = $params->{'sugarcube_fs_length'};
-		$prefs->client($client)->set('sugarcube_fs_length',"$sugarcube_fs_length");		# FS Length
+		$prefs->client($client)->set('sugarcube_fs_length',"$sugarcube_fs_length"); # FS Length
 
 		my $sugarcube_display = $params->{'sugarcube_display'};
 		$prefs->client($client)->set('sugarcube_display', "$sugarcube_display");
@@ -222,8 +215,9 @@ sub handler {
 		$prefs->client($client)->set('sugarcube_albumoveride', "$sugarcube_albumoveride");
 
 		my $sugarcube_megasaver = $params->{'sugarcube_megasaver'} ? 1 : 0;
-		if ($sugarcube_megasaver == 1) {
+
 		# MEGA SAVE START
+		if ($sugarcube_megasaver == 1) {
 			foreach my $player (Slim::Player::Client::clients()) {
 				$prefs->client($player)->set('sugarcube_vintage', "$sugarcube_vintage");
 				$prefs->client($player)->set('sugarcube_wobble', "$sugarcube_wobble");
@@ -266,23 +260,23 @@ sub handler {
 				$prefs->client($player)->set('scblockartist_alwaystwo', "$scblockartist_alwaystwo");
 				$prefs->client($player)->set('scblockartist_alwaysthree', "$scblockartist_alwaysthree");
 
-				$prefs->client($client)->set('sugarcube_filetype',"$sugarcube_filetype");		# FreeStyle Mode (mp3/flac)
+				$prefs->client($client)->set('sugarcube_filetype',"$sugarcube_filetype"); # FreeStyle Mode (mp3/flac)
 
-				$prefs->client($client)->set('sugarcube_mode', "$sugarcube_mode");		# Standard MusicIP or Freestyle mode
+				$prefs->client($client)->set('sugarcube_mode', "$sugarcube_mode"); # Standard MusicIP or Freestyle mode
 
-				$prefs->client($client)->set('sugarcube_year_on_off',"$sugarcube_year_on_off");	# 0=any 1=strict 2=allow empty
+				$prefs->client($client)->set('sugarcube_year_on_off',"$sugarcube_year_on_off"); # 0=any 1=strict 2=allow empty
 
-				$prefs->client($client)->set('sugarcube_startyear',"$sugarcube_startyear");	# FS Start Year
-				$prefs->client($client)->set('sugarcube_endyear',"$sugarcube_endyear");		# FS End Year
+				$prefs->client($client)->set('sugarcube_startyear',"$sugarcube_startyear"); # FS Start Year
+				$prefs->client($client)->set('sugarcube_endyear',"$sugarcube_endyear"); # FS End Year
 
-				$prefs->client($client)->set('sugarcube_fs_length',"$sugarcube_fs_length");		# FS Length
+				$prefs->client($client)->set('sugarcube_fs_length',"$sugarcube_fs_length"); # FS Length
 
 				$prefs->client($player)->set('sugarcube_display', "$sugarcube_display");
 				$prefs->client($player)->set('sugarcube_ts_pc_higher', "$sugarcube_ts_pc_higher");
 				$prefs->client($player)->set('sugarcube_ts_trackrated', "$sugarcube_ts_trackrated");
 
-				$prefs->client($client)->set('sugarcube_fade_on_off', "$sugarcube_fade_on_off");		# Fade or not fade
-				$prefs->client($client)->set('sugarcube_fade_time', "$sugarcube_fade_time");		# Fade timeline
+				$prefs->client($client)->set('sugarcube_fade_on_off', "$sugarcube_fade_on_off"); # Fade or not fade
+				$prefs->client($client)->set('sugarcube_fade_time', "$sugarcube_fade_time"); # Fade timeline
 
 				$prefs->client($client)->set('sugarcube_dupper', "$sugarcube_dupper");
 
@@ -292,63 +286,67 @@ sub handler {
 				}
 				$prefs->client($player)->set('sugarcube_clutter', "$sugarcube_clutter");
 				$prefs->client($player)->set('sugarcube_albumoveride', "$sugarcube_albumoveride");
-			}}
+			}
+		}
 		# MEGA SAVE END
 
-		if ($sugarcube_status == 1) {		#  Additional Activities for SC Dis/Enabled
+		if ($sugarcube_status == 1) { # Additional Activities for SC Dis/Enabled
 			Plugins::SugarCube::Plugin::SugarCubeEnabled($client);
 		} else {
 			Plugins::SugarCube::Plugin::SugarCubeDisabled($client);
 		}
 
-	}	# LOAD ROUTINE.. PULL IN DATA AND PUT IT INTO THE SCALARS
+	} # LOAD ROUTINE.. PULL IN DATA AND PUT IT INTO THE SCALARS
 
-			my $master = Slim::Player::Sync::isMaster($client);  # Returns 1 if true
-			my $slave = Slim::Player::Sync::isSlave($client);  # Returns 1 if true
-			my $name = Slim::Player::Client::name($client);
-			if ($master == 1) {
-			$params->{'prefs'}->{'master'}  = "";
-			} elsif ($slave == 1) {
-			my $sync_master = $client->master()->name();
-			$params->{'prefs'}->{'master'}  = "#### Warning $name is a slave in sync group, make changes at $sync_master ####";
-			} else {$params->{'prefs'}->{'master'}  = "";}
+	my $master = Slim::Player::Sync::isMaster($client); # Returns 1 if true
+	my $slave = Slim::Player::Sync::isSlave($client); # Returns 1 if true
+	my $name = Slim::Player::Client::name($client);
+	if ($master == 1) {
+		$params->{'prefs'}->{'master'} = "";
+	} elsif ($slave == 1) {
+		my $sync_master = $client->master()->name();
+		$params->{'prefs'}->{'master'} = "#### Warning $name is a slave in sync group, make changes at $sync_master ####";
+	} else {
+		$params->{'prefs'}->{'master'} = "";
+	}
 
-# Default set - minimum to work
+	# Default set - minimum to work
 	my $scube_style = $prefs->client($client)->get('sugarcube_style');
 	my $scube_variety = $prefs->client($client)->get('sugarcube_variety');
-	if ( $scube_style eq '' ) {
+	if (!defined($scube_style) || $scube_style eq '' ) {
 	$prefs->client($client)->set('sugarcube_style', 0);
 	$log->debug("SugarCube MIP Style Setting not Set for this client, default set to 0\n");}
 
-	if ( $scube_variety eq '' ) {
+	if (!defined($scube_variety) || $scube_variety eq '') {
 	$prefs->client($client)->set('sugarcube_variety', 0);
 	$log->debug("SugarCube MIP Variety Setting not Set for this client, default set to 0\n");}
 
 	my $sugarcube_blockartist = $prefs->client($client)->get('sugarcube_blockartist');
-	if ( $sugarcube_blockartist eq '' ) {
+	if (!defined($sugarcube_blockartist) || $sugarcube_blockartist eq '') {
 	$prefs->client($client)->set('sugarcube_blockartist', 5);
 	$log->debug("Block Artist, default set to 5\n");}
 
 	my $sugarcube_blockalbum = $prefs->client($client)->get('sugarcube_blockalbum');
-	if ( $sugarcube_blockalbum eq '' ) {
+	if (!defined($sugarcube_blockalbum) || $sugarcube_blockalbum eq '') {
 	$prefs->client($client)->set('sugarcube_blockalbum', 5);
 	$log->debug("Block Album, default set to 5\n");}
 
 	my $sugarcube_remembertracks = $prefs->client($client)->get('sugarcube_remembertracks');
-	if ( $sugarcube_remembertracks eq '' ) {
+	if (!defined($sugarcube_remembertracks) || $sugarcube_remembertracks eq '') {
 	$prefs->client($client)->set('sugarcube_remembertracks', 6);
 	$log->debug("Remember Tracks, default set to 6\n");}
 
 	my $sugarcube_clutter = $prefs->client($client)->get('sugarcube_clutter');
-	if ( $sugarcube_clutter eq '' ) {
+	if (!defined($sugarcube_clutter) || $sugarcube_clutter eq '') {
 	$prefs->client($client)->set('sugarcube_clutter', 5);
 	$log->debug("Clutter, default set to 5\n");}
 
 
 	my $sugarcube_mode = $prefs->client($client)->get('sugarcube_mode');
-	if ( $sugarcube_mode eq '' ) {
-	$prefs->client($client)->set('sugarcube_mode', 0);		# Standard MusicIP or Freestyle mode
-		$log->debug("Default mode set to Standard MusicIP\n");}
+	if (!defined($sugarcube_mode) || $sugarcube_mode eq '') {
+		$prefs->client($client)->set('sugarcube_mode', 0); # Standard MusicIP or Freestyle mode
+		$log->debug("Default mode set to Standard MusicIP\n");
+	}
 
 	my $sugarcube_ts_lastplayed = $prefs->client($client)->get('sugarcube_ts_lastplayed');
 	my $sugarcube_ts_trackrated = $prefs->client($client)->get('sugarcube_ts_trackrated');
@@ -357,78 +355,72 @@ sub handler {
 	my $sugarcube_ts_playcount = $prefs->client($client)->get('sugarcube_ts_playcount');
 	my $sugarcube_ts_rating = $prefs->client($client)->get('sugarcube_ts_rating');
 
-	my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype');	# FreeStyle mp3/flac
-
-	my $sugarcube_fade_on_off = $prefs->client($client)->get('sugarcube_fade_on_off');		# Fade or not fade
-
-	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time');		# Fade timeline
-	if ( $sugarcube_fade_time eq '' ) {
-	$prefs->client($client)->set('sugarcube_fade_time', 10);
-	$log->debug("Fade time, default set to 10\n");}
-
+	my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype'); # FreeStyle mp3/flac
+	my $sugarcube_fade_on_off = $prefs->client($client)->get('sugarcube_fade_on_off'); # Fade or not fade
+	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time'); # Fade timeline
+	if (!defined($sugarcube_fade_time) || $sugarcube_fade_time eq '') {
+		$prefs->client($client)->set('sugarcube_fade_time', 10);
+		$log->debug("sugarcube_fade_time; NOT defined, default set to 10\n");
+	}
 	my $sugarcube_dupper = $prefs->client($client)->get('sugarcube_dupper');
 
-# statistics Settings default to 0 if not defined
-	if ( $sugarcube_ts_trackrated eq '' ) {
+	# statistics Settings default to 0 if not defined
+	if (!defined($sugarcube_ts_trackrated) || $sugarcube_ts_trackrated eq '') {
 			$log->debug("sugarcube_ts_trackrated; NOT defined\n");
 			$prefs->client($client)->set('sugarcube_ts_trackrated', 0);
 		}
-	if ( $sugarcube_ts_lastplayed eq '' ) {
-			$log->debug("sugarcube_ts_lastplayed; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_ts_lastplayed', 0);
-		}
-			if ( $sugarcube_ts_pc_higher eq '' ) {
-			$log->debug("sugarcube_ts_pc_higher; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_ts_pc_higher', 0);
-		}
-				if ( $sugarcube_ts_recentplayed eq '' ) {
-			$log->debug("sugarcube_ts_recentplayed; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_ts_recentplayed', 0);
-		}
-					if ( $sugarcube_ts_playcount eq '' ) {
-			$log->debug("sugarcube_ts_playcount; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_ts_playcount', 0);
-		}
-					if ( $sugarcube_ts_rating eq '' ) {
-			$log->debug("sugarcube_ts_rating; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_ts_rating', 0);
-		}
-					if ( $sugarcube_fade_time eq '' ) {
-			$log->debug("sugarcube_fade_time; NOT defined\n");
-			$prefs->client($client)->set('sugarcube_fade_time', 10);
-		}
-#
-	$params->{'prefs'}->{'sugarcube_vintage'}  = $prefs->client($client)->get('sugarcube_vintage');
-	$params->{'prefs'}->{'sugarcube_status'}  = $prefs->client($client)->get('sugarcube_status');
-	$params->{'prefs'}->{'sugarcube_upnext'}  = $prefs->client($client)->get('sugarcube_upnext');
-	$params->{'prefs'}->{'sugarcube_wobble'}  = $prefs->client($client)->get('sugarcube_wobble');
-	$params->{'prefs'}->{'sugarcube_albumoveride'}  = $prefs->client($client)->get('sugarcube_albumoveride');
-	$params->{'prefs'}->{'sugarcube_weighting'}  = $prefs->client($client)->get('sugarcube_weighting');
-	$params->{'prefs'}->{'sugarcube_weightingtxt'}  = $prefs->client($client)->get('sugarcube_weightingtxt');
-	$params->{'prefs'}->{'sugarcube_style'}  = $prefs->client($client)->get('sugarcube_style');
-	$params->{'prefs'}->{'sugarcube_variety'}  = $prefs->client($client)->get('sugarcube_variety');
-	$params->{'prefs'}->{'sugarcube_album_song'}  = $prefs->client($client)->get('sugarcube_album_song');
-	$params->{'prefs'}->{'sugarcube_mix_type'}  = $prefs->client($client)->get('sugarcube_mix_type');
-	$params->{'prefs'}->{'sugarcube_restrict_genre'}  = $prefs->client($client)->get('sugarcube_restrict_genre');
-	$params->{'prefs'}->{'scalarm_genre'}  = $prefs->client($client)->get('scalarm_genre');
-	$params->{'prefs'}->{'sugarcube_dynamicq'}  = $prefs->client($client)->get('sugarcube_dynamicq');
+	if (!defined($sugarcube_ts_lastplayed) || $sugarcube_ts_lastplayed eq '') {
+		$log->debug("sugarcube_ts_lastplayed; NOT defined\n");
+		$prefs->client($client)->set('sugarcube_ts_lastplayed', 0);
+	}
+	if (!defined($sugarcube_ts_pc_higher) || $sugarcube_ts_pc_higher eq '') {
+		$log->debug("sugarcube_ts_pc_higher; NOT defined\n");
+		$prefs->client($client)->set('sugarcube_ts_pc_higher', 0);
+	}
+	if (!defined($sugarcube_ts_recentplayed) || $sugarcube_ts_recentplayed eq '') {
+		$log->debug("sugarcube_ts_recentplayed; NOT defined\n");
+		$prefs->client($client)->set('sugarcube_ts_recentplayed', 0);
+	}
+	if (!defined($sugarcube_ts_playcount) || $sugarcube_ts_playcount eq '') {
+		$log->debug("sugarcube_ts_playcount; NOT defined\n");
+		$prefs->client($client)->set('sugarcube_ts_playcount', 0);
+	}
+	if (!defined($sugarcube_ts_rating) || $sugarcube_ts_rating eq '') {
+		$log->debug("sugarcube_ts_rating; NOT defined\n");
+		$prefs->client($client)->set('sugarcube_ts_rating', 0);
+	}
+
+	$params->{'prefs'}->{'sugarcube_vintage'} = $prefs->client($client)->get('sugarcube_vintage');
+	$params->{'prefs'}->{'sugarcube_status'} = $prefs->client($client)->get('sugarcube_status');
+	$params->{'prefs'}->{'sugarcube_upnext'} = $prefs->client($client)->get('sugarcube_upnext');
+	$params->{'prefs'}->{'sugarcube_wobble'} = $prefs->client($client)->get('sugarcube_wobble');
+	$params->{'prefs'}->{'sugarcube_albumoveride'} = $prefs->client($client)->get('sugarcube_albumoveride');
+	$params->{'prefs'}->{'sugarcube_weighting'} = $prefs->client($client)->get('sugarcube_weighting');
+	$params->{'prefs'}->{'sugarcube_weightingtxt'} = $prefs->client($client)->get('sugarcube_weightingtxt');
+	$params->{'prefs'}->{'sugarcube_style'} = $prefs->client($client)->get('sugarcube_style');
+	$params->{'prefs'}->{'sugarcube_variety'} = $prefs->client($client)->get('sugarcube_variety');
+	$params->{'prefs'}->{'sugarcube_album_song'} = $prefs->client($client)->get('sugarcube_album_song');
+	$params->{'prefs'}->{'sugarcube_mix_type'} = $prefs->client($client)->get('sugarcube_mix_type');
+	$params->{'prefs'}->{'sugarcube_restrict_genre'} = $prefs->client($client)->get('sugarcube_restrict_genre');
+	$params->{'prefs'}->{'scalarm_genre'} = $prefs->client($client)->get('scalarm_genre');
+	$params->{'prefs'}->{'sugarcube_dynamicq'} = $prefs->client($client)->get('sugarcube_dynamicq');
 	$params->{'prefs'}->{'sugarcube_filteractive'} = $prefs->client($client)->get('sugarcube_filteractive');
-	$params->{'prefs'}->{'sugarcube_receipes'}  = $prefs->client($client)->get('sugarcube_receipes');
-	$params->{'prefs'}->{'sugarcube_genre'}  = $prefs->client($client)->get('sugarcube_genre');
-	$params->{'prefs'}->{'sugarcube_artist'}  = $prefs->client($client)->get('sugarcube_artist');
-	$params->{'prefs'}->{'sugarcube_morningfilter'}  = $prefs->client($client)->get('sugarcube_morningfilter');
-	$params->{'prefs'}->{'sugarcube_dayfilter'}  = $prefs->client($client)->get('sugarcube_dayfilter');
-	$params->{'prefs'}->{'sugarcube_eveningfilter'}  = $prefs->client($client)->get('sugarcube_eveningfilter');
-	$params->{'prefs'}->{'sugarcube_shuffle'}  = $prefs->client($client)->get('sugarcube_shuffle');
-	$params->{'prefs'}->{'sugarcube_remembertracks'}  = $prefs->client($client)->get('sugarcube_remembertracks');
-	$params->{'prefs'}->{'sugarcube_clear'}  = $prefs->client($client)->get('sugarcube_clear');
-	$params->{'prefs'}->{'sugarcube_volume_flag'}  = $prefs->client($client)->get('sugarcube_volume_flag');
-	$params->{'prefs'}->{'sugarcube_volumetimefrom'}  = $prefs->client($client)->get('sugarcube_volumetimefrom');
-	$params->{'prefs'}->{'sugarcube_volumetimeto'}  = $prefs->client($client)->get('sugarcube_volumetimeto');
-	$params->{'prefs'}->{'sugarcube_reducevolume'}  = $prefs->client($client)->get('sugarcube_reducevolume');
-	$params->{'prefs'}->{'sugarcube_sleep'}  = $prefs->client($client)->get('sugarcube_sleep');
-	$params->{'prefs'}->{'sugarcube_sleepfrom'}  = $prefs->client($client)->get('sugarcube_sleepfrom');
-	$params->{'prefs'}->{'sugarcube_sleepto'}  = $prefs->client($client)->get('sugarcube_sleepto');
+	$params->{'prefs'}->{'sugarcube_receipes'} = $prefs->client($client)->get('sugarcube_receipes');
+	$params->{'prefs'}->{'sugarcube_genre'} = $prefs->client($client)->get('sugarcube_genre');
+	$params->{'prefs'}->{'sugarcube_artist'} = $prefs->client($client)->get('sugarcube_artist');
+	$params->{'prefs'}->{'sugarcube_morningfilter'} = $prefs->client($client)->get('sugarcube_morningfilter');
+	$params->{'prefs'}->{'sugarcube_dayfilter'} = $prefs->client($client)->get('sugarcube_dayfilter');
+	$params->{'prefs'}->{'sugarcube_eveningfilter'} = $prefs->client($client)->get('sugarcube_eveningfilter');
+	$params->{'prefs'}->{'sugarcube_shuffle'} = $prefs->client($client)->get('sugarcube_shuffle');
+	$params->{'prefs'}->{'sugarcube_remembertracks'} = $prefs->client($client)->get('sugarcube_remembertracks');
+	$params->{'prefs'}->{'sugarcube_clear'} = $prefs->client($client)->get('sugarcube_clear');
+	$params->{'prefs'}->{'sugarcube_volume_flag'} = $prefs->client($client)->get('sugarcube_volume_flag');
+	$params->{'prefs'}->{'sugarcube_volumetimefrom'} = $prefs->client($client)->get('sugarcube_volumetimefrom');
+	$params->{'prefs'}->{'sugarcube_volumetimeto'} = $prefs->client($client)->get('sugarcube_volumetimeto');
+	$params->{'prefs'}->{'sugarcube_reducevolume'} = $prefs->client($client)->get('sugarcube_reducevolume');
+	$params->{'prefs'}->{'sugarcube_sleep'} = $prefs->client($client)->get('sugarcube_sleep');
+	$params->{'prefs'}->{'sugarcube_sleepfrom'} = $prefs->client($client)->get('sugarcube_sleepfrom');
+	$params->{'prefs'}->{'sugarcube_sleepto'} = $prefs->client($client)->get('sugarcube_sleepto');
 	$params->{'prefs'}->{'sugarcube_sleepduration'} = $prefs->client($client)->get('sugarcube_sleepduration');
 	$params->{'prefs'}->{'sugarcube_vartist'} = $prefs->client($client)->get('sugarcube_vartist');
 	$params->{'prefs'}->{'scblockgenre_always'} = $prefs->client($client)->get('scblockgenre_always');
@@ -444,29 +436,29 @@ sub handler {
 	$params->{'prefs'}->{'scblockartist_alwaysthree'} = $prefs->client($client)->get('scblockartist_alwaysthree');
 
 	$params->{'prefs'}->{'sugarcube_filetype'} = $prefs->client($client)->get('sugarcube_filetype');# Flac or MP3 used in FreeStyle Mode
-	$params->{'prefs'}->{'sugarcube_startyear'} = $prefs->client($client)->get('sugarcube_startyear');	# FS Start Year
-	$params->{'prefs'}->{'sugarcube_endyear'} = $prefs->client($client)->get('sugarcube_endyear');	# FS End Year
-	$params->{'prefs'}->{'sugarcube_year_on_off'} = $prefs->client($client)->get('sugarcube_year_on_off');	# 0=any 1=strict 2=allow empty
+	$params->{'prefs'}->{'sugarcube_startyear'} = $prefs->client($client)->get('sugarcube_startyear'); # FS Start Year
+	$params->{'prefs'}->{'sugarcube_endyear'} = $prefs->client($client)->get('sugarcube_endyear'); # FS End Year
+	$params->{'prefs'}->{'sugarcube_year_on_off'} = $prefs->client($client)->get('sugarcube_year_on_off'); # 0=any 1=strict 2=allow empty
 
-	$params->{'prefs'}->{'sugarcube_fs_length'} = $prefs->client($client)->get('sugarcube_fs_length');	# FS Length
+	$params->{'prefs'}->{'sugarcube_fs_length'} = $prefs->client($client)->get('sugarcube_fs_length'); # FS Length
 
-	$params->{'prefs'}->{'sugarcube_display'}  = $prefs->client($client)->get('sugarcube_display');
-	$params->{'prefs'}->{'sugarcube_ts_trackrated'}  = $prefs->client($client)->get('sugarcube_ts_trackrated');
-	$params->{'prefs'}->{'sugarcube_ts_lastplayed'}  = $prefs->client($client)->get('sugarcube_ts_lastplayed');
-	$params->{'prefs'}->{'sugarcube_fade'}  = $prefs->client($client)->get('sugarcube_fade');
-	$params->{'prefs'}->{'sugarcube_sn'}  = $prefs->client($client)->get('sugarcube_sn');
-	$params->{'prefs'}->{'sugarcube_clutter'}  = $prefs->client($client)->get('sugarcube_clutter');
-	$params->{'prefs'}->{'sugarcube_alarm_type'}  = $prefs->client($client)->get('sugarcube_alarm_type');
-	$params->{'prefs'}->{'scalarm_filter'}  = $prefs->client($client)->get('scalarm_filter');
-	$params->{'prefs'}->{'sugarcube_blockalbum'}  = $prefs->client($client)->get('sugarcube_blockalbum');
+	$params->{'prefs'}->{'sugarcube_display'} = $prefs->client($client)->get('sugarcube_display');
+	$params->{'prefs'}->{'sugarcube_ts_trackrated'} = $prefs->client($client)->get('sugarcube_ts_trackrated');
+	$params->{'prefs'}->{'sugarcube_ts_lastplayed'} = $prefs->client($client)->get('sugarcube_ts_lastplayed');
+	$params->{'prefs'}->{'sugarcube_fade'} = $prefs->client($client)->get('sugarcube_fade');
+	$params->{'prefs'}->{'sugarcube_sn'} = $prefs->client($client)->get('sugarcube_sn');
+	$params->{'prefs'}->{'sugarcube_clutter'} = $prefs->client($client)->get('sugarcube_clutter');
+	$params->{'prefs'}->{'sugarcube_alarm_type'} = $prefs->client($client)->get('sugarcube_alarm_type');
+	$params->{'prefs'}->{'scalarm_filter'} = $prefs->client($client)->get('scalarm_filter');
+	$params->{'prefs'}->{'sugarcube_blockalbum'} = $prefs->client($client)->get('sugarcube_blockalbum');
 
-	$params->{'prefs'}->{'sugarcube_mode'} = $prefs->client($client)->get('sugarcube_mode');		# Standard MusicIP or Freestyle mode
+	$params->{'prefs'}->{'sugarcube_mode'} = $prefs->client($client)->get('sugarcube_mode'); # Standard MusicIP or Freestyle mode
 
 	$params->{'prefs'}->{'scubelicense'} = $prefs->get('scubelicense');
 
-	$params->{'prefs'}->{'sugarcube_fade_on_off'} = $prefs->client($client)->get('sugarcube_fade_on_off');		# Fade or not fade
+	$params->{'prefs'}->{'sugarcube_fade_on_off'} = $prefs->client($client)->get('sugarcube_fade_on_off'); # Fade or not fade
 
-	$params->{'prefs'}->{'sugarcube_fade_time'} = $prefs->client($client)->get('sugarcube_fade_time');		# Fade timeline
+	$params->{'prefs'}->{'sugarcube_fade_time'} = $prefs->client($client)->get('sugarcube_fade_time'); # Fade timeline
 
 	$params->{'prefs'}->{'sugarcube_dupper'} = $prefs->client($client)->get('sugarcube_dupper');
 
@@ -479,15 +471,12 @@ sub handler {
 }
 
 sub isPluginsInstalled {
-        my $client = shift;
-        my $pluginList = shift;
-        my $enabledPlugin = 1;
-        foreach my $plugin (split /,/, $pluginList) {
-                if($enabledPlugin) {
-                        $enabledPlugin = grep(/$plugin/, Slim::Utils::PluginManager->enabledPlugins($client));
-                }
-        }
-        return $enabledPlugin;
+	my ($client, $pluginList) = @_;
+	my $enabledPlugin = 1;
+	foreach my $plugin (split /,/, $pluginList) {
+		$enabledPlugin = grep(/$plugin/, Slim::Utils::PluginManager->enabledPlugins($client)) if $enabledPlugin;
+	}
+	return $enabledPlugin;
 }
 
 sub getPrefs {return $prefs;}
@@ -495,7 +484,7 @@ sub getPrefs {return $prefs;}
 ###
 # FILTERS
 sub getFilterList {
-	my @filters    = ();
+	my @filters = ();
 	my %filterHash = ();
 
 	my $MMSport = $prefs->get('sugarport');
@@ -518,7 +507,7 @@ sub getFilterList {
 		}
 		$filterHash{$filter} = $filter;
 	}
-	if ($http->header("Client-Warning") =~ /Internal response/) {
+	if (($http->header("Client-Warning") || '' ) =~ /Internal response/) {
 		# did not reach the server at all
 	$log->warn("\nMusicIP is NOT Running!");
 	$timeoutvalue = 2;
@@ -529,7 +518,7 @@ sub getFilterList {
 ####
 # GENRES
 sub getGenresList {
-	my @filters    = ();
+	my @filters = ();
 	my %filterHash = ();
 
 	my $MMSport = $prefs->get('sugarport');
@@ -552,7 +541,7 @@ sub getGenresList {
 		}
 		$filterHash{$filter} = $filter;
 	}
-	if ($http->header("Client-Warning") =~ /Internal response/) {
+	if (($http->header("Client-Warning") || '' ) =~ /Internal response/) {
 		# did not reach the server at all
 	$log->warn("\nMusicIP is NOT Running!");
 	}
@@ -562,7 +551,7 @@ sub getGenresList {
 ####
 # ARTISTS
 sub getArtistsList {
-	my @filters    = ();
+	my @filters = ();
 	my %filterHash = ();
 
 	my $MMSport = $prefs->get('sugarport');
@@ -585,7 +574,7 @@ sub getArtistsList {
 		}
 		$filterHash{$filter} = $filter;
 	}
-	if ($http->header("Client-Warning") =~ /Internal response/) {
+	if (($http->header("Client-Warning") || '' ) =~ /Internal response/) {
 		# did not reach the server at all
 	$log->warn("\nMusicIP is NOT Running!");
 	}
@@ -596,7 +585,7 @@ sub getArtistsList {
 #####
 # RECEIPES
 sub getReceipesList {
-	my @filters    = ();
+	my @filters = ();
 	my %filterHash = ();
 
 	my $MMSport = $prefs->get('sugarport');
@@ -619,23 +608,21 @@ sub getReceipesList {
 		}
 		$filterHash{$filter} = $filter;
 	}
-	if ($http->header("Client-Warning") =~ /Internal response/) {
-		# did not reach the server at all
-	$log->warn("\nMusicIP is NOT Running!");
+	if (($http->header("Client-Warning") || '' ) =~ /Internal response/) {
+		$log->warn("\nMusicIP is NOT Running!"); # did not reach the server at all
 	}
 	return \%filterHash;
 }
 
 
 sub grabPlayers {
-    my %playersHash;
+	my %playersHash;
 
-    foreach my $client ( Slim::Player::Client::clients() ) {
-        my $name = $client->name;
-        $playersHash{$name} = $name;
-    }
-
-    return \%playersHash;
+	foreach my $client ( Slim::Player::Client::clients() ) {
+		my $name = $client->name;
+		$playersHash{$name} = $name;
+	}
+	return \%playersHash;
 }
 
 1;

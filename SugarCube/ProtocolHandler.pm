@@ -10,34 +10,25 @@ use strict;
 use warnings;
 use Plugins::SugarCube::Plugin;
 use Slim::Utils::Log;
-my $log = Slim::Utils::Log->addLogCategory({
-	'category'     => 'plugin.sugarcube',
-	'defaultLevel' => 'DEBUG',
-	'description'  => getDisplayName(),
-});
-
-sub getDisplayName {return 'PLUGIN_SUGARCUBE';}
+my $log = logger('plugin.sugarcube');
 
 sub overridePlayback {
-	my ( $class, $client, $url ) = @_;
+	my ($class, $client, $url) = @_;
 
 	if ($url !~ m|^sugarcube:(.*)$|) {
 		return undef;
 	}
 	$log->debug("ProtocolHandler; Firing");
-    Slim::Utils::Timers::setTimer($client, Time::HiRes::time() + 1, \&Plugins::SugarCube::Plugin::AlarmFired($client),);
+	Slim::Utils::Timers::setTimer($client, Time::HiRes::time() + 1, \&Plugins::SugarCube::Plugin::AlarmFired, $client);
 	return 1;
 }
 
 sub canDirectStream { 0 }
 
-sub contentType {
-	return 'sugarcube';
-}
+sub contentType { return 'sugarcube'; }
 
 sub isRemote { 0 }
 
-sub getIcon {
-	return Plugins::SugarCube::Plugin->_pluginDataFor('icon');
-}
+sub getIcon { return Plugins::SugarCube::Plugin->_pluginDataFor('icon'); }
+
 1;
