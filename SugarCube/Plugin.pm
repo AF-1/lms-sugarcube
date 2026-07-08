@@ -1239,7 +1239,7 @@ sub jive_menu_save_genre {
 		$request->setStatusNeedsClient();
 		return;
 	}
-	if (defined ($request->getParam('_genre'))) {
+	if (defined($request->getParam('_genre'))) {
 		$log->debug("Save Genres\n");
 		$prefs->client($client)->set('sugarcube_genre', $request->getParam('_genre'));
 	}
@@ -1256,7 +1256,7 @@ sub jive_menu_save_artist {
 		$request->setStatusNeedsClient();
 		return;
 	}
-	if (defined ($request->getParam('_artist'))) {
+	if (defined($request->getParam('_artist'))) {
 		$log->debug("Save Artist . $request->getParam('_artist') \n");
 		$prefs->client($client)->set('sugarcube_artist', $request->getParam('_artist'));
 	}
@@ -1274,7 +1274,7 @@ sub jive_menu_save_filter {
 		$request->setStatusNeedsClient();
 		return;
 	}
-	if (defined ($request->getParam('_filter'))) {
+	if (defined($request->getParam('_filter'))) {
 		$log->debug("Param _filter\n");
 		$prefs->client($client)->set('sugarcube_filteractive', $request->getParam('_filter'));
 	}
@@ -1291,45 +1291,45 @@ sub jiveSugarCubeSetting {
 
 	if (!defined $client) { $request->setStatusNeedsClient(); return; }
 
-	if (defined ($request->getParam('sugarcube_volume_flag'))) {
+	if (defined($request->getParam('sugarcube_volume_flag'))) {
 		$prefs->client($client)->set('sugarcube_volume_flag',
 		$request->getParam('sugarcube_volume_flag'));
 	}
-	if (defined ($request->getParam('sugarcube_next'))) {
+	if (defined($request->getParam('sugarcube_next'))) {
 		SugarCubeReplaceNext($client);
 	}
-	if (defined ($request->getParam('playalbum'))) {
+	if (defined($request->getParam('playalbum'))) {
 		playalbum($client);
 	}
-	if (defined ($request->getParam('flipmode'))) {
+	if (defined($request->getParam('flipmode'))) {
 		flipmixmode($request);
 	}
-	if (defined ($request->getParam('enable_disable'))) {
+	if (defined($request->getParam('enable_disable'))) {
 		toggle_state ($request, "no");
 	}
-	if (defined ($request->getParam('mixfromhere'))) {
+	if (defined($request->getParam('mixfromhere'))) {
 		mixfromplaying ($request, "no");
 	}
-	if (defined ($request->getParam('sendtoplayer'))) {
+	if (defined($request->getParam('sendtoplayer'))) {
 		sendtoanotherplayer($request);
 	}
 
 	# goes into a random loop for reasons unknown
-	if (defined ($request->getParam('sugarcube_artisttypes'))) {
+	if (defined($request->getParam('sugarcube_artisttypes'))) {
 		artist_filter($request);
 	}
 
-	if (defined ($request->getParam('sugarcube_filtertypes'))) {
+	if (defined($request->getParam('sugarcube_filtertypes'))) {
 		filter_filter($request);
 	}
-	if (defined ($request->getParam('sugarcube_genretypes'))) {
+	if (defined($request->getParam('sugarcube_genretypes'))) {
 		genre_filter($request);
 	}
-	if (defined ($request->getParam('sugarcube_auto'))) {
+	if (defined($request->getParam('sugarcube_auto'))) {
 		AutoStartMix($client);
 	}
 
-	if (defined ($request->getParam('_sendplayer'))) {
+	if (defined($request->getParam('_sendplayer'))) {
 		my $newplayer = $request->getParam('_sendplayer');
 		my $player = Slim::Player::Client::getClient($newplayer);
 		my $song = Slim::Player::Playlist::url($client);
@@ -1339,10 +1339,10 @@ sub jiveSugarCubeSetting {
 		$player->execute (["play"]);
 	}
 
-	if (defined ($request->getParam('sugarcube_sleep'))) {
+	if (defined($request->getParam('sugarcube_sleep'))) {
 		$prefs->client($client)->set('sugarcube_sleep', $request->getParam('sugarcube_sleep'));
 	}
-	if (defined ($request->getParam('sugarcube_status'))) {
+	if (defined($request->getParam('sugarcube_status'))) {
 		$prefs->client($client)->set('sugarcube_status', $request->getParam('sugarcube_status'));
 		if ($request->getParam('sugarcube_status') == 1) {
 			SugarCubeEnabled($client);
@@ -1350,24 +1350,24 @@ sub jiveSugarCubeSetting {
 			SugarCubeDisabled($client);
 		}
 	}
-	if (defined ($request->getParam('sugarcube_shuffle'))) {
+	if (defined($request->getParam('sugarcube_shuffle'))) {
 		$prefs->client($client)->set('sugarcube_shuffle', $request->getParam('sugarcube_shuffle'));
 	}
-	if (defined ($request->getParam('sugarcube_upnext'))) {
+	if (defined($request->getParam('sugarcube_upnext'))) {
 		$prefs->client($client)->set('sugarcube_upnext', $request->getParam('sugarcube_upnext'));
 	}
-	if (defined ($request->getParam('sugarcube_mixtype'))) {
+	if (defined($request->getParam('sugarcube_mixtype'))) {
 		$prefs->client($client)->set('sugarcube_mix_type',
 			$request->getParam('sugarcube_mixtype'));
 	}
-	if (defined ($request->getParam('sugarcube_album_song'))) {
+	if (defined($request->getParam('sugarcube_album_song'))) {
 		$prefs->client($client)->set('sugarcube_album_song',
 			$request->getParam('sugarcube_album_song'));
 	}
-	if (defined ($request->getParam('sugarcube_style'))) {
+	if (defined($request->getParam('sugarcube_style'))) {
 		$prefs->client($client)->set('sugarcube_style', $request->getParam('sugarcube_style'));
 	}
-	if (defined ($request->getParam('sugarcube_variety'))) {
+	if (defined($request->getParam('sugarcube_variety'))) {
 		$prefs->client($client)->set('sugarcube_variety', $request->getParam('sugarcube_variety'));
 	}
 	$request->setStatusDone();
@@ -2090,14 +2090,14 @@ sub gotMIP {
 		$changeindex++;
 	}
 
-	my $x = Slim::Player::Playlist::url($client);
+	my $x = Slim::Player::Playlist::url($client) || '';
 
 	# START ALARM CHECK - IF NOT ALARM SITUATION - SAVE CURRENT PLAYING TRACK
 	if ($x ne 'sugarcube:track'
 		&& $creator ne 'SpiceflyAutoMix'
 		&& $creator ne 'SpiceflyONE')
 	{
-		$song = Slim::Player::Playlist::url($client);
+		$song = Slim::Player::Playlist::url($client) || '';
 
 		if ($song =~ m/^tmp:/i) {
 
@@ -2611,7 +2611,7 @@ sub SugarPlayerCheck {
 		## TRAFFIC END
 
 		## COMING UP NEXT BUILD FOR THE LIVE VIEW
-		my $currentsong = Slim::Player::Playlist::url($client);
+		my $currentsong = Slim::Player::Playlist::url($client) || '';
 
 		if ($currentsong =~ m/^tmp:/i) {
 			$log->debug("\nTrying to correct tmp file\n");
