@@ -568,7 +568,7 @@ sub jiveSugarCubeMenu {
 				ucfirst (Slim::Utils::Strings::string('ON'))
 			],
 			selectedIndex =>
-			 $prefs->client($client)->get('sugarcube_volume_flag') + 1,
+			 ($prefs->client($client)->get('sugarcube_volume_flag') || 0) + 1,
 			actions => {
 				do => {
 					choices => [
@@ -596,8 +596,7 @@ sub jiveSugarCubeMenu {
 				ucfirst (Slim::Utils::Strings::string('OFF')),
 				ucfirst (Slim::Utils::Strings::string('ON'))
 			],
-			selectedIndex => $prefs->client($client)->get('sugarcube_sleep') +
-			 1,
+			selectedIndex => ($prefs->client($client)->get('sugarcube_sleep') || 0) + 1,
 			actions => {
 				do => {
 					choices => [
@@ -622,8 +621,7 @@ sub jiveSugarCubeMenu {
 				ucfirst (Slim::Utils::Strings::string('OFF')),
 				ucfirst (Slim::Utils::Strings::string('ON'))
 			],
-			selectedIndex => $prefs->client($client)->get('sugarcube_upnext') +
-			 1,
+			selectedIndex => ($prefs->client($client)->get('sugarcube_upnext') || 0) + 1,
 			actions => {
 				do => {
 					choices => [
@@ -649,8 +647,7 @@ sub jiveSugarCubeMenu {
 				ucfirst (Slim::Utils::Strings::string('OFF')),
 				ucfirst (Slim::Utils::Strings::string('ON'))
 			],
-			selectedIndex => $prefs->client($client)->get('sugarcube_shuffle')
-			 + 1,
+			selectedIndex => ($prefs->client($client)->get('sugarcube_shuffle') || 0) + 1,
 			actions => {
 				do => {
 					choices => [
@@ -671,8 +668,7 @@ sub jiveSugarCubeMenu {
 		{
 			text =>
 			 Slim::Utils::Strings::string('PLUGIN_SUGARCUBE_JIVE_MIXTYPE'),
-			selectedIndex => $prefs->client($client)->get('sugarcube_mix_type')
-			 + 1,
+			selectedIndex => ($prefs->client($client)->get('sugarcube_mix_type') || 0) + 1,
 			choiceStrings => [ "None", "Filter", "Genre", "Artist" ],
 			actions => {
 				do => {
@@ -734,8 +730,7 @@ sub jiveSugarCubeMenu {
 		{
 			text =>
 			 Slim::Utils::Strings::string('PLUGIN_SUGARCUBE_JIVE_SONG_ALBUM'),
-			selectedIndex =>
-			 $prefs->client($client)->get('sugarcube_album_song') + 1,
+			selectedIndex => ($prefs->client($client)->get('sugarcube_album_song') || 0) + 1,
 			choiceStrings => [ "Album", "Song" ],
 			actions => {
 				do => {
@@ -1095,7 +1090,7 @@ sub toggle_state {
 	my $msg;
 
 	# my $current_status = $prefs->client($client)->get('sugarcube_status');
-	if ($prefs->client($client)->get('sugarcube_status') == 1) { # Enabled
+	if (($prefs->client($client)->get('sugarcube_status') || 0) == 1) { # Enabled
 		$msg = 'SugarCube DISABLED';
 		$prefs->client($client)->set ('sugarcube_status', "0");
 	} else {
@@ -1827,7 +1822,6 @@ sub FreeStyle {
 		my $FullAlbum
 	) = Plugins::SugarCube::Breakout::getSongDetails($song);
 	$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
-	if (length($CurrentAlbumArt) == 0) { $CurrentAlbumArt = "0"; }
 	$cpartist{$client} = $PlayArtist;
 	$cptrack{$client} = $PlayTrack;
 	$cpalbum{$client} = $PlayAlbum;
@@ -1981,7 +1975,7 @@ sub FreeStyle {
 		}
 
 	} else {
-		if (length ($myworkingset[8]) == 0) { $myworkingset[8] = "0"; }
+		$myworkingset[8] = "0" if !$myworkingset[8];
 		$upnartist{$client} = $myworkingset[4];
 		$upntrack{$client} = $myworkingset[1];
 		$upnalbum{$client} = $myworkingset[2];
@@ -2005,7 +1999,7 @@ sub FreeStyle {
 	# Reset Random Flag
 
 	$log->debug("Adding Track; $song\n");
-	if (length($song) == 0) {
+	if (!defined($song)) {
 		$log->info("*********FAILED STOP *********\n");
 	}
 	addtrack ($client, $song); # song is hashed up
@@ -2117,7 +2111,6 @@ sub gotMIP {
 			my $FullAlbum
 		) = Plugins::SugarCube::Breakout::getSongDetails($song);
 		$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
-		if (length($CurrentAlbumArt) == 0) { $CurrentAlbumArt = "0"; }
 		$cpartist{$client} = $PlayArtist;
 		$cptrack{$client} = $PlayTrack;
 		$cpalbum{$client} = $PlayAlbum;
@@ -2497,7 +2490,6 @@ sub randompuller {
 		my $RNDFullAlbum
 	) = Plugins::SugarCube::Breakout::getRandom ($client, $NEWSCgenre);
 	$RNDAlbumArt = "0" if !$RNDAlbumArt;
-	if (length($RNDAlbumArt) == 0) { $RNDAlbumArt = "0"; }
 
 	my $sugarcube_mode = $prefs->client($client)->get('sugarcube_mode');
 
@@ -2637,7 +2629,6 @@ sub SugarPlayerCheck {
 				my $LP
 			) = Plugins::SugarCube::Breakout::getTSSongDetails($currentsong);
 			$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
-			if (length($CurrentAlbumArt) == 0) { $CurrentAlbumArt = "0"; }
 			$cpartist{$client} = $PlayArtist;
 			$cptrack{$client} = $PlayTrack;
 			$cpalbum{$client} = $PlayAlbum;
@@ -2660,7 +2651,6 @@ sub SugarPlayerCheck {
 				my $UPNLP
 			) = Plugins::SugarCube::Breakout::getmyTSNextSong($client);
 			$UPNAlbumArt = "0" if !$UPNAlbumArt;
-			if (length($UPNAlbumArt) == 0) { $UPNAlbumArt = "0"; }
 			$upnartist{$client} = $UPNArtist;
 			$upntrack{$client} = $UPNTrack;
 			$upnalbum{$client} = $UPNAlbum;
@@ -2682,7 +2672,6 @@ sub SugarPlayerCheck {
 				my $FullAlbum
 			) = Plugins::SugarCube::Breakout::getSongDetails($currentsong);
 			$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
-			if (length($CurrentAlbumArt) == 0) { $CurrentAlbumArt = "0"; }
 			$cpartist{$client} = $PlayArtist;
 			$cptrack{$client} = $PlayTrack;
 			$cpalbum{$client} = $PlayAlbum;
@@ -2698,7 +2687,6 @@ sub SugarPlayerCheck {
 				my $UPNFULLAlbum
 			) = Plugins::SugarCube::Breakout::getmyNextSong($client);
 			$UPNAlbumArt = "0" if !$UPNAlbumArt;
-			if (length($UPNAlbumArt) == 0) { $UPNAlbumArt = "0"; }
 			$upnartist{$client} = $UPNArtist;
 			$upntrack{$client} = $UPNTrack;
 			$upnalbum{$client} = $UPNAlbum;
@@ -3037,7 +3025,6 @@ sub gotErrorContinue {
 				my $FullAlbum
 			) = Plugins::SugarCube::Breakout::getSongDetails($currentsong);
 			$CurrentAlbumArt = "0" if !$CurrentAlbumArt;
-			if (length($CurrentAlbumArt) == 0) { $CurrentAlbumArt = "0"; }
 			$cpartist{$client} = $PlayArtist;
 			$cptrack{$client} = $PlayTrack;
 			$cpalbum{$client} = $PlayAlbum;
@@ -3058,11 +3045,9 @@ sub gotErrorContinue {
 # Return the Url of the track in the playlist at specified position 0 being the first item
 # my $track_url = findtrackurl_frompos($client,4);
 sub findtrackurl_frompos {
-	my $client = shift;
-	my $find_pos = shift;
+	my ($client, $find_pos) = @_;
 	my $track2 = Slim::Player::Playlist::song ($client, $find_pos);
-	my $track2url = $track2->url;
-	return $track2url;
+	return $track2 ? $track2->url : '';
 }
 
 # Merge track and album
@@ -3074,7 +3059,7 @@ sub dupper {
 	my @static_list = ("Various", "Artists", "-", "//", "\\", "Instrumental", "Acoustic");
 
 	## Current Playing Track Details
-	$song = Slim::Player::Playlist::url($client);
+	$song = Slim::Player::Playlist::url($client) || '';
 	$song = Slim::Utils::Misc::pathFromFileURL($song);
 	$song = dirtyencoder($song);
 	(
@@ -3287,9 +3272,9 @@ my $checklive = $prefs->client($client)->get('sugarcube_status');
 
 sub slideVolume {
 	my $client = shift;
-	my $sugarcube_reducevolume = $prefs->client($client)->get('sugarcube_reducevolume');
-	my $sugarcube_volumetimefrom = $prefs->client($client)->get('sugarcube_volumetimefrom');
-	my $sugarcube_volumetimeto = $prefs->client($client)->get('sugarcube_volumetimeto');
+	my $sugarcube_reducevolume = $prefs->client($client)->get('sugarcube_reducevolume') || 0;
+	my $sugarcube_volumetimefrom = $prefs->client($client)->get('sugarcube_volumetimefrom') || 0;
+	my $sugarcube_volumetimeto = $prefs->client($client)->get('sugarcube_volumetimeto') || 0;
 	my $volumeslide = Slim::Player::Client::volume($client);
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
 	if ($sugarcube_volumetimefrom - $hour <= 0
@@ -3310,9 +3295,9 @@ sub sleepplayer {
 		my $sleeper = $client->sleepTime();
 		if ($sleeper == 0) {
 			my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
-			my $sugarcube_sleepfrom = $prefs->client($client)->get('sugarcube_sleepfrom');
-			my $sugarcube_sleepto = $prefs->client($client)->get('sugarcube_sleepto');
-			my $sugarcube_sleepduration = $prefs->client($client)->get('sugarcube_sleepduration');
+			my $sugarcube_sleepfrom = $prefs->client($client)->get('sugarcube_sleepfrom') || 0;
+			my $sugarcube_sleepto = $prefs->client($client)->get('sugarcube_sleepto') || 0;
+			my $sugarcube_sleepduration = $prefs->client($client)->get('sugarcube_sleepduration') || 0;
 			if ($sugarcube_sleepfrom - $hour <= 0
 				&& $sugarcube_sleepto - $hour <= 0
 				|| $sugarcube_sleepfrom - $hour >= 0
@@ -3327,7 +3312,7 @@ sub sleepplayer {
 
 # This always felt terrible but it did the job
 sub dirtyencoder {
-	my $mytitle = shift;
+	my $mytitle = shift || '';
 
 	#$log->debug("Pre-Conversion; $mytitle\n");
 	$mytitle =~ s/%/%25/g;
@@ -3565,7 +3550,6 @@ sub AutoStartMix {
 	$request->source('PLUGIN_SUGARCUBE');
 
 	my $sugarcube_activefilter;
-	my $scalarm_genre = $prefs->client($client)->get('scalarm_genre');
 	my $sugarport = $prefs->get('sugarport');
 	my $miphosturl = $prefs->get('miphosturl');
 	my $sugarmipsize = $prefs->get('sugarmipsize');
@@ -3579,7 +3563,7 @@ sub AutoStartMix {
 	my $sugarcube_alarm_type = $prefs->client($client)->get('sugarcube_alarm_type') || 0; # 0 is filter 1 is genre
 
 	if ($sugarcube_alarm_type == 0) { # Filter Mode
-		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_filter');
+		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_filter') || '';
 		if ($sugarcube_activefilter eq '0'
 			|| $sugarcube_activefilter eq '(None)')
 		{
@@ -3595,7 +3579,7 @@ sub AutoStartMix {
 			$mypageurl = ($mypageurl . '&filter=' . $sugarcube_activefilter);
 		}
 	} else { # Genre Mode
-		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_genre');
+		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_genre') || '';
 
 		if ($sugarcube_activefilter eq '0'
 			|| $sugarcube_activefilter eq '(None)')
@@ -3621,15 +3605,15 @@ sub AutoStartMix {
 
 sub ToggleVolume {
 	my ($client, $item) = @_;
-	my $sugarcubevolume_flag;
+	my $sugarcube_volume_flag;
 	my $line;
 	if ($item eq '{PLUGIN_SUGARCUBE_VOLUME_FADE_ON}') {
-		$sugarcubevolume_flag = 0;
-		$prefs->client($client)->set('sugarcubevolume_flag', "$sugarcubevolume_flag");
+		$sugarcube_volume_flag = 0;
+		$prefs->client($client)->set('sugarcube_volume_flag', "$sugarcube_volume_flag");
 		$line = $client->string('PLUGIN_SUGARCUBE_MENU_VOL_DISABLED');
 	} else {
-		$sugarcubevolume_flag = 1;
-		$prefs->client($client)->set('sugarcubevolume_flag', "$sugarcubevolume_flag");
+		$sugarcube_volume_flag = 1;
+		$prefs->client($client)->set('sugarcube_volume_flag', "$sugarcube_volume_flag");
 		$line = $client->string('PLUGIN_SUGARCUBE_MENU_VOL_ENABLE');
 	}
 	$client->showBriefly(
@@ -3714,7 +3698,7 @@ sub AlarmFired {
 	my $sugarcube_alarm_type = $prefs->client($client)->get('sugarcube_alarm_type') || 0; # 0 is filter 1 is genre
 
 	if ($sugarcube_alarm_type == 0) { # Filter Mode
-		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_filter');
+		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_filter') || '';
 		if ($sugarcube_activefilter eq '0'
 			|| $sugarcube_activefilter eq '(None)')
 		{
@@ -3730,7 +3714,7 @@ sub AlarmFired {
 			$mypageurl = ($mypageurl . '&filter=' . $sugarcube_activefilter);
 		}
 	} else { # Genre Mode
-		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_genre');
+		$sugarcube_activefilter = $prefs->client($client)->get('scalarm_genre') || '';
 
 		if ($sugarcube_activefilter eq '0'
 			|| $sugarcube_activefilter eq '(None)')
@@ -4168,7 +4152,7 @@ sub handleWebList {
 sub CheckSong {
 	$log->debug("###CheckSong\n");
 	my $client = shift;
-	my $currentsong = Slim::Player::Playlist::url($client);
+	my $currentsong = Slim::Player::Playlist::url($client) || '';
 	$currentsong = Slim::Utils::Misc::pathFromFileURL($currentsong);
 	$currentsong = dirtyencoder($currentsong);
 
@@ -4178,7 +4162,7 @@ sub CheckSong {
 
 	$log->debug("SongPosition; $songtime\n");
 
-	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time'); # Fade timeline
+	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time') || 5; # Fade timeline
 
 	$log->debug("Fade Length; $sugarcube_fade_time\n");
 	$log->debug("Song Length; $song_length\n");
@@ -4200,23 +4184,21 @@ sub Volume_Save {
 	my $client = shift;
 	my $volume_start = Slim::Player::Client::volume($client);
 
-	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time'); # Fade timeline
-
-	if ($global_slide_on{$client} eq "off") {
-		# If we are not fading save the volume
-		$slide_start_volume{$client} = $volume_start;
-		$log->debug("Saved slide_start_volume; $slide_start_volume{$client}\n");
-	} elsif (!exists $global_slide_on{$client}) { # If we are not fading save the volume
+	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time') || 5; # Fade timeline
+	if (!exists $global_slide_on{$client}) { # If we are not fading save the volume
 		if ($volume_start == 0) {
 			$log->debug("Volume; No Save\n");
 		} else {
 			$slide_start_volume{$client} = $volume_start;
 			$log->debug("Saved defective hash; $slide_start_volume{$client}\n");
 		}
+	} elsif ($global_slide_on{$client} eq "off") {
+		# If we are not fading save the volume
+		$slide_start_volume{$client} = $volume_start;
+		$log->debug("Saved slide_start_volume; $slide_start_volume{$client}\n");
 	}
 
 	StartFade($client);
-
 }
 
 sub StartFade {
@@ -4225,7 +4207,7 @@ sub StartFade {
 
 	$global_slide_on{$client} = "on"; # We are fading
 
-	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time'); # Fade timeline
+	my $sugarcube_fade_time = $prefs->client($client)->get('sugarcube_fade_time') || 5; # Fade timeline
 	my $volume_start = $slide_start_volume{$client};
 
 	my $volumeslide = Slim::Player::Client::volume($client);

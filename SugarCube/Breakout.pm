@@ -232,16 +232,15 @@ sub FSgetRealRandomSubsetYearRangeAny {
 	}
 
 	my $sugarcube_filetype = $prefs->client($client)->get('sugarcube_filetype');
-	if ($sugarcube_filetype eq "") {
+	if (!defined($sugarcube_filetype) || $sugarcube_filetype eq "") {
 		$sugarcube_filetype = 0; # Default Anything
 	}
 
 	my $sugarcube_fs_length = $prefs->client($client)->get('sugarcube_fs_length'); # Length of Track
 	my $sugarcube_fs_length_low;
 	my $sugarcube_fs_length_high;
-
 	# Select Tracks ...Normal 0 tracks.secs >= 0 AND tracks.secs <= 18000
-	if (!defined($sugarcube_filetype) || $sugarcube_filetype eq "") {
+	if (!defined($sugarcube_fs_length) || $sugarcube_fs_length eq "" || $sugarcube_fs_length == 0) {
 		$sugarcube_fs_length_low = '0';
 		$sugarcube_fs_length_high = '18000';
 
@@ -440,6 +439,7 @@ sub getmyTSNextSong {
 	if ($songIndex == $listlength) { $songIndex--; }
 	my $url = Slim::Player::Playlist::song ($client, $songIndex);
 	my $track = Slim::Schema->rs('Track')->objectForUrl({'url' => $url});
+	return unless $track;
 	my $trackid = $track->id;
 
 	my $table = ($apc_enabled && $prefs->get('useapcvalues')) ? 'alternativeplaycount' : 'tracks_persistent';
@@ -536,6 +536,7 @@ sub getmyNextSong {
 	if ($songIndex == $listlength) { $songIndex--; }
 	my $url = Slim::Player::Playlist::song ($client, $songIndex);
 	my $track = Slim::Schema->rs('Track')->objectForUrl({'url' => $url});
+	return unless $track;
 	my $trackid = $track->id;
 
 	my $dbh = Slim::Schema->storage->dbh();
@@ -1279,10 +1280,10 @@ sub DropGenreAndXMas {
 	my $sth;
 	if (($sugarxmas == 1) && ($theTime ne 'Dec')) {
 		# $log->debug("Christmas Block Active\n");
-		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDGENRE' WHERE WorkingSet.SCgenres = $scblockgenre_always OR WorkingSet.SCgenres = $scblockgenre_alwaystwo OR WorkingSet.SCgenres = $scblockgenre_alwaysthree OR upper(WorkingSet.SCgenres) = 'XMAS' OR upper(WorkingSet.SCgenres) = 'CHRISTMAS' AND WorkingSet.client = $clientid");
+		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDGENRE' WHERE (WorkingSet.SCgenres = $scblockgenre_always OR WorkingSet.SCgenres = $scblockgenre_alwaystwo OR WorkingSet.SCgenres = $scblockgenre_alwaysthree OR upper(WorkingSet.SCgenres) = 'XMAS' OR upper(WorkingSet.SCgenres) = 'CHRISTMAS') AND WorkingSet.client = $clientid");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
 	} else {
-		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDGENRE' WHERE WorkingSet.SCgenres = $scblockgenre_always OR WorkingSet.SCgenres = $scblockgenre_alwaystwo OR WorkingSet.SCgenres = $scblockgenre_alwaysthree AND WorkingSet.client = $clientid");
+		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDGENRE' WHERE (WorkingSet.SCgenres = $scblockgenre_always OR WorkingSet.SCgenres = $scblockgenre_alwaystwo OR WorkingSet.SCgenres = $scblockgenre_alwaysthree) AND WorkingSet.client = $clientid");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
 	}
 }
@@ -1313,14 +1314,14 @@ sub DropArtists {
 	if ($sugarcube_global_player == 0) {
 		# $log->debug("SugarCube Std Drop Artists\n");
 		my $clientid = $dbh->quote (Slim::Player::Client::id($client));
-		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDARTIST' WHERE WorkingSet.SCartist = $scblockartist_always OR WorkingSet.SCartist = $scblockartist_alwaystwo OR WorkingSet.SCartist = $scblockartist_alwaysthree AND WorkingSet.client = $clientid");
+		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDARTIST' WHERE (WorkingSet.SCartist = $scblockartist_always OR WorkingSet.SCartist = $scblockartist_alwaystwo OR WorkingSet.SCartist = $scblockartist_alwaysthree) AND WorkingSet.client = $clientid");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
 		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPARTIST' WHERE EXISTS (SELECT ArtistTracker.id FROM ArtistTracker WHERE ArtistTracker.SCartist = WorkingSet.SCartist AND WorkingSet.client = $clientid)");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
 	} else {
 		# $log->debug("SugarCube GLOBAL Drop Artists\n");
 		my $clientid = $dbh->quote (Slim::Player::Client::id($client));
-		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDARTIST' WHERE WorkingSet.SCartist = $scblockartist_always OR WorkingSet.SCartist = $scblockartist_alwaystwo OR WorkingSet.SCartist = $scblockartist_alwaysthree AND WorkingSet.client = $clientid");
+		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPBLOCKEDARTIST' WHERE (WorkingSet.SCartist = $scblockartist_always OR WorkingSet.SCartist = $scblockartist_alwaystwo OR WorkingSet.SCartist = $scblockartist_alwaysthree) AND WorkingSet.client = $clientid");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
 		$sth = $dbh->prepare("UPDATE WorkingSet SET trackingno = 'DROPARTIST' WHERE EXISTS (SELECT ArtistTracker.id FROM ArtistTracker WHERE ArtistTracker.SCartist = WorkingSet.SCartist");
 		$sth->execute() || die "Could not execute: " . $dbh->errstr;
