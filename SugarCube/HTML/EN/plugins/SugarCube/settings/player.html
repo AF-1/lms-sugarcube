@@ -159,6 +159,69 @@
 			[%- END -%]
 			</select>
 		[% END %]
+
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST" desc="PLUGIN_SC_WEB_PREFERARTISTDESC" %]
+			<select class="stdedit" name="scpreferartist_one" id="scpreferartist_one">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scpreferartist_one == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST_WEIGHT" desc="PLUGIN_SC_WEB_PREFERARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="scpreferartist_one_weight" id="scpreferartist_one_weight" value="[% prefs.scpreferartist_one_weight %]" size="1">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST" desc="PLUGIN_SC_WEB_PREFERARTISTDESC" %]
+			<select class="stdedit" name="scpreferartist_two" id="scpreferartist_two">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scpreferartist_two == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST_WEIGHT" desc="PLUGIN_SC_WEB_PREFERARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="scpreferartist_two_weight" id="scpreferartist_two_weight" value="[% prefs.scpreferartist_two_weight %]" size="1">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST" desc="PLUGIN_SC_WEB_PREFERARTISTDESC" %]
+			<select class="stdedit" name="scpreferartist_three" id="scpreferartist_three">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.scpreferartist_three == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_PREFERARTIST_WEIGHT" desc="PLUGIN_SC_WEB_PREFERARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="scpreferartist_three_weight" id="scpreferartist_three_weight" value="[% prefs.scpreferartist_three_weight %]" size="1">
+		[% END %]
+
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST" desc="PLUGIN_SC_WEB_LESSARTISTDESC" %]
+			<select class="stdedit" name="sclessartist_one" id="sclessartist_one">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.sclessartist_one == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST_WEIGHT" desc="PLUGIN_SC_WEB_LESSARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="sclessartist_one_weight" id="sclessartist_one_weight" value="[% prefs.sclessartist_one_weight %]" size="1">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST" desc="PLUGIN_SC_WEB_LESSARTISTDESC" %]
+			<select class="stdedit" name="sclessartist_two" id="sclessartist_two">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.sclessartist_two == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST_WEIGHT" desc="PLUGIN_SC_WEB_LESSARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="sclessartist_two_weight" id="sclessartist_two_weight" value="[% prefs.sclessartist_two_weight %]" size="1">
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST" desc="PLUGIN_SC_WEB_LESSARTISTDESC" %]
+			<select class="stdedit" name="sclessartist_three" id="sclessartist_three">
+			[% FOREACH option IN artists.keys.sort %]
+				<option [% IF prefs.sclessartist_three == option %]selected [% END %]value="[% option %]">[% artists.$option %]</option>
+			[%- END -%]
+			</select>
+		[% END %]
+		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_LESSARTIST_WEIGHT" desc="PLUGIN_SC_WEB_LESSARTIST_WEIGHTDESC" %]
+			<input type="text" class="stdedit sliderInput_1_5_1" name="sclessartist_three_weight" id="sclessartist_three_weight" value="[% prefs.sclessartist_three_weight %]" size="1">
+		[% END %]
+
 		[% WRAPPER settingGroup title="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS" desc="PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC" %]
 			<select class="stdedit" name="scblockgenre_always" id="scblockgenre_always">
 			[% FOREACH option IN genres.keys.sort %]

@@ -282,6 +282,22 @@ PLUGIN_SC_WEB_BLOCKARTIST_ALWAYS
 	EN	Always Block Selected Artist
 PLUGIN_SC_WEB_BLOCKARTIST_ALWAYSDESC
 	EN	Always Block the Selected Artist so that it does not play.  This may be ignored when selecting a random track
+PLUGIN_SC_WEB_PREFERARTIST
+	EN	Preferred Artist
+PLUGIN_SC_WEB_PREFERARTISTDESC
+	EN	This artist will be more likely to be selected. Weight 1=slightly more, 5=much more often
+PLUGIN_SC_WEB_PREFERARTIST_WEIGHT
+	EN	Preferred Artist Weight (1-5)
+PLUGIN_SC_WEB_PREFERARTIST_WEIGHTDESC
+	EN	How much more often this artist should be selected (1=slightly, 5=much more)
+PLUGIN_SC_WEB_LESSARTIST
+	EN	Less Preferred Artist
+PLUGIN_SC_WEB_LESSARTISTDESC
+	EN	This artist will be less likely to be selected. Weight 1=slightly less, 5=much less often
+PLUGIN_SC_WEB_LESSARTIST_WEIGHT
+	EN	Less Preferred Artist Weight (1-5)
+PLUGIN_SC_WEB_LESSARTIST_WEIGHTDESC
+	EN	How much less often this artist should be selected (1=slightly less, 5=much less)
 PLUGIN_SC_WEB_BLOCKGENRE_ALWAYS
 	EN	Always Block this Genre
 PLUGIN_SC_WEB_BLOCKGENRE_ALWAYSDESC

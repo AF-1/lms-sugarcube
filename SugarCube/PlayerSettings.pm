@@ -177,6 +177,36 @@ sub handler {
 		my $scblockartist_alwaysthree = $params->{'scblockartist_alwaysthree'};
 		$prefs->client($client)->set('scblockartist_alwaysthree', "$scblockartist_alwaysthree");
 
+		my $scpreferartist_one = $params->{'scpreferartist_one'};
+		$prefs->client($client)->set('scpreferartist_one', "$scpreferartist_one");
+		my $scpreferartist_one_weight = $params->{'scpreferartist_one_weight'};
+		$prefs->client($client)->set('scpreferartist_one_weight', "$scpreferartist_one_weight");
+
+		my $scpreferartist_two = $params->{'scpreferartist_two'};
+		$prefs->client($client)->set('scpreferartist_two', "$scpreferartist_two");
+		my $scpreferartist_two_weight = $params->{'scpreferartist_two_weight'};
+		$prefs->client($client)->set('scpreferartist_two_weight', "$scpreferartist_two_weight");
+
+		my $scpreferartist_three = $params->{'scpreferartist_three'};
+		$prefs->client($client)->set('scpreferartist_three', "$scpreferartist_three");
+		my $scpreferartist_three_weight = $params->{'scpreferartist_three_weight'};
+		$prefs->client($client)->set('scpreferartist_three_weight', "$scpreferartist_three_weight");
+
+		my $sclessartist_one = $params->{'sclessartist_one'};
+		$prefs->client($client)->set('sclessartist_one', "$sclessartist_one");
+		my $sclessartist_one_weight = $params->{'sclessartist_one_weight'};
+		$prefs->client($client)->set('sclessartist_one_weight', "$sclessartist_one_weight");
+
+		my $sclessartist_two = $params->{'sclessartist_two'};
+		$prefs->client($client)->set('sclessartist_two', "$sclessartist_two");
+		my $sclessartist_two_weight = $params->{'sclessartist_two_weight'};
+		$prefs->client($client)->set('sclessartist_two_weight', "$sclessartist_two_weight");
+
+		my $sclessartist_three = $params->{'sclessartist_three'};
+		$prefs->client($client)->set('sclessartist_three', "$sclessartist_three");
+		my $sclessartist_three_weight = $params->{'sclessartist_three_weight'};
+		$prefs->client($client)->set('sclessartist_three_weight', "$sclessartist_three_weight");
+
 		my $sugarcube_filetype = $params->{'sugarcube_filetype'}; # Flac or MP3 used in FreeStyle Mode
 		$prefs->client($client)->set('sugarcube_filetype',"$sugarcube_filetype");
 
@@ -434,6 +464,19 @@ sub handler {
 	$params->{'prefs'}->{'scblockartist_always'} = $prefs->client($client)->get('scblockartist_always');
 	$params->{'prefs'}->{'scblockartist_alwaystwo'} = $prefs->client($client)->get('scblockartist_alwaystwo');
 	$params->{'prefs'}->{'scblockartist_alwaysthree'} = $prefs->client($client)->get('scblockartist_alwaysthree');
+
+	$params->{'prefs'}->{'scpreferartist_one'} = $prefs->client($client)->get('scpreferartist_one');
+	$params->{'prefs'}->{'scpreferartist_one_weight'} = $prefs->client($client)->get('scpreferartist_one_weight');
+	$params->{'prefs'}->{'scpreferartist_two'} = $prefs->client($client)->get('scpreferartist_two');
+	$params->{'prefs'}->{'scpreferartist_two_weight'} = $prefs->client($client)->get('scpreferartist_two_weight');
+	$params->{'prefs'}->{'scpreferartist_three'} = $prefs->client($client)->get('scpreferartist_three');
+	$params->{'prefs'}->{'scpreferartist_three_weight'} = $prefs->client($client)->get('scpreferartist_three_weight');
+	$params->{'prefs'}->{'sclessartist_one'} = $prefs->client($client)->get('sclessartist_one');
+	$params->{'prefs'}->{'sclessartist_one_weight'} = $prefs->client($client)->get('sclessartist_one_weight');
+	$params->{'prefs'}->{'sclessartist_two'} = $prefs->client($client)->get('sclessartist_two');
+	$params->{'prefs'}->{'sclessartist_two_weight'} = $prefs->client($client)->get('sclessartist_two_weight');
+	$params->{'prefs'}->{'sclessartist_three'} = $prefs->client($client)->get('sclessartist_three');
+	$params->{'prefs'}->{'sclessartist_three_weight'} = $prefs->client($client)->get('sclessartist_three_weight');
 
 	$params->{'prefs'}->{'sugarcube_filetype'} = $prefs->client($client)->get('sugarcube_filetype');# Flac or MP3 used in FreeStyle Mode
 	$params->{'prefs'}->{'sugarcube_startyear'} = $prefs->client($client)->get('sugarcube_startyear'); # FS Start Year
