@@ -2311,6 +2311,9 @@ sub gotMIP {
 		### Just take a single track
 		###
 
+		## Apply artist weighting (prefer/less) before selection
+		@myworkingset = Plugins::SugarCube::Breakout::applyArtistWeighting( $client, @myworkingset );
+
 		my $sugarcube_wobble = $prefs->client($client)->get('sugarcube_wobble') || 0;
 		if ($sugarcube_wobble == 1 || $sugarcube_wobble == 2 || $sugarcube_wobble == 3 || $sugarcube_wobble == 4) {
 			# $log->debug("Wobble Mode Active\n");
