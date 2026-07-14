@@ -2312,12 +2312,19 @@ sub gotMIP {
 		###
 
 		my $sugarcube_wobble = $prefs->client($client)->get('sugarcube_wobble') || 0;
-		if ($sugarcube_wobble == 1 || $sugarcube_wobble == 2 || $sugarcube_wobble == 3) {
+		if ($sugarcube_wobble == 1 || $sugarcube_wobble == 2 || $sugarcube_wobble == 3 || $sugarcube_wobble == 4) {
 			# $log->debug("Wobble Mode Active\n");
 			## 0 (Disabled)
 			## 1 Tight Wobble (First 3)
 			## 2 Medium Wobble (First 5)
 			## 3 Loose Wobble (Any)
+			## 4 Floating Wobble (Random: Tight/Medium/Loose)
+
+			## Floating Wobble: pick a random mode each time
+			my $effective_wobble = $sugarcube_wobble;
+			if ($sugarcube_wobble == 4) {
+				$effective_wobble = int(rand(3)) + 1; ## Randomly 1, 2 or 3
+			}
 
 			my $arraysize = scalar @myworkingset;
 			my $random_number = 0;
@@ -2327,10 +2334,10 @@ sub gotMIP {
 				$random_number = ($arraysize / 10);
 				# $log->debug("Random Sized array; $random_number\n");
 
-				if ($sugarcube_wobble == 1 && $arraysize > 31) {
+				if ($effective_wobble == 1 && $arraysize > 31) {
 					$random_number = int (rand(3)); ## Number between 0 and 3
 					$random_number = $random_number * 10;
-				} elsif ($sugarcube_wobble == 2 && $arraysize > 51) {
+				} elsif ($effective_wobble == 2 && $arraysize > 51) {
 					$random_number = int (rand($random_number)); ## Number between 0 and 5
 					$random_number = $random_number * 10;
 				} else {
