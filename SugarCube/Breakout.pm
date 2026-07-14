@@ -1673,4 +1673,103 @@ sub get_track_length {
 	return ($length);
 }
 
+sub applyArtistWeighting {
+	my $client       = shift;
+	my @workingset    = @_;
+
+	# Get preferred artists + weights
+	my @prefer_artists = (
+		$prefs->client($client)->get('scpreferartist_one')   // '',
+		$prefs->client($client)->get('scpreferartist_two')   // '',
+		$prefs->client($client)->get('scpreferartist_three') // '',
+	);
+	my @prefer_weights = (
+		$prefs->client($client)->get('scpreferartist_one_weight')   || 1,
+		$prefs->client($client)->get('scpreferartist_two_weight')   || 1,
+		$prefs->client($client)->get('scpreferartist_three_weight') || 1,
+	);
+
+	# Get less-preferred artists + weights
+	my @less_artists = (
+		$prefs->client($client)->get('sclessartist_one')   // '',
+		$prefs->client($client)->get('sclessartist_two')   // '',
+		$prefs->client($client)->get('sclessartist_three') // '',
+	);
+	my @less_weights = (
+		$prefs->client($client)->get('sclessartist_one_weight')   || 1,
+		$prefs->client($client)->get('sclessartist_two_weight')   || 1,
+		$prefs->client($client)->get('sclessartist_three_weight') || 1,
+	);
+
+	my $block = 10;  # number of elements per track in the array
+	my $track_count = scalar(@workingset) / $block;
+
+	my @weighted = ();
+
+	for ( my $i = 0; $i < $track_count; $i++ ) {
+		my $artist = $workingset[ $i * $block + 4 ] // '';
+		my $copies = 1;
+
+		# Normalise artist name for comparison
+		my $artist_norm = lc($artist);
+		$artist_norm =~ s/[^a-z0-9 ]//g;
+		$artist_norm =~ s/\s+/ /g;
+		$artist_norm =~ s/^\s+|\s+$//g;
+
+		# Preferred weighting: add extra copies
+		for my $j ( 0 .. 2 ) {
+			if ( $prefer_artists[$j] ne '' ) {
+				my $pref_norm = lc($prefer_artists[$j]);
+				$pref_norm =~ s/[^a-z0-9 ]//g;
+				$pref_norm =~ s/\s+/ /g;
+				$pref_norm =~ s/^\s+|\s+$//g;
+				if ( index($artist_norm, $pref_norm) >= 0 ) {
+					my $w = int( $prefer_weights[$j] );
+					$w = 1 if $w < 1;
+					$w = 5 if $w > 5;
+					$copies = $w + 1;
+					$log->debug("Prefer weighting: $artist x$copies\n");
+					last;
+				}
+			}
+		}
+
+		# Less-preferred weighting: chance to drop the track
+		for my $j ( 0 .. 2 ) {
+			if ( $less_artists[$j] ne '' ) {
+				my $less_norm = lc($less_artists[$j]);
+				$less_norm =~ s/[^a-z0-9 ]//g;
+				$less_norm =~ s/\s+/ /g;
+				$less_norm =~ s/^\s+|\s+$//g;
+				if ( index($artist_norm, $less_norm) >= 0 ) {
+					my $w = int( $less_weights[$j] );
+					$w = 1 if $w < 1;
+					$w = 5 if $w > 5;
+					my $keep_chance = 1 / ( $w + 1 );
+					if ( rand() > $keep_chance ) {
+						$log->debug("Less weighting: $artist dropped (weight $w)\n");
+						$copies = 0;
+					}
+					else {
+						$log->debug("Less weighting: $artist kept (weight $w)\n");
+					}
+					last;
+				}
+			}
+		}
+
+		for ( 1 .. $copies ) {
+			push @weighted, @workingset[ $i * $block .. $i * $block + $block - 1 ];
+		}
+	}
+
+	# If every track got dropped, fall back to the original set
+	if ( scalar(@weighted) == 0 ) {
+		$log->debug("Artist weighting: all tracks dropped, returning original set\n");
+		return @workingset;
+	}
+
+	return @weighted;
+}
+
 1;
