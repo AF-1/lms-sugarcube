@@ -205,6 +205,7 @@ sub initPlugin {
 	Slim::Control::Request::addDispatch(['sugarcube', 'menu'], [0, 0, 1, \&jiveSugarCubeMenu]);
 	Slim::Control::Request::addDispatch(['sugarcube', 'setting'], [1, 0, 1, \&jiveSugarCubeSetting]);
 	Slim::Control::Request::addDispatch(['sugarcube', 'filters', '_filter'], [1, 0, 0, \&jive_menu_save_filter]);
+	Slim::Control::Request::addDispatch(['sugarcube', 'recipe', '_recipe'], [1, 0, 0, \&jive_menu_save_recipe]);
 	Slim::Control::Request::addDispatch(['sugarcube', 'genre', '_genre' ], [1, 0, 0, \&jive_menu_save_genre]);
 	Slim::Control::Request::addDispatch(['sugarcube', 'artist', '_artist'], [1, 0, 0, \&jive_menu_save_artist]);
 	Slim::Control::Request::addDispatch(['sugarcube', 'players', '_sendplayer'], [1, 0, 0, \&jiveSugarCubeSetting]);
@@ -718,6 +719,16 @@ sub jiveSugarCubeMenu {
 			},
 		},
 		{
+			text => 'Select MusicIP Recipe',
+			actions => {
+				go => {
+					player => 0,
+					cmd =>
+					 [ 'sugarcube', 'setting', 'sugarcube_recipetypes:0' ],
+				},
+			},
+		},
+		{
 			text => Slim::Utils::Strings::string('PLUGIN_GENRES'),
 			actions => {
 				go => {
@@ -946,6 +957,50 @@ sub filter_filter {
 	$request->setStatusDone();
 
 	Slim::Control::Jive::sliceAndShip ($request, $client, \@filtermenu);
+}
+
+sub recipe_filter {
+	$log->debug("recipe_filter\n");
+	my $request = shift;
+	my $client = $request->client();
+	my $l_recipes = Plugins::SugarCube::PlayerSettings::getReceipesList($client);
+	my @listRef = ();
+	foreach my $recipe (sort keys %$l_recipes) {
+		push @listRef, $l_recipes->{$recipe};
+	}
+	my $activerecipe = $prefs->client($client)->get('sugarcube_receipes') || '';
+	my @recipemenu = ();
+	my $val;
+	foreach my $recipe (@listRef) {
+		if ($recipe eq $activerecipe) {
+			$val = 1;
+		} else {
+			$val = 0;
+		}
+		push @recipemenu,
+		 {
+			id => $recipe,
+			text => $recipe,
+			radio => $val,
+			actions => {
+				do => {
+					player => 0,
+					cmd => [ 'sugarcube', 'recipe', $recipe ],
+				},
+			},
+		 };
+	}
+	my $numitems = scalar(@recipemenu);
+	$request->addResult ("base", { window => { titleStyle => 'noidea' } });
+	$request->addResult ("count", $numitems);
+	$request->addResult ("offset", 0);
+	my $cnt = 0;
+	for my $eachPreset (@recipemenu[ 0 .. $#recipemenu ]) {
+		$request->setResultLoopHash ('item_loop', $cnt, $eachPreset);
+		$cnt++;
+	}
+	$request->setStatusDone();
+	Slim::Control::Jive::sliceAndShip ($request, $client, \@recipemenu);
 }
 
 sub artist_filter {
@@ -1276,6 +1331,20 @@ sub jive_menu_save_filter {
 	$request->setStatusDone();
 }
 
+sub jive_menu_save_recipe {
+	my $request = shift;
+	my $client = $request->client();
+	if (!defined $client) {
+		$request->setStatusNeedsClient();
+		return;
+	}
+	if (defined($request->getParam('_recipe'))) {
+		$log->debug("Param _recipe\n");
+		$prefs->client($client)->set('sugarcube_receipes', $request->getParam('_recipe'));
+	}
+	$request->setStatusDone();
+}
+
 sub jiveSugarCubeSetting {
 	no warnings 'numeric';
 
@@ -1316,6 +1385,9 @@ sub jiveSugarCubeSetting {
 
 	if (defined($request->getParam('sugarcube_filtertypes'))) {
 		filter_filter($request);
+	}
+	if (defined($request->getParam('sugarcube_recipetypes'))) {
+		recipe_filter($request);
 	}
 	if (defined($request->getParam('sugarcube_genretypes'))) {
 		genre_filter($request);
