@@ -1,0 +1,27 @@
+# .github/workflows/automerge-usercontrib.yml
+name: Auto-merge usercontrib branches
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - usercontrib_HB64
+      - usercontrib_saysaar
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    # only works if PR is not marked as draft
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Merge PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --merge \
+            --repo "${{ github.repository }}"
