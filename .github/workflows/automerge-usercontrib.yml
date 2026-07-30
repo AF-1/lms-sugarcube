@@ -15,8 +15,12 @@ permissions:
 jobs:
   automerge:
     runs-on: ubuntu-latest
-    # only works if PR is not marked as draft
-    if: github.event.pull_request.draft == false
+    if: |
+      github.event.pull_request.draft == false &&
+      (
+        (github.event.pull_request.base.ref == 'usercontrib_HB64' && github.event.pull_request.user.login == 'HB64') ||
+        (github.event.pull_request.base.ref == 'usercontrib_saysaar' && github.event.pull_request.user.login == 'saysaar')
+      )
     steps:
       - name: Merge PR
         env:
