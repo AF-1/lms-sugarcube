@@ -2165,6 +2165,16 @@ sub gotMIP {
 			$log->debug("Failed to obtain LMS metadata from database\n\n"); # Need to do something probably :)
 		}
 
+		# Restore MIP acoustic order before saving to WorkingSet
+		my %mip_order;
+		for my $idx (0 .. $#unique) { $mip_order{$unique[$idx]} //= $idx; }
+		my @groups;
+		for (my $i = 0; $i < scalar(@quickone); $i += 11) {
+			push @groups, [@quickone[$i .. $i+10]];
+		}
+		@groups = sort { ($mip_order{$a->[0]} // 9999) <=> ($mip_order{$b->[0]} // 9999) } @groups;
+		@quickone = map { @$_ } @groups;
+
 		Plugins::SugarCube::Breakout::myworkingset ($client, @quickone); # Save all our stuff
 
 		if ($creator ne 'SpiceflyONE')
@@ -2253,6 +2263,16 @@ sub gotMIP {
 		if ($sth->rows == 0) {
 			$log->debug("Failed to obtain LMS metadata from database\n\n"); # Need to do something probably :)
 		}
+
+		# Restore MIP acoustic order before saving to WorkingSet
+		my %mip_order2;
+		for my $idx (0 .. $#unique) { $mip_order2{$unique[$idx]} //= $idx; }
+		my @groups2;
+		for (my $i = 0; $i < scalar(@quickone); $i += 11) {
+			push @groups2, [@quickone[$i .. $i+10]];
+		}
+		@groups2 = sort { ($mip_order2{$a->[0]} // 9999) <=> ($mip_order2{$b->[0]} // 9999) } @groups2;
+		@quickone = map { @$_ } @groups2;
 
 		Plugins::SugarCube::Breakout::myworkingset ($client, @quickone); # Save all our stuff
 
