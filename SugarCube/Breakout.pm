@@ -668,10 +668,30 @@ sub init {
 
 	$dbh->do("CREATE TABLE IF NOT EXISTS sugarcubeclients (id INTEGER PRIMARY KEY, client, persona)");
 	$dbh->do("CREATE TABLE IF NOT EXISTS WorkingSet (id INTEGER PRIMARY KEY, client, trackingno, temptrack, SCtrack, SCalbum, SCgenres, SCartist, SCplaycount integer, SCrating integer, SClastplayed integer, cover, album)");
-	$dbh->do("CREATE TABLE IF NOT EXISTS AlbumTracker (id INTEGER PRIMARY KEY, client, SCalbum text unique)");
-	$dbh->do("CREATE TABLE IF NOT EXISTS ArtistTracker (id INTEGER PRIMARY KEY, client, SCartist text unique)");
-	$dbh->do("CREATE TABLE IF NOT EXISTS TrackTracker (id INTEGER PRIMARY KEY, client, track text unique)");
+	$dbh->do("CREATE TABLE IF NOT EXISTS AlbumTracker (id INTEGER PRIMARY KEY, client, SCalbum, UNIQUE(client, SCalbum))");
+	$dbh->do("CREATE TABLE IF NOT EXISTS ArtistTracker (id INTEGER PRIMARY KEY, client, SCartist, UNIQUE(client, SCartist))");
+	$dbh->do("CREATE TABLE IF NOT EXISTS TrackTracker (id INTEGER PRIMARY KEY, client, track, UNIQUE(client, track))");
 	$dbh->do("CREATE TABLE IF NOT EXISTS History (id INTEGER PRIMARY KEY, client, artist,track,album,genre,albumart,fullalbum)");
+
+	# Migrate AlbumTracker/ArtistTracker/TrackTracker from a UNIQUE constraint
+	# on the value column alone to UNIQUE(client, value). The old schema let
+	# INSERT OR REPLACE silently steal a row from one player's client the
+	# moment another player played the same artist/album/track, causing
+	# cross-player "forgetting". CREATE TABLE IF NOT EXISTS above only
+	# affects fresh installs, so existing databases are rebuilt here.
+	for my $trackerdef ( ['AlbumTracker', 'SCalbum'], ['ArtistTracker', 'SCartist'], ['TrackTracker', 'track'] ) {
+		my $table = $trackerdef->[0];
+		my $col = $trackerdef->[1];
+		my ($tablesql) = $dbh->selectrow_array("SELECT sql FROM sqlite_master WHERE type='table' AND name='$table'");
+		if ($tablesql && $tablesql !~ /unique\s*\(\s*client\s*,\s*$col\s*\)/i) {
+			$log->debug("Migrating $table to a per-client unique constraint\n");
+			$dbh->do("DROP TABLE IF EXISTS old_$table");
+			$dbh->do("ALTER TABLE $table RENAME TO old_$table");
+			$dbh->do("CREATE TABLE $table (id INTEGER PRIMARY KEY, client, $col, UNIQUE(client, $col))");
+			$dbh->do("INSERT OR IGNORE INTO $table (id, client, $col) SELECT id, client, $col FROM old_$table");
+			$dbh->do("DROP TABLE old_$table");
+		}
+	}
 
 	my $catalog_rowset = $dbh->selectall_arrayref("PRAGMA table_info(WorkingSet)");
 	my @col_names = map { $_->[1] } @{$catalog_rowset};
@@ -822,7 +842,7 @@ sub AlbumArtistTracker {
 				if (defined($songIndex)) {
 					if ($songIndex > $sugarcube_blockalbum) { # sugarcube_blockartist
 						for (my $i = 0; $i < $songIndex - $sugarcube_blockalbum; $i++) {
-							my $sth = $dbh->prepare("delete from AlbumTracker where id in (select id from AlbumTracker order by id asc limit 1)");
+							my $sth = $dbh->prepare("delete from AlbumTracker where id in (select id from AlbumTracker where client='$clientid' order by id asc limit 1)");
 							$sth->execute();
 						}
 					}
@@ -857,7 +877,7 @@ sub AlbumArtistTracker {
 			if (defined($songIndex)) {
 				if ($songIndex > $sugarcube_blockartist) { # sugarcube_blockartist
 					for (my $i = 0; $i < $songIndex - $sugarcube_blockartist; $i++) {
-						my $sth = $dbh->prepare("delete from ArtistTracker where id in (select id from ArtistTracker order by id asc limit 1)");
+						my $sth = $dbh->prepare("delete from ArtistTracker where id in (select id from ArtistTracker where client='$clientid' order by id asc limit 1)");
 						$sth->execute();
 					}
 				}
@@ -906,7 +926,7 @@ sub TrackTracker {
 			if (defined($songIndex)) {
 				if ($songIndex > $sugarcube_remembertracks) { # sugarcube_remembertracks
 					for (my $i = 0 ; $i < $songIndex - $sugarcube_remembertracks; $i++) {
-						my $sth = $dbh->prepare("delete from TrackTracker where id in (select id from TrackTracker order by id asc limit 1)");
+						my $sth = $dbh->prepare("delete from TrackTracker where id in (select id from TrackTracker where client='$clientid' order by id asc limit 1)");
 						$sth->execute();
 					}
 				}
@@ -928,7 +948,7 @@ sub mystuff {
 	my $sqlitetimeout = $prefs->get('sqlitetimeout');
 	$dbh->sqlite_busy_timeout ($sqlitetimeout * 1000);
 
-	my $sth = $dbh->prepare("SELECT temptrack, SCTrack, SCalbum, SCgenres, SCartist, SCplaycount, SCrating, SClastplayed, cover, album FROM WorkingSet WHERE WorkingSet.trackingno = 'OK' AND client ='$clientid'");
+	my $sth = $dbh->prepare("SELECT temptrack, SCTrack, SCalbum, SCgenres, SCartist, SCplaycount, SCrating, SClastplayed, cover, album FROM WorkingSet WHERE WorkingSet.trackingno = 'OK' AND client ='$clientid' ORDER BY id ASC");
 	$sth->execute();
 
 	my $array_ref = $sth->fetchall_arrayref();
@@ -1642,7 +1662,7 @@ sub SaveHistory {
 			if (defined($songIndex)) {
 				if ($songIndex > 30) {
 					for (my $i = 0 ; $i < $songIndex - 30 ; $i++) {
-						my $sth = $dbh->prepare("delete from History where id in (select id from History order by id asc limit 1)");
+						my $sth = $dbh->prepare("delete from History where id in (select id from History where client='$clientid' order by id asc limit 1)");
 						$sth->execute();
 					}
 				}
