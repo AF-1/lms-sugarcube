@@ -1469,26 +1469,26 @@ sub StatsPuller {
 		}
 
 		if (!defined($col10) || $col10 eq '') { $col10 = "0"; }
-		my $build = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
+		my $build = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:load','album_id:"
 			. $col11
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Loading Album'));\">";
-		my $build2 = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=album_id:"
+			. "']]}));\">";
+		my $build2 = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:add','album_id:"
 			. $col11
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Loading Album'));\">";
+			. "']]}));\">";
 		my $build3 = "<a href=\"/clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;album_id="
 			. $col11
 			. "&amp;player="
 			. $clientid_uri
 			. "'/index.html?index=0\" target=\"browser\"><img src=\"/html/images/b_mmmix.gif\" alt=\"More\" title=\"More\"></a>";
-		my $build4 = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=track_id:"
+		my $build4 = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:add','track_id:"
 			. $col12
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Add Track'));\">";
+			. "']]}));\">";
 
 		# THIS IS STATISTICS BUILD UP
 		$line = $line
@@ -1541,21 +1541,21 @@ sub StatsPuller {
 
 			if (!defined($col10) || $col10 eq '') { $col10 = '0'; }
 
-		my $build = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
+		my $build = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:load','album_id:"
 			. $col11
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Loading Album'));\">";
-		my $build2 = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=album_id:"
+			. "']]}));\">";
+		my $build2 = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:add','album_id:"
 			. $col11
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Add Album'));\">";
-		my $build4 = "<a onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:add&amp;p2=track_id:"
+			. "']]}));\">";
+		my $build4 = "<a onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			. $clientid
+			. "',['playlistcontrol','cmd:add','track_id:"
 			. $col12
-			. "&amp;player="
-			. $clientid_uri
-			. "', 1, SqueezeJS.string('Add Track'));\">";
+			. "']]}));\">";
 		my $build3 = "<a href=\"/clixmlbrowser/clicmd=browselibrary+items&amp;mode=albums&amp;album_id="
 			. $col11
 			. "&amp;player="
