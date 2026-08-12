@@ -3900,11 +3900,11 @@ sub handleWebListHistory {
 for ($index = 0 ; $index < @history ; ($index = $index + 6)) {
 			$x = $x + 6;
 
-			my $build = "<a class='myButton' title='Play Album' onclick=\"SqueezeJS.Controller.urlRequest('/anyurl?p0=playlistcontrol&amp;p1=cmd:load&amp;p2=album_id:"
+            my $build = "<a class='myButton' title='Play Album' onclick=\"var r=new XMLHttpRequest();r.open('POST','/jsonrpc.js',true);r.setRequestHeader('Content-Type','application/json');r.onload=function(){};r.send(JSON.stringify({id:1,method:'slim.request',params:['"
+			 . $client->id
+			 . "',['playlistcontrol','cmd:load','album_id:"
 			 . $history[ $x - 1 ]
-			 . "&amp;player="
-			 . $client
-			 . "', 1, SqueezeJS.string('Loading Album'));\">Play Album</a>";
+			 . "']]}));\">Play Album</a>";
 			my $icon = $history[ $x - 2 ];
 			if (length($icon) == 0) {
 				$line = $line
