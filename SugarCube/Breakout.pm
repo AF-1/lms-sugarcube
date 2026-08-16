@@ -1427,7 +1427,7 @@ sub StatsPuller {
 	my $sqlitetimeout = $prefs->get('sqlitetimeout');
 	$dbh->sqlite_busy_timeout ($sqlitetimeout * 1000);
 
-	my $sth = $dbh->prepare("SELECT trackingno, SCtrack, SCalbum, SCartist, SCgenres, SCplaycount, SCrating, SClastplayed, temptrack, cover, album, trackid FROM WorkingSet WHERE WorkingSet.client = '$clientid' ORDER BY WorkingSet.trackingno DESC");
+	my $sth = $dbh->prepare("SELECT trackingno, SCtrack, SCalbum, SCartist, SCgenres, SCplaycount, SCrating, SClastplayed, temptrack, cover, album, trackid FROM WorkingSet WHERE WorkingSet.client = '$clientid' ORDER BY WorkingSet.id ASC");
 	$sth->execute();
 	$sth->bind_col (1, \$col1); # tracking status ie. played already, playcount etc
 	$sth->bind_col (2, \$col2); # track name
