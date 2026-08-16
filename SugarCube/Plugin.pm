@@ -263,6 +263,10 @@ sub postinitPlugin {
 	$apc_enabled = Slim::Utils::PluginManager->isEnabled('Plugins::AlternativePlayCount::Plugin');
 	main::DEBUGLOG && $log->is_debug && $log->debug('Plugin "Alternative Play Count" is enabled') if $apc_enabled;
 
+	# Breakout keeps its own copy of this flag; Lyrion only calls postinitPlugin
+	# on the module named in install.xml, so set it here too.
+	Plugins::SugarCube::Breakout->postinitPlugin();
+
 	# if user has the Don't Stop The Music plugin enabled, register ourselves
 	if (Slim::Utils::PluginManager->isEnabled('Slim::Plugin::DontStopTheMusic::Plugin')) {
 		require Slim::Plugin::DontStopTheMusic::Plugin;
