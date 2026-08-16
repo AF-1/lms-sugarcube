@@ -23,10 +23,10 @@
 					if (btns.length > 1) {
 						btns[1].click();
 					} else {
-						window.location.href = "[% webroot %]";
+						window.top.location.href = "[% webroot %]";
 					}
 				} catch (e) {
-					window.location.href = "[% webroot %]";
+					window.top.location.href = "[% webroot %]";
 				}
 			}, 10000);
 		</script>	
