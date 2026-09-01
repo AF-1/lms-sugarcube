@@ -2,8 +2,7 @@ SugarCube
 ====
 ![Min. LMS Version](https://img.shields.io/badge/Min._LMS_Version_Required-7.9-darkgreen)<br>
 
-A modified version of the SugarCube plugin by [Charles Parker](https://www.spicefly.com/).<br>
-**No guarantees that it will work or continue to do so**.<br>
+A modified version of the LMS SugarCube plugin.<br><br>
 
 > [!NOTE]
 > This version is based on the [**6.01** open-source version](https://bitbucket.org/spicefly/sugarcube/src/master/), *<ins>not</ins> version 5.25*.<br>
